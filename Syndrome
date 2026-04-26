@@ -160,13 +160,15 @@ local function resolveTheme(themeName)
     return BUILT_IN_THEMES[themeName] or BUILT_IN_THEMES['DarkTheme']
 end
 
-function Library.CreateLib(title, themeName)
+function Library.CreateLib(title, themeName, toggleKey)
     local self   = setmetatable({}, Library)
     local T      = resolveTheme(themeName)
     local R      = Library._rounding
     local animSp = Library._animSpeed
 
     Library._theme = T
+
+    local savedToggleKey = toggleKey or Enum.KeyCode.RightShift
 
     local uiScreen = Instance.new('ScreenGui')
     uiScreen.Name              = 'DollarwareUI_' .. tostring(math.random(1e5, 9e5))
@@ -198,6 +200,10 @@ function Library.CreateLib(title, themeName)
     mainFrame.ZIndex           = 5
     mainFrame.Parent           = uiScreen
 
+    local mainCorner = Instance.new('UICorner')
+    mainCorner.CornerRadius = UDim.new(0, 8)
+    mainCorner.Parent       = mainFrame
+
     local uiScale = Instance.new('UIScale')
     uiScale.Scale  = 1
     uiScale.Name   = 'Scale'
@@ -219,7 +225,7 @@ function Library.CreateLib(title, themeName)
         shadow.ImageColor3          = Color3.fromRGB(0, 0, 5)
         shadow.Position             = UDim2.fromScale(0.5, 0.5)
         shadow.ScaleType            = 'Slice'
-        shadow.Size                 = UDim2.new(1, 50, 1, 50)
+        shadow.Size                 = UDim2.new(1, 60, 1, 60)
         shadow.SliceCenter          = Rect.new(40, 40, 260, 260)
         shadow.ZIndex               = 4
         shadow.Parent               = mainFrame
@@ -229,7 +235,7 @@ function Library.CreateLib(title, themeName)
         trim.BorderSizePixel  = 0
         trim.Name             = 'Trim'
         trim.Position         = UDim2.fromOffset(0, -1)
-        trim.Size             = UDim2.new(1, 0, 0, 1)
+        trim.Size             = UDim2.new(1, 0, 0, 2)
         trim.ZIndex           = 64
         trim.Parent           = mainFrame
         local trimGrad = Instance.new('UIGradient')
@@ -242,12 +248,16 @@ function Library.CreateLib(title, themeName)
     titleBar.BackgroundColor3 = T.Window1
     titleBar.BorderColor3     = T.Inset1
     titleBar.BorderMode       = 'Inset'
-    titleBar.BorderSizePixel  = 1
+    titleBar.BorderSizePixel  = 0
     titleBar.ClipsDescendants = true
     titleBar.Name             = 'TitleBar'
-    titleBar.Size             = UDim2.new(1, 0, 0, 26)
+    titleBar.Size             = UDim2.new(1, 0, 0, 30)
     titleBar.ZIndex           = 50
     titleBar.Parent           = mainFrame
+
+    local titleBarCorner = Instance.new('UICorner')
+    titleBarCorner.CornerRadius = UDim.new(0, 8)
+    titleBarCorner.Parent       = titleBar
 
     do
         local stroke = Instance.new('UIStroke')
@@ -261,23 +271,23 @@ function Library.CreateLib(title, themeName)
         icon.BackgroundTransparency = 1
         icon.BorderSizePixel        = 0
         icon.Image                  = 'rbxassetid://10152328589'
-        icon.ImageColor3            = Color3.fromRGB(255, 255, 255)
+        icon.ImageColor3            = T.Primary
         icon.Name                   = 'Icon'
-        icon.Position               = UDim2.fromOffset(2, 1)
+        icon.Position               = UDim2.fromOffset(6, 4)
         icon.Size                   = UDim2.fromOffset(22, 22)
         icon.ZIndex                 = 51
         icon.Parent                 = titleBar
 
         local titleLabel = Instance.new('TextLabel')
         titleLabel.BackgroundTransparency = 1
-        titleLabel.Font                   = 'RobotoCondensed'
+        titleLabel.Font                   = 'GothamBold'
         titleLabel.Name                   = 'Title'
-        titleLabel.Position               = UDim2.fromOffset(28, 0)
+        titleLabel.Position               = UDim2.fromOffset(32, 0)
         titleLabel.RichText               = true
-        titleLabel.Size                   = UDim2.new(1, -74, 1, 0)
+        titleLabel.Size                   = UDim2.new(1, -80, 1, 0)
         titleLabel.Text                   = title
         titleLabel.TextColor3             = T.TextPrimary
-        titleLabel.TextSize               = 17
+        titleLabel.TextSize               = 14
         titleLabel.TextStrokeColor3       = T.TextStroke
         titleLabel.TextStrokeTransparency = 0.8
         titleLabel.TextXAlignment         = 'Left'
@@ -289,18 +299,19 @@ function Library.CreateLib(title, themeName)
         pad.Parent      = titleLabel
 
         local btnClose = Instance.new('TextButton')
-        btnClose.AnchorPoint      = Vector2.new(1, 0)
+        btnClose.AnchorPoint      = Vector2.new(1, 0.5)
         btnClose.AutoButtonColor  = false
         btnClose.BackgroundColor3 = T.Button1
         btnClose.BorderSizePixel  = 0
         btnClose.Name             = 'BtnClose'
-        btnClose.Position         = UDim2.new(1, -3, 0, 2)
+        btnClose.Position         = UDim2.new(1, -5, 0.5, 0)
         btnClose.Size             = UDim2.fromOffset(20, 20)
         btnClose.Text             = ''
         btnClose.ZIndex           = 52
         btnClose.Parent           = titleBar
-        Instance.new('UICorner').CornerRadius = UDim.new(0, R and 2 or 0)
-        Instance.new('UICorner').Parent       = btnClose
+        local bcCorner = Instance.new('UICorner')
+        bcCorner.CornerRadius = UDim.new(0, 6)
+        bcCorner.Parent       = btnClose
         local bcs = Instance.new('UIStroke')
         bcs.ApplyStrokeMode = 'Border'
         bcs.Color           = T.Stroke
@@ -316,34 +327,90 @@ function Library.CreateLib(title, themeName)
         bci.ZIndex                 = 52
         bci.Parent                 = btnClose
 
-        local btnMin = Instance.new('TextButton')
-        btnMin.AnchorPoint      = Vector2.new(1, 0)
-        btnMin.AutoButtonColor  = false
-        btnMin.BackgroundColor3 = T.Button1
-        btnMin.BorderSizePixel  = 0
-        btnMin.Name             = 'BtnMin'
-        btnMin.Position         = UDim2.new(1, -27, 0, 2)
-        btnMin.Size             = UDim2.fromOffset(20, 20)
-        btnMin.Text             = ''
-        btnMin.ZIndex           = 52
-        btnMin.Parent           = titleBar
-        local bmc = Instance.new('UICorner')
-        bmc.CornerRadius = UDim.new(0, R and 2 or 0)
-        bmc.Parent       = btnMin
-        local bms = Instance.new('UIStroke')
-        bms.ApplyStrokeMode = 'Border'
-        bms.Color           = T.Stroke
-        bms.LineJoinMode    = 'Round'
-        bms.Thickness       = 1
-        bms.Parent          = btnMin
-        local bmi = Instance.new('ImageLabel')
-        bmi.BackgroundTransparency = 1
-        bmi.BorderSizePixel        = 0
-        bmi.Image                  = 'rbxassetid://9801458532'
-        bmi.ImageColor3            = Color3.fromRGB(255, 255, 255)
-        bmi.Size                   = UDim2.fromScale(1, 1)
-        bmi.ZIndex                 = 52
-        bmi.Parent                 = btnMin
+        local keyBindBtn = Instance.new('TextButton')
+        keyBindBtn.AnchorPoint      = Vector2.new(1, 0.5)
+        keyBindBtn.AutoButtonColor  = false
+        keyBindBtn.BackgroundColor3 = T.Button1
+        keyBindBtn.BorderSizePixel  = 0
+        keyBindBtn.Name             = 'BtnKeybind'
+        keyBindBtn.Position         = UDim2.new(1, -29, 0.5, 0)
+        keyBindBtn.Size             = UDim2.fromOffset(20, 20)
+        keyBindBtn.Text             = ''
+        keyBindBtn.ZIndex           = 52
+        keyBindBtn.Parent           = titleBar
+        local kbCorner = Instance.new('UICorner')
+        kbCorner.CornerRadius = UDim.new(0, 6)
+        kbCorner.Parent       = keyBindBtn
+        local kbs = Instance.new('UIStroke')
+        kbs.ApplyStrokeMode = 'Border'
+        kbs.Color           = T.Stroke
+        kbs.LineJoinMode    = 'Round'
+        kbs.Thickness       = 1
+        kbs.Parent          = keyBindBtn
+        local kbi = Instance.new('ImageLabel')
+        kbi.BackgroundTransparency = 1
+        kbi.BorderSizePixel        = 0
+        kbi.Image                  = 'rbxassetid://9642680675'
+        kbi.ImageColor3            = Color3.fromRGB(255, 255, 255)
+        kbi.Size                   = UDim2.fromScale(1, 1)
+        kbi.ZIndex                 = 52
+        kbi.Parent                 = keyBindBtn
+
+        local keyLblDisplay = Instance.new('TextLabel')
+        keyLblDisplay.AnchorPoint          = Vector2.new(1, 0.5)
+        keyLblDisplay.BackgroundTransparency = 1
+        keyLblDisplay.Font                 = 'Gotham'
+        keyLblDisplay.Position             = UDim2.new(1, -52, 0.5, 0)
+        keyLblDisplay.Size                 = UDim2.fromOffset(70, 20)
+        keyLblDisplay.Text                 = '[' .. tostring(savedToggleKey.Name) .. ']'
+        keyLblDisplay.TextColor3           = T.TextDim
+        keyLblDisplay.TextSize             = 11
+        keyLblDisplay.TextXAlignment       = 'Right'
+        keyLblDisplay.TextYAlignment       = 'Center'
+        keyLblDisplay.ZIndex               = 52
+        keyLblDisplay.Parent               = titleBar
+
+        local listeningForKey = false
+        local keyInputCon     = nil
+
+        keyBindBtn.MouseEnter:Connect(function()
+            if not listeningForKey then
+                tween(keyBindBtn, {BackgroundColor3 = T.Button2}, 0.2, 1)
+            else
+                tween(keyBindBtn, {BackgroundColor3 = T.Button4}, 0.2, 1)
+            end
+            tween(kbs, {Color = T.StrokeHover}, 0.2, 1)
+        end)
+        keyBindBtn.MouseLeave:Connect(function()
+            if listeningForKey then
+                tween(keyBindBtn, {BackgroundColor3 = T.Button3}, 0.2, 1)
+            else
+                tween(keyBindBtn, {BackgroundColor3 = T.Button1}, 0.2, 1)
+            end
+            tween(kbs, {Color = T.Stroke}, 0.2, 1)
+        end)
+        keyBindBtn.MouseButton1Click:Connect(function()
+            if listeningForKey then return end
+            listeningForKey = true
+            tween(kbi, {ImageColor3 = T.Primary}, 0.3, 1)
+            keyLblDisplay.Text = '[...]'
+            tween(keyLblDisplay, {TextColor3 = T.Primary}, 0.2, 1)
+
+            keyInputCon = inputService.InputBegan:Connect(function(io, gpe)
+                if gpe then return end
+                local kc = io.KeyCode
+                if kc ~= Enum.KeyCode.Unknown then
+                    savedToggleKey = kc
+                    keyLblDisplay.Text = '[' .. kc.Name .. ']'
+                    tween(keyLblDisplay, {TextColor3 = T.TextDim}, 0.3, 1)
+                    tween(kbi, {ImageColor3 = Color3.fromRGB(255, 255, 255)}, 0.3, 1)
+                    tween(keyBindBtn, {BackgroundColor3 = T.Button1}, 0.2, 1)
+                    listeningForKey = false
+                    keyInputCon:Disconnect()
+                    keyInputCon = nil
+                end
+            end)
+        end)
 
         btnClose.MouseEnter:Connect(function()
             tween(btnClose, {BackgroundColor3 = T.Button2}, 0.2, 1)
@@ -354,46 +421,7 @@ function Library.CreateLib(title, themeName)
             tween(bcs, {Color = T.Stroke}, 0.2, 1)
         end)
         btnClose.MouseButton1Click:Connect(function()
-            Library.Destroy()
-        end)
-
-        local minimized = false
-        local winSize   = UDim2.fromOffset(500, 350)
-
-        btnMin.MouseEnter:Connect(function()
-            if minimized then
-                tween(btnMin, {BackgroundColor3 = T.Button4}, 0.2, 1)
-            else
-                tween(btnMin, {BackgroundColor3 = T.Button2}, 0.2, 1)
-            end
-            tween(bms, {Color = T.StrokeHover}, 0.2, 1)
-        end)
-        btnMin.MouseLeave:Connect(function()
-            if minimized then
-                tween(btnMin, {BackgroundColor3 = T.Button3}, 0.2, 1)
-            else
-                tween(btnMin, {BackgroundColor3 = T.Button1}, 0.2, 1)
-            end
-            tween(bms, {Color = T.Stroke}, 0.2, 1)
-        end)
-        btnMin.MouseButton1Click:Connect(function()
-            minimized = not minimized
-            if minimized then
-                winSize = mainFrame.Size
-                tween(mainFrame, {Size = UDim2.fromOffset(winSize.X.Offset, 26)}, 0.3, 1)
-                bmi.Image = 'rbxassetid://9642646619'
-                tween(bmi, {Rotation = 45, ImageColor3 = T.Primary}, 0.3, 1)
-                tween(btnMin, {BackgroundColor3 = T.Button3}, 0.2, 1)
-                mainFrame['PageRegion'].Visible = false
-                mainFrame['Sidebar'].Visible    = false
-            else
-                tween(mainFrame, {Size = winSize}, 0.3, 1)
-                bmi.Image = 'rbxassetid://9642680675'
-                tween(bmi, {Rotation = 0, ImageColor3 = Color3.fromRGB(255, 255, 255)}, 0.3, 1)
-                tween(btnMin, {BackgroundColor3 = T.Button1}, 0.2, 1)
-                mainFrame['PageRegion'].Visible = true
-                mainFrame['Sidebar'].Visible    = true
-            end
+            self:Destroy()
         end)
     end
 
@@ -401,10 +429,10 @@ function Library.CreateLib(title, themeName)
     sidebar.BackgroundColor3 = T.Window3
     sidebar.BorderColor3     = T.Inset3
     sidebar.BorderMode       = 'Inset'
-    sidebar.BorderSizePixel  = 1
+    sidebar.BorderSizePixel  = 0
     sidebar.Name             = 'Sidebar'
-    sidebar.Position         = UDim2.fromOffset(0, 27)
-    sidebar.Size             = UDim2.new(0, 125, 1, -27)
+    sidebar.Position         = UDim2.fromOffset(0, 30)
+    sidebar.Size             = UDim2.new(0, 125, 1, -30)
     sidebar.ZIndex           = 50
     sidebar.Parent           = mainFrame
     do
@@ -437,7 +465,7 @@ function Library.CreateLib(title, themeName)
         local tl = Instance.new('UIListLayout')
         tl.FillDirection     = 'Vertical'
         tl.HorizontalAlignment = 'Center'
-        tl.Padding           = UDim.new(0, 6)
+        tl.Padding           = UDim.new(0, 4)
         tl.SortOrder         = 'LayoutOrder'
         tl.VerticalAlignment = 'Top'
         tl.Parent            = tabMenu
@@ -450,11 +478,11 @@ function Library.CreateLib(title, themeName)
     pageRegion.BackgroundColor3 = T.Window2
     pageRegion.BorderColor3     = T.Inset2
     pageRegion.BorderMode       = 'Inset'
-    pageRegion.BorderSizePixel  = 1
+    pageRegion.BorderSizePixel  = 0
     pageRegion.ClipsDescendants = true
     pageRegion.Name             = 'PageRegion'
-    pageRegion.Position         = UDim2.new(0, 126, 0, 27)
-    pageRegion.Size             = UDim2.new(1, -126, 1, -27)
+    pageRegion.Position         = UDim2.new(0, 126, 0, 30)
+    pageRegion.Size             = UDim2.new(1, -126, 1, -30)
     pageRegion.ZIndex           = 30
     pageRegion.Parent           = mainFrame
 
@@ -497,11 +525,14 @@ function Library.CreateLib(title, themeName)
         fade.BackgroundTransparency = 0
         fade.BorderColor3        = T.Inset1
         fade.BorderMode          = 'Inset'
-        fade.BorderSizePixel     = 1
+        fade.BorderSizePixel     = 0
         fade.Size                = UDim2.new(1, 4, 1, 4)
         fade.Position            = UDim2.fromOffset(-2, -2)
         fade.ZIndex              = 60
         fade.Parent              = titleBar
+        local fc = Instance.new('UICorner')
+        fc.CornerRadius = UDim.new(0, 8)
+        fc.Parent       = fade
         tween(fade, {BackgroundTransparency = 1}, 2, 1).Completed:Wait()
         fade:Destroy()
     end)
@@ -518,12 +549,20 @@ function Library.CreateLib(title, themeName)
     self._notifCont    = notifContainer
     self._notifs       = {}
     self._pickerWins   = {}
+    self._visible      = true
+    self._toggleKey    = savedToggleKey
 
     Library._activeLib = self
 
     self._hkCon = inputService.InputBegan:Connect(function(io, gpe)
         if not gpe and io.UserInputType.Name == 'Keyboard' then
             local kc = io.KeyCode
+
+            if kc == self._toggleKey then
+                self._visible = not self._visible
+                mainFrame.Visible = self._visible
+            end
+
             for _, hk in ipairs(self._hotkeys) do
                 if hk.key == kc and hk.set ~= time() then
                     if hk.fn then
@@ -550,20 +589,20 @@ function Library:NewTab(tabName)
     local btn = Instance.new('TextButton')
     btn.AutoButtonColor  = false
     btn.BackgroundColor3 = T.Button1
-    btn.Font             = 'SourceSans'
+    btn.Font             = 'GothamMedium'
     btn.LayoutOrder      = tab._id
     btn.Name             = tabName
-    btn.Size             = UDim2.new(1, -8, 0, 20)
+    btn.Size             = UDim2.new(1, -10, 0, 22)
     btn.Text             = tabName
     btn.TextColor3       = T.TextPrimary
-    btn.TextSize         = 15
+    btn.TextSize         = 13
     btn.TextStrokeColor3 = T.TextStroke
     btn.TextStrokeTransparency = 0.8
     btn.ZIndex           = 52
     btn.Parent           = self._tabMenu
     do
         local c = Instance.new('UICorner')
-        c.CornerRadius = UDim.new(0, R and 2 or 0)
+        c.CornerRadius = UDim.new(0, 6)
         c.Parent = btn
         local s = Instance.new('UIStroke')
         s.ApplyStrokeMode = 'Border'
@@ -703,18 +742,25 @@ function Library:NewTab(tabName)
             ss.LineJoinMode    = 'Round'
             ss.Thickness       = 1
             ss.Parent          = secFrame
+            local sc = Instance.new('UICorner')
+            sc.CornerRadius = UDim.new(0, 6)
+            sc.Parent       = secFrame
         end
 
         local titleBar2 = Instance.new('Frame')
         titleBar2.BackgroundColor3 = T2.Window3
         titleBar2.BorderColor3     = T2.Inset3
         titleBar2.BorderMode       = 'Inset'
-        titleBar2.BorderSizePixel  = 1
+        titleBar2.BorderSizePixel  = 0
         titleBar2.Name             = 'TitleBar'
-        titleBar2.Size             = UDim2.new(1, 0, 0, 16)
+        titleBar2.Size             = UDim2.new(1, 0, 0, 18)
         titleBar2.ZIndex           = 33
         titleBar2.Parent           = secFrame
         do
+            local stbc = Instance.new('UICorner')
+            stbc.CornerRadius = UDim.new(0, 6)
+            stbc.Parent       = titleBar2
+
             local ts = Instance.new('UIStroke')
             ts.ApplyStrokeMode = 'Border'
             ts.Color           = T2.Stroke
@@ -724,11 +770,11 @@ function Library:NewTab(tabName)
 
             local secTitle = Instance.new('TextLabel')
             secTitle.BackgroundTransparency = 1
-            secTitle.Font                   = 'SourceSans'
+            secTitle.Font                   = 'GothamMedium'
             secTitle.Size                   = UDim2.fromScale(1, 1)
             secTitle.Text                   = sectionName
             secTitle.TextColor3             = T2.TextPrimary
-            secTitle.TextSize               = 14
+            secTitle.TextSize               = 12
             secTitle.TextStrokeColor3       = T2.TextStroke
             secTitle.TextStrokeTransparency = 0.8
             secTitle.TextXAlignment         = 'Left'
@@ -736,14 +782,14 @@ function Library:NewTab(tabName)
             secTitle.ZIndex                 = 35
             secTitle.Parent                 = titleBar2
             local stp = Instance.new('UIPadding')
-            stp.PaddingLeft = UDim.new(0, 4)
+            stp.PaddingLeft = UDim.new(0, 6)
             stp.Parent      = secTitle
 
             local trim2 = Instance.new('Frame')
             trim2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
             trim2.BorderSizePixel  = 0
             trim2.Position         = UDim2.fromOffset(-1, -2)
-            trim2.Size             = UDim2.new(1, 2, 0, 1)
+            trim2.Size             = UDim2.new(1, 2, 0, 2)
             trim2.ZIndex           = 33
             trim2.Parent           = titleBar2
             local tg = Instance.new('UIGradient')
@@ -751,18 +797,18 @@ function Library:NewTab(tabName)
             tg.Parent = trim2
 
             local minBtn = Instance.new('TextButton')
-            minBtn.AnchorPoint      = Vector2.new(1, 0)
+            minBtn.AnchorPoint      = Vector2.new(1, 0.5)
             minBtn.AutoButtonColor  = false
             minBtn.BackgroundColor3 = T2.Button1
             minBtn.BorderSizePixel  = 0
             minBtn.Name             = 'MinBtn'
-            minBtn.Position         = UDim2.new(1, -1, 0, 1)
-            minBtn.Size             = UDim2.fromOffset(12, 12)
+            minBtn.Position         = UDim2.new(1, -3, 0.5, 0)
+            minBtn.Size             = UDim2.fromOffset(14, 14)
             minBtn.Text             = ''
             minBtn.ZIndex           = 35
             minBtn.Parent           = titleBar2
             local mc = Instance.new('UICorner')
-            mc.CornerRadius = UDim.new(0, R2 and 2 or 0)
+            mc.CornerRadius = UDim.new(0, 4)
             mc.Parent = minBtn
             local ms = Instance.new('UIStroke')
             ms.ApplyStrokeMode = 'Border'
@@ -823,9 +869,9 @@ function Library:NewTab(tabName)
         ctrlMenu.BackgroundColor3 = T2.Window2
         ctrlMenu.BorderColor3     = T2.Inset2
         ctrlMenu.BorderMode       = 'Inset'
-        ctrlMenu.BorderSizePixel  = 1
+        ctrlMenu.BorderSizePixel  = 0
         ctrlMenu.Name             = 'ControlMenu'
-        ctrlMenu.Position         = UDim2.fromOffset(0, 17)
+        ctrlMenu.Position         = UDim2.fromOffset(0, 19)
         ctrlMenu.Size             = UDim2.fromScale(1, 0)
         ctrlMenu.ZIndex           = 33
         ctrlMenu.Parent           = secFrame
@@ -889,11 +935,11 @@ function Library:NewTab(tabName)
 
             local label = Instance.new('TextLabel')
             label.BackgroundTransparency = 1
-            label.Font                   = 'SourceSans'
+            label.Font                   = 'Gotham'
             label.Size                   = UDim2.fromScale(1, 1)
             label.Text                   = btnName
             label.TextColor3             = T3.TextPrimary
-            label.TextSize               = 14
+            label.TextSize               = 13
             label.TextStrokeColor3       = T3.TextStroke
             label.TextStrokeTransparency = 0.8
             label.TextXAlignment         = 'Left'
@@ -905,15 +951,15 @@ function Library:NewTab(tabName)
             lp.Parent      = label
 
             local btnFrame = Instance.new('Frame')
-            btnFrame.AnchorPoint      = Vector2.new(1, 0)
+            btnFrame.AnchorPoint      = Vector2.new(1, 0.5)
             btnFrame.BackgroundColor3 = T3.Button1
             btnFrame.Name             = 'BtnFrame'
-            btnFrame.Position         = UDim2.new(1, -3, 0, 2)
+            btnFrame.Position         = UDim2.new(1, -4, 0.5, 0)
             btnFrame.Size             = UDim2.fromOffset(16, 16)
             btnFrame.ZIndex           = 35
             btnFrame.Parent           = sensor
             local bc = Instance.new('UICorner')
-            bc.CornerRadius = UDim.new(0, R3 and 2 or 0)
+            bc.CornerRadius = UDim.new(0, 5)
             bc.Parent = btnFrame
             local bs = Instance.new('UIStroke')
             bs.ApplyStrokeMode = 'Border'
@@ -978,11 +1024,11 @@ function Library:NewTab(tabName)
 
             local lbl = Instance.new('TextLabel')
             lbl.BackgroundTransparency = 1
-            lbl.Font                   = 'SourceSans'
+            lbl.Font                   = 'Gotham'
             lbl.Size                   = UDim2.fromScale(1, 1)
             lbl.Text                   = togName
             lbl.TextColor3             = T3.TextPrimary
-            lbl.TextSize               = 14
+            lbl.TextSize               = 13
             lbl.TextStrokeColor3       = T3.TextStroke
             lbl.TextStrokeTransparency = 0.8
             lbl.TextXAlignment         = 'Left'
@@ -994,15 +1040,15 @@ function Library:NewTab(tabName)
             lp.Parent      = lbl
 
             local togFrame = Instance.new('Frame')
-            togFrame.AnchorPoint      = Vector2.new(1, 0)
+            togFrame.AnchorPoint      = Vector2.new(1, 0.5)
             togFrame.BackgroundColor3 = T3.Button1
             togFrame.Name             = 'TogFrame'
-            togFrame.Position         = UDim2.new(1, -3, 0, 2)
+            togFrame.Position         = UDim2.new(1, -4, 0.5, 0)
             togFrame.Size             = UDim2.fromOffset(16, 16)
             togFrame.ZIndex           = 35
             togFrame.Parent           = sensor
             local tc = Instance.new('UICorner')
-            tc.CornerRadius = UDim.new(0, R3 and 2 or 0)
+            tc.CornerRadius = UDim.new(0, 5)
             tc.Parent = togFrame
             local ts = Instance.new('UIStroke')
             ts.ApplyStrokeMode = 'Border'
@@ -1094,7 +1140,7 @@ function Library:NewTab(tabName)
             cont.ZIndex           = 35
             cont.Parent           = cf
             local cc = Instance.new('UICorner')
-            cc.CornerRadius = UDim.new(0, R3 and 2 or 0)
+            cc.CornerRadius = UDim.new(0, 6)
             cc.Parent = cont
             local cs = Instance.new('UIStroke')
             cs.ApplyStrokeMode = 'Border'
@@ -1105,14 +1151,14 @@ function Library:NewTab(tabName)
 
             local fill = Instance.new('Frame')
             fill.BackgroundColor3 = T3.Primary
-            fill.BackgroundTransparency = 0.6
+            fill.BackgroundTransparency = 0.5
             fill.BorderSizePixel  = 0
             fill.Name             = 'Fill'
             fill.Size             = UDim2.fromScale(0, 1)
             fill.ZIndex           = 36
             fill.Parent           = cont
             local fc = Instance.new('UICorner')
-            fc.CornerRadius = UDim.new(0, R3 and 2 or 0)
+            fc.CornerRadius = UDim.new(0, 6)
             fc.Parent = fill
             local fg = Instance.new('UIGradient')
             fg.Color    = ColorSequence.new(T3.ControlGradient1, T3.ControlGradient2)
@@ -1121,11 +1167,11 @@ function Library:NewTab(tabName)
 
             local nameLbl = Instance.new('TextLabel')
             nameLbl.BackgroundTransparency = 1
-            nameLbl.Font                   = 'SourceSans'
+            nameLbl.Font                   = 'Gotham'
             nameLbl.Size                   = UDim2.fromScale(1, 1)
             nameLbl.Text                   = sliderName
             nameLbl.TextColor3             = T3.TextPrimary
-            nameLbl.TextSize               = 14
+            nameLbl.TextSize               = 13
             nameLbl.TextStrokeColor3       = T3.TextStroke
             nameLbl.TextStrokeTransparency = 0.8
             nameLbl.TextXAlignment         = 'Left'
@@ -1138,11 +1184,11 @@ function Library:NewTab(tabName)
 
             local valLbl = Instance.new('TextLabel')
             valLbl.BackgroundTransparency = 1
-            valLbl.Font                   = 'SourceSans'
+            valLbl.Font                   = 'Gotham'
             valLbl.Size                   = UDim2.fromScale(1, 1)
             valLbl.Text                   = fmt:format(sVal)
             valLbl.TextColor3             = T3.TextPrimary
-            valLbl.TextSize               = 14
+            valLbl.TextSize               = 13
             valLbl.TextStrokeColor3       = T3.TextStroke
             valLbl.TextStrokeTransparency = 0.8
             valLbl.TextXAlignment         = 'Right'
@@ -1158,21 +1204,21 @@ function Library:NewTab(tabName)
             inputBox.BackgroundColor3     = T3.Window1
             inputBox.BackgroundTransparency = 0.1
             inputBox.ClearTextOnFocus     = true
-            inputBox.Font                 = 'SourceSans'
+            inputBox.Font                 = 'Gotham'
             inputBox.Name                 = 'InputBox'
             inputBox.PlaceholderColor3    = T3.TextDim
             inputBox.PlaceholderText      = 'enter value'
             inputBox.Size                 = UDim2.fromScale(1, 1)
             inputBox.Text                 = ''
             inputBox.TextColor3           = T3.TextPrimary
-            inputBox.TextSize             = 14
+            inputBox.TextSize             = 13
             inputBox.TextXAlignment       = 'Center'
             inputBox.TextYAlignment       = 'Center'
             inputBox.Visible              = false
             inputBox.ZIndex               = 38
             inputBox.Parent               = cont
             local ic = Instance.new('UICorner')
-            ic.CornerRadius = UDim.new(0, R3 and 2 or 0)
+            ic.CornerRadius = UDim.new(0, 6)
             ic.Parent = inputBox
 
             local currentVal = sVal
@@ -1254,7 +1300,7 @@ function Library:NewTab(tabName)
             box.BackgroundColor3      = T3.Window1
             box.ClearTextOnFocus      = true
             box.ClipsDescendants      = true
-            box.Font                  = 'SourceSans'
+            box.Font                  = 'Gotham'
             box.Name                  = 'TextBox'
             box.PlaceholderColor3     = T3.TextDim
             box.PlaceholderText       = placeholder or tbName
@@ -1262,7 +1308,7 @@ function Library:NewTab(tabName)
             box.Size                  = UDim2.new(1, -6, 0, 16)
             box.Text                  = ''
             box.TextColor3            = T3.TextPrimary
-            box.TextSize              = 14
+            box.TextSize              = 13
             box.TextStrokeColor3      = T3.TextStroke
             box.TextStrokeTransparency = 0.8
             box.TextXAlignment        = 'Left'
@@ -1270,7 +1316,7 @@ function Library:NewTab(tabName)
             box.ZIndex                = 35
             box.Parent                = cf
             local bc = Instance.new('UICorner')
-            bc.CornerRadius = UDim.new(0, R3 and 2 or 0)
+            bc.CornerRadius = UDim.new(0, 6)
             bc.Parent = box
             local bs = Instance.new('UIStroke')
             bs.ApplyStrokeMode = 'Border'
@@ -1302,11 +1348,11 @@ function Library:NewTab(tabName)
 
             local lbl = Instance.new('TextLabel')
             lbl.BackgroundTransparency = 1
-            lbl.Font                   = 'SourceSans'
+            lbl.Font                   = 'Gotham'
             lbl.Size                   = UDim2.fromScale(1, 1)
             lbl.Text                   = text or ''
             lbl.TextColor3             = T3.TextPrimary
-            lbl.TextSize               = 14
+            lbl.TextSize               = 13
             lbl.TextStrokeColor3       = T3.TextStroke
             lbl.TextStrokeTransparency = 0.8
             lbl.TextXAlignment         = 'Left'
@@ -1340,11 +1386,11 @@ function Library:NewTab(tabName)
 
             local lbl = Instance.new('TextLabel')
             lbl.BackgroundTransparency = 1
-            lbl.Font                   = 'SourceSans'
+            lbl.Font                   = 'Gotham'
             lbl.Size                   = UDim2.fromScale(1, 1)
             lbl.Text                   = pickerName
             lbl.TextColor3             = T3.TextPrimary
-            lbl.TextSize               = 14
+            lbl.TextSize               = 13
             lbl.TextStrokeColor3       = T3.TextStroke
             lbl.TextStrokeTransparency = 0.8
             lbl.TextXAlignment         = 'Left'
@@ -1356,10 +1402,10 @@ function Library:NewTab(tabName)
             lp.Parent      = lbl
 
             local bubble = Instance.new('Frame')
-            bubble.AnchorPoint      = Vector2.new(1, 0)
+            bubble.AnchorPoint      = Vector2.new(1, 0.5)
             bubble.BackgroundColor3 = T3.Button1
             bubble.Name             = 'Bubble'
-            bubble.Position         = UDim2.new(1, -3, 0, 2)
+            bubble.Position         = UDim2.new(1, -4, 0.5, 0)
             bubble.Size             = UDim2.fromOffset(16, 16)
             bubble.ZIndex           = 35
             bubble.Parent           = sensor
@@ -1418,6 +1464,9 @@ function Library:NewTab(tabName)
                 pw.Size             = UDim2.fromOffset(300, 300)
                 pw.ZIndex           = 200
                 pw.Parent           = lib2._uiScreen
+                local pwc = Instance.new('UICorner')
+                pwc.CornerRadius = UDim.new(0, 8)
+                pwc.Parent       = pw
                 do
                     local ps = Instance.new('UIStroke')
                     ps.ApplyStrokeMode = 'Border'
@@ -1429,7 +1478,7 @@ function Library:NewTab(tabName)
                     ptrim.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
                     ptrim.BorderSizePixel  = 0
                     ptrim.Position         = UDim2.fromOffset(0, -1)
-                    ptrim.Size             = UDim2.new(1, 0, 0, 1)
+                    ptrim.Size             = UDim2.new(1, 0, 0, 2)
                     ptrim.ZIndex           = 210
                     ptrim.Parent           = pw
                     local ptg = Instance.new('UIGradient')
@@ -1442,12 +1491,15 @@ function Library:NewTab(tabName)
                 ptb.BackgroundColor3 = T3.Window1
                 ptb.BorderColor3     = T3.Inset1
                 ptb.BorderMode       = 'Inset'
-                ptb.BorderSizePixel  = 1
+                ptb.BorderSizePixel  = 0
                 ptb.ClipsDescendants = true
                 ptb.Name             = 'PTitleBar'
-                ptb.Size             = UDim2.new(1, 0, 0, 26)
+                ptb.Size             = UDim2.new(1, 0, 0, 30)
                 ptb.ZIndex           = 201
                 ptb.Parent           = pw
+                local ptbc = Instance.new('UICorner')
+                ptbc.CornerRadius = UDim.new(0, 8)
+                ptbc.Parent       = ptb
                 do
                     local pts = Instance.new('UIStroke')
                     pts.ApplyStrokeMode = 'Border'
@@ -1458,19 +1510,19 @@ function Library:NewTab(tabName)
                     local pti = Instance.new('ImageLabel')
                     pti.BackgroundTransparency = 1
                     pti.Image                  = 'rbxassetid://9658988382'
-                    pti.ImageColor3            = Color3.fromRGB(255, 255, 255)
-                    pti.Position               = UDim2.fromOffset(2, 2)
+                    pti.ImageColor3            = T3.Primary
+                    pti.Position               = UDim2.fromOffset(6, 4)
                     pti.Size                   = UDim2.fromOffset(22, 22)
                     pti.ZIndex                 = 202
                     pti.Parent                 = ptb
                     local ptlbl = Instance.new('TextLabel')
                     ptlbl.BackgroundTransparency = 1
-                    ptlbl.Font                   = 'RobotoCondensed'
-                    ptlbl.Position               = UDim2.fromOffset(28, 0)
-                    ptlbl.Size                   = UDim2.new(1, -56, 1, 0)
+                    ptlbl.Font                   = 'GothamBold'
+                    ptlbl.Position               = UDim2.fromOffset(32, 0)
+                    ptlbl.Size                   = UDim2.new(1, -60, 1, 0)
                     ptlbl.Text                   = pickerName
                     ptlbl.TextColor3             = T3.TextPrimary
-                    ptlbl.TextSize               = 17
+                    ptlbl.TextSize               = 14
                     ptlbl.TextStrokeColor3       = T3.TextStroke
                     ptlbl.TextStrokeTransparency = 0.8
                     ptlbl.TextXAlignment         = 'Left'
@@ -1482,17 +1534,17 @@ function Library:NewTab(tabName)
                     ptp.Parent      = ptlbl
 
                     local pcbtn = Instance.new('TextButton')
-                    pcbtn.AnchorPoint      = Vector2.new(1, 0)
+                    pcbtn.AnchorPoint      = Vector2.new(1, 0.5)
                     pcbtn.AutoButtonColor  = false
                     pcbtn.BackgroundColor3 = T3.Button1
                     pcbtn.BorderSizePixel  = 0
-                    pcbtn.Position         = UDim2.new(1, -3, 0, 2)
+                    pcbtn.Position         = UDim2.new(1, -5, 0.5, 0)
                     pcbtn.Size             = UDim2.fromOffset(20, 20)
                     pcbtn.Text             = ''
                     pcbtn.ZIndex           = 202
                     pcbtn.Parent           = ptb
                     local pcc = Instance.new('UICorner')
-                    pcc.CornerRadius = UDim.new(0, R3 and 2 or 0)
+                    pcc.CornerRadius = UDim.new(0, 6)
                     pcc.Parent = pcbtn
                     local pcs = Instance.new('UIStroke')
                     pcs.ApplyStrokeMode = 'Border'
@@ -1544,11 +1596,11 @@ function Library:NewTab(tabName)
                 preg.BackgroundColor3 = T3.Window2
                 preg.BorderColor3     = T3.Inset2
                 preg.BorderMode       = 'Inset'
-                preg.BorderSizePixel  = 1
+                preg.BorderSizePixel  = 0
                 preg.ClipsDescendants = true
                 preg.Name             = 'Region'
-                preg.Position         = UDim2.fromOffset(0, 27)
-                preg.Size             = UDim2.new(1, 0, 1, -27)
+                preg.Position         = UDim2.fromOffset(0, 30)
+                preg.Size             = UDim2.new(1, 0, 1, -30)
                 preg.ZIndex           = 202
                 preg.Parent           = pw
 
@@ -1594,7 +1646,7 @@ function Library:NewTab(tabName)
                 valCont.ZIndex           = 203
                 valCont.Parent           = valSliderF
                 local vc = Instance.new('UICorner')
-                vc.CornerRadius = UDim.new(0, R3 and 2 or 0)
+                vc.CornerRadius = UDim.new(0, 6)
                 vc.Parent = valCont
                 local vs = Instance.new('UIStroke')
                 vs.ApplyStrokeMode = 'Border'
@@ -1609,7 +1661,7 @@ function Library:NewTab(tabName)
                 valGrad.ZIndex           = 204
                 valGrad.Parent           = valCont
                 local vgc = Instance.new('UICorner')
-                vgc.CornerRadius = UDim.new(0, R3 and 2 or 0)
+                vgc.CornerRadius = UDim.new(0, 6)
                 vgc.Parent = valGrad
                 local vgg = Instance.new('UIGradient')
                 vgg.Color        = ColorSequence.new(Color3.fromRGB(0, 0, 0))
@@ -1628,7 +1680,7 @@ function Library:NewTab(tabName)
                 valCursor2.ZIndex               = 204
                 valCursor2.Parent               = valCont
                 local vc2c = Instance.new('UICorner')
-                vc2c.CornerRadius = UDim.new(0, R3 and 2 or 0)
+                vc2c.CornerRadius = UDim.new(0, 4)
                 vc2c.Parent = valCursor2
                 local vc2s = Instance.new('UIStroke')
                 vc2s.Color     = Color3.fromRGB(255, 255, 255)
@@ -1764,11 +1816,11 @@ function Library:NewTab(tabName)
 
             local lbl = Instance.new('TextLabel')
             lbl.BackgroundTransparency = 1
-            lbl.Font                   = 'SourceSans'
+            lbl.Font                   = 'Gotham'
             lbl.Size                   = UDim2.fromScale(1, 1)
             lbl.Text                   = bindName
             lbl.TextColor3             = T3.TextPrimary
-            lbl.TextSize               = 14
+            lbl.TextSize               = 13
             lbl.TextStrokeColor3       = T3.TextStroke
             lbl.TextStrokeTransparency = 0.8
             lbl.TextXAlignment         = 'Left'
@@ -1780,14 +1832,14 @@ function Library:NewTab(tabName)
             lp.Parent      = lbl
 
             local keyLbl = Instance.new('TextLabel')
-            keyLbl.AnchorPoint          = Vector2.new(1, 0)
+            keyLbl.AnchorPoint          = Vector2.new(1, 0.5)
             keyLbl.BackgroundTransparency = 1
-            keyLbl.Font                 = 'SourceSans'
-            keyLbl.Position             = UDim2.new(1, -3, 0, 2)
+            keyLbl.Font                 = 'Gotham'
+            keyLbl.Position             = UDim2.new(1, -4, 0.5, 0)
             keyLbl.Size                 = UDim2.fromOffset(60, 16)
             keyLbl.Text                 = currentKey and ('[%s]'):format(tostring(currentKey)) or '[None]'
             keyLbl.TextColor3           = T3.TextDim
-            keyLbl.TextSize             = 14
+            keyLbl.TextSize             = 12
             keyLbl.TextStrokeColor3     = T3.TextStroke
             keyLbl.TextStrokeTransparency = 0.8
             keyLbl.TextXAlignment       = 'Right'
@@ -1872,7 +1924,7 @@ function Library:NewTab(tabName)
             btnFrame2.ZIndex           = 35
             btnFrame2.Parent           = sensor
             local dbc = Instance.new('UICorner')
-            dbc.CornerRadius = UDim.new(0, R3 and 2 or 0)
+            dbc.CornerRadius = UDim.new(0, 6)
             dbc.Parent = btnFrame2
             local dbs = Instance.new('UIStroke')
             dbs.ApplyStrokeMode = 'Border'
@@ -1883,11 +1935,11 @@ function Library:NewTab(tabName)
 
             local dropLbl = Instance.new('TextLabel')
             dropLbl.BackgroundTransparency = 1
-            dropLbl.Font                   = 'SourceSans'
+            dropLbl.Font                   = 'Gotham'
             dropLbl.Size                   = UDim2.fromScale(1, 1)
             dropLbl.Text                   = dropName
             dropLbl.TextColor3             = T3.TextPrimary
-            dropLbl.TextSize               = 14
+            dropLbl.TextSize               = 13
             dropLbl.TextStrokeColor3       = T3.TextStroke
             dropLbl.TextStrokeTransparency = 0.8
             dropLbl.TextXAlignment         = 'Center'
@@ -1898,7 +1950,7 @@ function Library:NewTab(tabName)
             local arrowLbl = Instance.new('TextLabel')
             arrowLbl.AnchorPoint          = Vector2.new(1, 0.5)
             arrowLbl.BackgroundTransparency = 1
-            arrowLbl.Font                 = 'SourceSans'
+            arrowLbl.Font                 = 'Gotham'
             arrowLbl.Position             = UDim2.new(1, -4, 0.5, 0)
             arrowLbl.Size                 = UDim2.fromOffset(12, 12)
             arrowLbl.Text                 = '▼'
@@ -1932,6 +1984,9 @@ function Library:NewTab(tabName)
                 ds.Color           = T3.Stroke
                 ds.Thickness       = 1
                 ds.Parent          = dropMenu
+                local dmc = Instance.new('UICorner')
+                dmc.CornerRadius = UDim.new(0, 6)
+                dmc.Parent       = dropMenu
                 local dl = Instance.new('UIListLayout')
                 dl.Padding             = UDim.new(0, 2)
                 dl.FillDirection       = 'Vertical'
@@ -1951,18 +2006,18 @@ function Library:NewTab(tabName)
                 ob.AutoButtonColor  = false
                 ob.BackgroundColor3 = T3.Button1
                 ob.BorderSizePixel  = 0
-                ob.Font             = 'SourceSans'
+                ob.Font             = 'Gotham'
                 ob.Name             = optText
                 ob.Size             = UDim2.new(1, -4, 0, 16)
                 ob.Text             = optText
                 ob.TextColor3       = T3.TextPrimary
-                ob.TextSize         = 14
+                ob.TextSize         = 13
                 ob.TextStrokeColor3 = T3.TextStroke
                 ob.TextStrokeTransparency = 0.8
                 ob.ZIndex           = 36
                 ob.Parent           = dropMenu
                 local oc = Instance.new('UICorner')
-                oc.CornerRadius = UDim.new(0, R3 and 2 or 0)
+                oc.CornerRadius = UDim.new(0, 5)
                 oc.Parent = ob
 
                 ob.MouseEnter:Connect(function()
@@ -2069,6 +2124,9 @@ function Library:Notify(title, message, duration)
     notifFrame.Size             = UDim2.fromOffset(200, 70)
     notifFrame.Visible          = true
     notifFrame.ZIndex           = 3000
+    local nfc = Instance.new('UICorner')
+    nfc.CornerRadius = UDim.new(0, 8)
+    nfc.Parent       = notifFrame
     do
         local ns = Instance.new('UIStroke')
         ns.ApplyStrokeMode = 'Border'
@@ -2080,7 +2138,7 @@ function Library:Notify(title, message, duration)
         nt.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         nt.BorderSizePixel  = 0
         nt.Position         = UDim2.fromOffset(0, -1)
-        nt.Size             = UDim2.new(1, 0, 0, 1)
+        nt.Size             = UDim2.new(1, 0, 0, 2)
         nt.ZIndex           = 3005
         nt.Parent           = notifFrame
         local ntg = Instance.new('UIGradient')
@@ -2092,12 +2150,15 @@ function Library:Notify(title, message, duration)
     ntb.BackgroundColor3 = T.Window1
     ntb.BorderColor3     = T.Inset1
     ntb.BorderMode       = 'Inset'
-    ntb.BorderSizePixel  = 1
+    ntb.BorderSizePixel  = 0
     ntb.ClipsDescendants = true
     ntb.Name             = 'NTitleBar'
     ntb.Size             = UDim2.new(1, 0, 0, 26)
     ntb.ZIndex           = 3001
     ntb.Parent           = notifFrame
+    local ntbc = Instance.new('UICorner')
+    ntbc.CornerRadius = UDim.new(0, 8)
+    ntbc.Parent       = ntb
     do
         local ntbs = Instance.new('UIStroke')
         ntbs.ApplyStrokeMode = 'Border'
@@ -2108,18 +2169,18 @@ function Library:Notify(title, message, duration)
         nti.BackgroundTransparency = 1
         nti.Image                  = 'rbxassetid://9865915364'
         nti.ImageColor3            = T.Primary
-        nti.Position               = UDim2.fromOffset(2, 2)
+        nti.Position               = UDim2.fromOffset(6, 2)
         nti.Size                   = UDim2.fromOffset(22, 22)
         nti.ZIndex                 = 3002
         nti.Parent                 = ntb
         local ntlbl = Instance.new('TextLabel')
         ntlbl.BackgroundTransparency = 1
-        ntlbl.Font                   = 'SourceSans'
-        ntlbl.Position               = UDim2.fromOffset(28, 0)
-        ntlbl.Size                   = UDim2.new(1, -28, 1, 0)
+        ntlbl.Font                   = 'GothamMedium'
+        ntlbl.Position               = UDim2.fromOffset(32, 0)
+        ntlbl.Size                   = UDim2.new(1, -32, 1, 0)
         ntlbl.Text                   = title or 'Notification'
         ntlbl.TextColor3             = T.TextPrimary
-        ntlbl.TextSize               = 15
+        ntlbl.TextSize               = 13
         ntlbl.TextStrokeColor3       = T.TextStroke
         ntlbl.TextStrokeTransparency = 0.8
         ntlbl.TextXAlignment         = 'Left'
@@ -2135,7 +2196,7 @@ function Library:Notify(title, message, duration)
     nreg.BackgroundColor3 = T.Window2
     nreg.BorderColor3     = T.Inset2
     nreg.BorderMode       = 'Inset'
-    nreg.BorderSizePixel  = 1
+    nreg.BorderSizePixel  = 0
     nreg.ClipsDescendants = true
     nreg.Name             = 'NRegion'
     nreg.Position         = UDim2.fromOffset(0, 27)
@@ -2144,11 +2205,11 @@ function Library:Notify(title, message, duration)
     nreg.Parent           = notifFrame
     local ndesc = Instance.new('TextLabel')
     ndesc.BackgroundTransparency = 1
-    ndesc.Font                   = 'SourceSans'
+    ndesc.Font                   = 'Gotham'
     ndesc.Size                   = UDim2.fromScale(1, 1)
     ndesc.Text                   = message or ''
     ndesc.TextColor3             = T.TextPrimary
-    ndesc.TextSize               = 14
+    ndesc.TextSize               = 13
     ndesc.TextStrokeColor3       = T.TextStroke
     ndesc.TextStrokeTransparency = 0.8
     ndesc.TextWrapped            = true
