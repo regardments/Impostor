@@ -168,7 +168,7 @@ function Library.CreateLib(title, themeName, toggleKey)
 
     Library._theme = T
 
-    local savedToggleKey = toggleKey or Enum.KeyCode.RightShift
+    local savedToggleKey = toggleKey or Enum.KeyCode.F1
     local minimized = false
     local originalSize = nil
 
@@ -543,10 +543,12 @@ function Library.CreateLib(title, themeName, toggleKey)
             sidebar.Visible = false
             pageRegion.Visible = false
             tween(mainFrame, {Size = UDim2.new(originalSize.X.Scale, originalSize.X.Offset, 0, 30)}, 0.3, 1)
+            uiScreen.Enabled = false
         else
             sidebar.Visible = true
             pageRegion.Visible = true
             tween(mainFrame, {Size = originalSize}, 0.3, 1)
+            uiScreen.Enabled = true
         end
     end
 
