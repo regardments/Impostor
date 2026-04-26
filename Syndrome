@@ -298,61 +298,6 @@ function Library.CreateLib(title, themeName, toggleKey)
         pad.PaddingLeft = UDim.new(0, 4)
         pad.Parent      = titleLabel
 
-        local minimizeBtn = Instance.new('TextButton')
-        minimizeBtn.AnchorPoint      = Vector2.new(1, 0.5)
-        minimizeBtn.AutoButtonColor  = false
-        minimizeBtn.BackgroundColor3 = T.Button1
-        minimizeBtn.BorderSizePixel  = 0
-        minimizeBtn.Name             = 'BtnMinimize'
-        minimizeBtn.Position         = UDim2.new(1, -29, 0.5, 0)
-        minimizeBtn.Size             = UDim2.fromOffset(20, 20)
-        minimizeBtn.Text             = ''
-        minimizeBtn.ZIndex           = 52
-        minimizeBtn.Parent           = titleBar
-        local minCorner = Instance.new('UICorner')
-        minCorner.CornerRadius = UDim.new(0, 6)
-        minCorner.Parent       = minimizeBtn
-        local minStroke = Instance.new('UIStroke')
-        minStroke.ApplyStrokeMode = 'Border'
-        minStroke.Color           = T.Stroke
-        minStroke.LineJoinMode    = 'Round'
-        minStroke.Thickness       = 1
-        minStroke.Parent          = minimizeBtn
-        local minIcon = Instance.new('ImageLabel')
-        minIcon.BackgroundTransparency = 1
-        minIcon.BorderSizePixel        = 0
-        minIcon.Image                  = 'rbxassetid://9801471573'
-        minIcon.ImageColor3            = Color3.fromRGB(255, 255, 255)
-        minIcon.Rotation               = 180
-        minIcon.Size                   = UDim2.fromScale(1, 1)
-        minIcon.ZIndex                 = 52
-        minIcon.Parent                 = minimizeBtn
-        local minGrad = Instance.new('UIGradient')
-        minGrad.Color    = ColorSequence.new(T.ControlGradient1, T.ControlGradient2)
-        minGrad.Rotation = 90
-        minGrad.Parent   = minIcon
-
-        local minimized = false
-
-        minimizeBtn.MouseEnter:Connect(function()
-            tween(minimizeBtn, {BackgroundColor3 = T.Button2}, 0.2, 1)
-            tween(minStroke, {Color = T.StrokeHover}, 0.2, 1)
-        end)
-        minimizeBtn.MouseLeave:Connect(function()
-            tween(minimizeBtn, {BackgroundColor3 = T.Button1}, 0.2, 1)
-            tween(minStroke, {Color = T.Stroke}, 0.2, 1)
-        end)
-        minimizeBtn.MouseButton1Click:Connect(function()
-            minimized = not minimized
-            if minimized then
-                tween(mainFrame, {Size = UDim2.fromOffset(500, 30)}, 0.3, 1)
-                tween(minIcon, {Rotation = 0}, 0.3, 1)
-            else
-                tween(mainFrame, {Size = UDim2.fromOffset(500, 350)}, 0.3, 1)
-                tween(minIcon, {Rotation = 180}, 0.3, 1)
-            end
-        end)
-
         local btnClose = Instance.new('TextButton')
         btnClose.AnchorPoint      = Vector2.new(1, 0.5)
         btnClose.AutoButtonColor  = false
@@ -388,9 +333,12 @@ function Library.CreateLib(title, themeName, toggleKey)
         keyBindBtn.BackgroundColor3 = T.Button1
         keyBindBtn.BorderSizePixel  = 0
         keyBindBtn.Name             = 'BtnKeybind'
-        keyBindBtn.Position         = UDim2.new(1, -53, 0.5, 0)
-        keyBindBtn.Size             = UDim2.fromOffset(20, 20)
-        keyBindBtn.Text             = ''
+        keyBindBtn.Position         = UDim2.new(1, -29, 0.5, 0)
+        keyBindBtn.Size             = UDim2.fromOffset(60, 20)
+        keyBindBtn.Text             = '[' .. tostring(savedToggleKey.Name) .. ']'
+        keyBindBtn.TextColor3       = T.TextDim
+        keyBindBtn.TextSize         = 11
+        keyBindBtn.Font             = 'Gotham'
         keyBindBtn.ZIndex           = 52
         keyBindBtn.Parent           = titleBar
         local kbCorner = Instance.new('UICorner')
@@ -402,28 +350,6 @@ function Library.CreateLib(title, themeName, toggleKey)
         kbs.LineJoinMode    = 'Round'
         kbs.Thickness       = 1
         kbs.Parent          = keyBindBtn
-        local kbi = Instance.new('ImageLabel')
-        kbi.BackgroundTransparency = 1
-        kbi.BorderSizePixel        = 0
-        kbi.Image                  = 'rbxassetid://9642680675'
-        kbi.ImageColor3            = Color3.fromRGB(255, 255, 255)
-        kbi.Size                   = UDim2.fromScale(1, 1)
-        kbi.ZIndex                 = 52
-        kbi.Parent                 = keyBindBtn
-
-        local keyLblDisplay = Instance.new('TextLabel')
-        keyLblDisplay.AnchorPoint          = Vector2.new(1, 0.5)
-        keyLblDisplay.BackgroundTransparency = 1
-        keyLblDisplay.Font                 = 'Gotham'
-        keyLblDisplay.Position             = UDim2.new(1, -76, 0.5, 0)
-        keyLblDisplay.Size                 = UDim2.fromOffset(70, 20)
-        keyLblDisplay.Text                 = '[' .. tostring(savedToggleKey.Name) .. ']'
-        keyLblDisplay.TextColor3           = T.TextDim
-        keyLblDisplay.TextSize             = 11
-        keyLblDisplay.TextXAlignment       = 'Right'
-        keyLblDisplay.TextYAlignment       = 'Center'
-        keyLblDisplay.ZIndex               = 52
-        keyLblDisplay.Parent               = titleBar
 
         local listeningForKey = false
         local keyInputCon     = nil
@@ -447,18 +373,17 @@ function Library.CreateLib(title, themeName, toggleKey)
         keyBindBtn.MouseButton1Click:Connect(function()
             if listeningForKey then return end
             listeningForKey = true
-            tween(kbi, {ImageColor3 = T.Primary}, 0.3, 1)
-            keyLblDisplay.Text = '[...]'
-            tween(keyLblDisplay, {TextColor3 = T.Primary}, 0.2, 1)
+            keyBindBtn.Text = '[...]'
+            tween(keyBindBtn, {TextColor3 = T.Primary}, 0.2, 1)
+            tween(keyBindBtn, {BackgroundColor3 = T.Button3}, 0.2, 1)
 
             keyInputCon = inputService.InputBegan:Connect(function(io, gpe)
                 if gpe then return end
                 local kc = io.KeyCode
                 if kc ~= Enum.KeyCode.Unknown then
                     savedToggleKey = kc
-                    keyLblDisplay.Text = '[' .. kc.Name .. ']'
-                    tween(keyLblDisplay, {TextColor3 = T.TextDim}, 0.3, 1)
-                    tween(kbi, {ImageColor3 = Color3.fromRGB(255, 255, 255)}, 0.3, 1)
+                    keyBindBtn.Text = '[' .. kc.Name .. ']'
+                    tween(keyBindBtn, {TextColor3 = T.TextDim}, 0.3, 1)
                     tween(keyBindBtn, {BackgroundColor3 = T.Button1}, 0.2, 1)
                     listeningForKey = false
                     keyInputCon:Disconnect()
