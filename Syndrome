@@ -329,43 +329,13 @@ function Library.CreateLib(title, themeName, toggleKey)
         bci.ZIndex = 52
         bci.Parent = btnClose
 
-        local btnMinimize = Instance.new('TextButton')
-        btnMinimize.AnchorPoint = Vector2.new(1, 0.5)
-        btnMinimize.AutoButtonColor = false
-        btnMinimize.BackgroundColor3 = T.Button1
-        btnMinimize.BorderSizePixel = 0
-        btnMinimize.Name = 'BtnMinimize'
-        btnMinimize.Position = UDim2.new(1, -29, 0.5, 0)
-        btnMinimize.Size = UDim2.fromOffset(20, 20)
-        btnMinimize.Text = ''
-        btnMinimize.ZIndex = 52
-        btnMinimize.Parent = titleBar
-        local minCorner = Instance.new('UICorner')
-        minCorner.CornerRadius = UDim.new(0, 6)
-        minCorner.Parent = btnMinimize
-        local minStroke = Instance.new('UIStroke')
-        minStroke.ApplyStrokeMode = 'Border'
-        minStroke.Color = T.Stroke
-        minStroke.LineJoinMode = 'Round'
-        minStroke.Thickness = 1
-        minStroke.Parent = btnMinimize
-        local minIcon = Instance.new('ImageLabel')
-        minIcon.BackgroundTransparency = 1
-        minIcon.BorderSizePixel = 0
-        minIcon.Image = 'rbxassetid://9801471573'
-        minIcon.ImageColor3 = Color3.fromRGB(255, 255, 255)
-        minIcon.Size = UDim2.fromScale(0.7, 0.7)
-        minIcon.Position = UDim2.fromScale(0.15, 0.15)
-        minIcon.ZIndex = 52
-        minIcon.Parent = btnMinimize
-
         local keyBindBtn = Instance.new('TextButton')
         keyBindBtn.AnchorPoint = Vector2.new(1, 0.5)
         keyBindBtn.AutoButtonColor = false
         keyBindBtn.BackgroundColor3 = T.Button1
         keyBindBtn.BorderSizePixel = 0
         keyBindBtn.Name = 'BtnKeybind'
-        keyBindBtn.Position = UDim2.new(1, -53, 0.5, 0)
+        keyBindBtn.Position = UDim2.new(1, -29, 0.5, 0)
         keyBindBtn.Size = UDim2.fromOffset(60, 20)
         keyBindBtn.Text = '[' .. tostring(savedToggleKey.Name) .. ']'
         keyBindBtn.TextColor3 = T.TextDim
@@ -418,7 +388,7 @@ function Library.CreateLib(title, themeName, toggleKey)
                     tween(keyBindBtn, {TextColor3 = T.TextDim}, 0.3, 1)
                     tween(keyBindBtn, {BackgroundColor3 = T.Button1}, 0.2, 1)
                     listeningForKey = false
-                    keyInputCon:Disconnect()
+                    if keyInputCon then keyInputCon:Disconnect() end
                     keyInputCon = nil
                 end
             end)
@@ -435,33 +405,6 @@ function Library.CreateLib(title, themeName, toggleKey)
         btnClose.MouseButton1Click:Connect(function()
             self:Destroy()
         end)
-
-        btnMinimize.MouseEnter:Connect(function()
-            tween(btnMinimize, {BackgroundColor3 = T.Button2}, 0.2, 1)
-            tween(minStroke, {Color = T.StrokeHover}, 0.2, 1)
-        end)
-        btnMinimize.MouseLeave:Connect(function()
-            tween(btnMinimize, {BackgroundColor3 = T.Button1}, 0.2, 1)
-            tween(minStroke, {Color = T.Stroke}, 0.2, 1)
-        end)
-
-        local function toggleMinimize()
-            minimized = not minimized
-            if minimized then
-                originalSize = mainFrame.Size
-                sidebar.Visible = false
-                pageRegion.Visible = false
-                tween(mainFrame, {Size = UDim2.new(originalSize.X.Scale, originalSize.X.Offset, 0, 30)}, 0.3, 1)
-                tween(minIcon, {Rotation = 180}, 0.3, 1)
-            else
-                sidebar.Visible = true
-                pageRegion.Visible = true
-                tween(mainFrame, {Size = originalSize}, 0.3, 1)
-                tween(minIcon, {Rotation = 0}, 0.3, 1)
-            end
-        end
-
-        btnMinimize.MouseButton1Click:Connect(toggleMinimize)
     end
 
     local sidebar = Instance.new('Frame')
@@ -593,22 +536,26 @@ function Library.CreateLib(title, themeName, toggleKey)
 
     Library._activeLib = self
 
+    local function toggleMinimize()
+        minimized = not minimized
+        if minimized then
+            originalSize = mainFrame.Size
+            sidebar.Visible = false
+            pageRegion.Visible = false
+            tween(mainFrame, {Size = UDim2.new(originalSize.X.Scale, originalSize.X.Offset, 0, 30)}, 0.3, 1)
+        else
+            sidebar.Visible = true
+            pageRegion.Visible = true
+            tween(mainFrame, {Size = originalSize}, 0.3, 1)
+        end
+    end
+
     self._hkCon = inputService.InputBegan:Connect(function(io, gpe)
         if not gpe and io.UserInputType.Name == 'Keyboard' then
             local kc = io.KeyCode
 
             if kc == self._toggleKey then
-                minimized = not minimized
-                if minimized then
-                    originalSize = mainFrame.Size
-                    sidebar.Visible = false
-                    pageRegion.Visible = false
-                    tween(mainFrame, {Size = UDim2.new(originalSize.X.Scale, originalSize.X.Offset, 0, 30)}, 0.3, 1)
-                else
-                    sidebar.Visible = true
-                    pageRegion.Visible = true
-                    tween(mainFrame, {Size = originalSize}, 0.3, 1)
-                end
+                toggleMinimize()
             end
 
             for _, hk in ipairs(self._hotkeys) do
