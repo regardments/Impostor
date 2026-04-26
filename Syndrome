@@ -3,7 +3,7 @@ local TweenService = game:GetService("TweenService") or error("TweenService not 
 local UserInputService = game:GetService("UserInputService") or error("UserInputService not available")
 local RunService = game:GetService("RunService") or error("RunService not available")
 
-local KEYBIND_FILE = "simplekavo_keybind.txt"
+local KEYBIND_FILE = "keybind.txt"
 local DEFAULT_KEYBIND = Enum.KeyCode.F1
 
 local function saveKeybind(keyCode)
@@ -161,7 +161,7 @@ function SimpleKavo.CreateLib(title, themeName)
 	local listeningForKey = false
 
 	local ScreenGui = Instance.new("ScreenGui")
-	ScreenGui.Name = "SimpleKavo_" .. tostring(math.random(10000, 99999))
+	ScreenGui.Name = "Meow" .. tostring(math.random(10000, 99999))
 	ScreenGui.ResetOnSpawn = false
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 	ScreenGui.DisplayOrder = 1000
