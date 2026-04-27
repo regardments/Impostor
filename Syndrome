@@ -26,29 +26,29 @@ local Themes = {
 	DarkTheme = {
 		Primary       = Color3.fromRGB(255, 255, 255),
 		Secondary     = Color3.fromRGB(255, 255, 255),
-		Window1       = Color3.fromRGB(0, 0, 0),
-		Window2       = Color3.fromRGB(0, 0, 0),
-		Window3       = Color3.fromRGB(0, 0, 0),
-		Button1       = Color3.fromRGB(20, 20, 22),
-		Button2       = Color3.fromRGB(78, 78, 78),
-		Button3       = Color3.fromRGB(110, 110, 110),
-		Stroke        = Color3.fromRGB(45, 45, 48),
-		StrokeHover   = Color3.fromRGB(75, 75, 78),
+		Window1       = Color3.fromRGB(18, 18, 20),
+		Window2       = Color3.fromRGB(24, 24, 27),
+		Window3       = Color3.fromRGB(14, 14, 16),
+		Button1       = Color3.fromRGB(32, 32, 36),
+		Button2       = Color3.fromRGB(52, 52, 58),
+		Button3       = Color3.fromRGB(72, 72, 80),
+		Stroke        = Color3.fromRGB(55, 55, 62),
+		StrokeHover   = Color3.fromRGB(90, 90, 100),
 		TextPrimary   = Color3.fromRGB(255, 255, 255),
-		TextDim       = Color3.fromRGB(140, 140, 145),
-		SchemeColor   = Color3.fromRGB(188, 188, 188),
+		TextDim       = Color3.fromRGB(140, 140, 150),
+		SchemeColor   = Color3.fromRGB(188, 188, 200),
 	},
 	HalloweenTheme = {
 		Primary       = Color3.fromRGB(245, 73, 39),
 		Secondary     = Color3.fromRGB(233, 150, 38),
-		Window1       = Color3.fromRGB(14, 10, 8),
-		Window2       = Color3.fromRGB(8, 6, 4),
-		Window3       = Color3.fromRGB(11, 8, 6),
-		Button1       = Color3.fromRGB(18, 12, 9),
-		Button2       = Color3.fromRGB(26, 18, 13),
-		Button3       = Color3.fromRGB(38, 26, 19),
-		Stroke        = Color3.fromRGB(55, 35, 25),
-		StrokeHover   = Color3.fromRGB(90, 55, 35),
+		Window1       = Color3.fromRGB(16, 11, 8),
+		Window2       = Color3.fromRGB(22, 15, 10),
+		Window3       = Color3.fromRGB(12, 8, 5),
+		Button1       = Color3.fromRGB(30, 20, 13),
+		Button2       = Color3.fromRGB(45, 28, 18),
+		Button3       = Color3.fromRGB(60, 38, 25),
+		Stroke        = Color3.fromRGB(65, 40, 28),
+		StrokeHover   = Color3.fromRGB(100, 60, 38),
 		TextPrimary   = Color3.fromRGB(255, 255, 255),
 		TextDim       = Color3.fromRGB(160, 120, 100),
 		SchemeColor   = Color3.fromRGB(245, 73, 39),
@@ -56,34 +56,39 @@ local Themes = {
 	BloodTheme = {
 		Primary       = Color3.fromRGB(227, 27, 27),
 		Secondary     = Color3.fromRGB(180, 10, 60),
-		Window1       = Color3.fromRGB(11, 5, 5),
-		Window2       = Color3.fromRGB(6, 2, 2),
-		Window3       = Color3.fromRGB(9, 4, 4),
-		Button1       = Color3.fromRGB(16, 8, 8),
-		Button2       = Color3.fromRGB(24, 12, 12),
-		Button3       = Color3.fromRGB(36, 18, 18),
-		Stroke        = Color3.fromRGB(55, 20, 20),
-		StrokeHover   = Color3.fromRGB(90, 30, 30),
+		Window1       = Color3.fromRGB(14, 6, 6),
+		Window2       = Color3.fromRGB(20, 10, 10),
+		Window3       = Color3.fromRGB(10, 4, 4),
+		Button1       = Color3.fromRGB(28, 14, 14),
+		Button2       = Color3.fromRGB(42, 20, 20),
+		Button3       = Color3.fromRGB(55, 28, 28),
+		Stroke        = Color3.fromRGB(65, 25, 25),
+		StrokeHover   = Color3.fromRGB(100, 38, 38),
 		TextPrimary   = Color3.fromRGB(255, 255, 255),
 		TextDim       = Color3.fromRGB(160, 100, 100),
 		SchemeColor   = Color3.fromRGB(227, 27, 27),
 	},
 	DefaultTheme = {
-		Primary       = Color3.fromRGB(91, 77, 249),
-		Secondary     = Color3.fromRGB(130, 76, 247),
-		Window1       = Color3.fromRGB(20, 20, 23),
-		Window2       = Color3.fromRGB(12, 12, 15),
-		Window3       = Color3.fromRGB(15, 15, 18),
-		Button1       = Color3.fromRGB(18, 18, 21),
-		Button2       = Color3.fromRGB(28, 28, 31),
-		Button3       = Color3.fromRGB(42, 42, 45),
-		Stroke        = Color3.fromRGB(50, 50, 53),
-		StrokeHover   = Color3.fromRGB(80, 80, 84),
+		Primary       = Color3.fromRGB(110, 95, 255),
+		Secondary     = Color3.fromRGB(150, 95, 255),
+		Window1       = Color3.fromRGB(18, 18, 22),
+		Window2       = Color3.fromRGB(24, 24, 30),
+		Window3       = Color3.fromRGB(14, 14, 18),
+		Button1       = Color3.fromRGB(32, 32, 40),
+		Button2       = Color3.fromRGB(48, 48, 58),
+		Button3       = Color3.fromRGB(62, 62, 75),
+		Stroke        = Color3.fromRGB(55, 55, 68),
+		StrokeHover   = Color3.fromRGB(90, 90, 110),
 		TextPrimary   = Color3.fromRGB(255, 255, 255),
-		TextDim       = Color3.fromRGB(130, 130, 138),
-		SchemeColor   = Color3.fromRGB(91, 77, 249),
+		TextDim       = Color3.fromRGB(130, 130, 150),
+		SchemeColor   = Color3.fromRGB(110, 95, 255),
 	},
 }
+
+-- Raio padrão de arredondamento
+local CORNER_RADIUS   = UDim.new(0, 10)
+local CORNER_SM       = UDim.new(0, 6)
+local CORNER_XS       = UDim.new(0, 4)
 
 local function Tween(object, properties, duration, style)
 	local easingStyle = style == 2 and Enum.EasingStyle.Linear or Enum.EasingStyle.Exponential
@@ -111,6 +116,25 @@ end
 
 local function cartToPolar(x, y)
 	return math.sqrt((x^2) + (y^2)), math.atan2(y, x)
+end
+
+-- Função auxiliar para adicionar UICorner
+local function AddCorner(parent, radius)
+	local c = Instance.new("UICorner")
+	c.CornerRadius = radius or CORNER_XS
+	c.Parent = parent
+	return c
+end
+
+-- Função auxiliar para adicionar UIStroke
+local function AddStroke(parent, color, thickness)
+	local s = Instance.new("UIStroke")
+	s.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	s.Color = color
+	s.LineJoinMode = Enum.LineJoinMode.Round
+	s.Thickness = thickness or 1
+	s.Parent = parent
+	return s
 end
 
 function SimpleKavo:DraggingEnabled(frame, parent)
@@ -177,17 +201,13 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	PickerGui.Position = UDim2.fromOffset(200, 150)
 	PickerGui.ZIndex = 500
 	PickerGui.Parent = screenGui
+	AddCorner(PickerGui, CORNER_RADIUS)
 
 	local PickerScale = Instance.new("UIScale")
 	PickerScale.Scale = 1
 	PickerScale.Parent = PickerGui
 
-	local PickerStroke = Instance.new("UIStroke")
-	PickerStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	PickerStroke.Color = T.Stroke
-	PickerStroke.LineJoinMode = Enum.LineJoinMode.Round
-	PickerStroke.Thickness = 1
-	PickerStroke.Parent = PickerGui
+	local PickerStroke = AddStroke(PickerGui, T.Stroke)
 
 	local PickerShadow = Instance.new("ImageLabel")
 	PickerShadow.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -197,7 +217,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	PickerShadow.ImageColor3 = Color3.fromRGB(0, 0, 5)
 	PickerShadow.Position = UDim2.fromScale(0.5, 0.5)
 	PickerShadow.ScaleType = Enum.ScaleType.Slice
-	PickerShadow.Size = UDim2.new(1, 50, 1, 50)
+	PickerShadow.Size = UDim2.new(1, 70, 1, 70)
 	PickerShadow.SliceCenter = Rect.new(40, 40, 260, 260)
 	PickerShadow.ZIndex = 499
 	PickerShadow.Parent = PickerGui
@@ -205,8 +225,8 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	local PickerTrim = Instance.new("Frame")
 	PickerTrim.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	PickerTrim.BorderSizePixel = 0
-	PickerTrim.Position = UDim2.fromOffset(0, -1)
-	PickerTrim.Size = UDim2.new(1, 0, 0, 1)
+	PickerTrim.Position = UDim2.fromOffset(0, 0)
+	PickerTrim.Size = UDim2.new(1, 0, 0, 2)
 	PickerTrim.ZIndex = 510
 	PickerTrim.Parent = PickerGui
 
@@ -218,68 +238,59 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	PickerHeader.Name = "Header"
 	PickerHeader.BackgroundColor3 = T.Window1
 	PickerHeader.BorderSizePixel = 0
-	PickerHeader.Size = UDim2.new(1, 0, 0, 26)
+	PickerHeader.Size = UDim2.new(1, 0, 0, 32)
 	PickerHeader.ZIndex = 501
-	PickerHeader.ClipsDescendants = true
+	PickerHeader.ClipsDescendants = false
 	PickerHeader.Parent = PickerGui
+	AddCorner(PickerHeader, CORNER_RADIUS)
 
-	local PickerHeaderStroke = Instance.new("UIStroke")
-	PickerHeaderStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	PickerHeaderStroke.Color = T.Stroke
-	PickerHeaderStroke.LineJoinMode = Enum.LineJoinMode.Round
-	PickerHeaderStroke.Thickness = 1
-	PickerHeaderStroke.Parent = PickerHeader
+	-- Painel interno para cobrir cantos inferiores do header
+	local PickerHeaderBot = Instance.new("Frame")
+	PickerHeaderBot.BackgroundColor3 = T.Window1
+	PickerHeaderBot.BorderSizePixel = 0
+	PickerHeaderBot.Position = UDim2.new(0, 0, 1, -10)
+	PickerHeaderBot.Size = UDim2.new(1, 0, 0, 10)
+	PickerHeaderBot.ZIndex = 501
+	PickerHeaderBot.Parent = PickerHeader
+
+	local PickerHeaderStroke = AddStroke(PickerHeader, T.Stroke)
 
 	local PickerIcon = Instance.new("ImageLabel")
 	PickerIcon.BackgroundTransparency = 1
 	PickerIcon.BorderSizePixel = 0
 	PickerIcon.Image = "rbxassetid://9658988382"
 	PickerIcon.ImageColor3 = T.Primary
-	PickerIcon.Position = UDim2.fromOffset(2, 2)
+	PickerIcon.Position = UDim2.fromOffset(6, 5)
 	PickerIcon.Size = UDim2.fromOffset(22, 22)
 	PickerIcon.ZIndex = 502
 	PickerIcon.Parent = PickerHeader
 
 	local PickerTitle = Instance.new("TextLabel")
 	PickerTitle.BackgroundTransparency = 1
-	PickerTitle.Font = Enum.Font.RobotoCondensed
-	PickerTitle.Position = UDim2.fromOffset(24, 0)
-	PickerTitle.Size = UDim2.new(1, -50, 1, 0)
+	PickerTitle.Font = Enum.Font.GothamSemibold
+	PickerTitle.Position = UDim2.fromOffset(30, 0)
+	PickerTitle.Size = UDim2.new(1, -60, 1, 0)
 	PickerTitle.Text = pickerName
 	PickerTitle.TextColor3 = T.TextPrimary
-	PickerTitle.TextSize = 17
+	PickerTitle.TextSize = 14
 	PickerTitle.TextXAlignment = Enum.TextXAlignment.Left
 	PickerTitle.TextYAlignment = Enum.TextYAlignment.Center
-	PickerTitle.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-	PickerTitle.TextStrokeTransparency = 0.8
 	PickerTitle.ZIndex = 502
 	PickerTitle.Parent = PickerHeader
 
-	local PickerTitlePad = Instance.new("UIPadding")
-	PickerTitlePad.PaddingLeft = UDim.new(0, 4)
-	PickerTitlePad.Parent = PickerTitle
-
 	local CloseBtn = Instance.new("TextButton")
-	CloseBtn.AnchorPoint = Vector2.new(1, 0)
+	CloseBtn.AnchorPoint = Vector2.new(1, 0.5)
 	CloseBtn.AutoButtonColor = false
 	CloseBtn.BackgroundColor3 = T.Button1
 	CloseBtn.BorderSizePixel = 0
-	CloseBtn.Position = UDim2.new(1, -3, 0, 2)
-	CloseBtn.Size = UDim2.fromOffset(20, 20)
+	CloseBtn.Position = UDim2.new(1, -6, 0.5, 0)
+	CloseBtn.Size = UDim2.fromOffset(22, 22)
 	CloseBtn.Text = ""
 	CloseBtn.ZIndex = 502
 	CloseBtn.Parent = PickerHeader
+	AddCorner(CloseBtn, CORNER_SM)
 
-	local CloseBtnCorner = Instance.new("UICorner")
-	CloseBtnCorner.CornerRadius = UDim.new(0, 2)
-	CloseBtnCorner.Parent = CloseBtn
-
-	local CloseBtnStroke = Instance.new("UIStroke")
-	CloseBtnStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	CloseBtnStroke.Color = T.Stroke
-	CloseBtnStroke.LineJoinMode = Enum.LineJoinMode.Round
-	CloseBtnStroke.Thickness = 1
-	CloseBtnStroke.Parent = CloseBtn
+	local CloseBtnStroke = AddStroke(CloseBtn, T.Stroke)
 
 	local CloseBtnIcon = Instance.new("ImageLabel")
 	CloseBtnIcon.BackgroundTransparency = 1
@@ -290,42 +301,27 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	CloseBtnIcon.ZIndex = 502
 	CloseBtnIcon.Parent = CloseBtn
 
-	local CloseBtnIconGrad = Instance.new("UIGradient")
-	CloseBtnIconGrad.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(200, 200, 200))
-	CloseBtnIconGrad.Rotation = 90
-	CloseBtnIconGrad.Parent = CloseBtnIcon
-
 	local Region = Instance.new("Frame")
 	Region.BackgroundColor3 = T.Window2
 	Region.BorderSizePixel = 0
 	Region.ClipsDescendants = true
-	Region.Position = UDim2.fromOffset(0, 27)
-	Region.Size = UDim2.new(1, 0, 1, -27)
+	Region.Position = UDim2.fromOffset(0, 34)
+	Region.Size = UDim2.new(1, 0, 1, -34)
 	Region.ZIndex = 501
 	Region.Parent = PickerGui
-
-	local RegionStroke = Instance.new("UIStroke")
-	RegionStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	RegionStroke.Color = T.Stroke
-	RegionStroke.LineJoinMode = Enum.LineJoinMode.Round
-	RegionStroke.Thickness = 1
-	RegionStroke.Parent = Region
+	AddCorner(Region, CORNER_RADIUS)
 
 	local PickerRegion = Instance.new("Frame")
 	PickerRegion.BackgroundColor3 = T.Window2
 	PickerRegion.BorderSizePixel = 0
 	PickerRegion.ClipsDescendants = true
-	PickerRegion.Position = UDim2.fromOffset(2, 2)
-	PickerRegion.Size = UDim2.new(1, -4, 0.75, -4)
+	PickerRegion.Position = UDim2.fromOffset(6, 6)
+	PickerRegion.Size = UDim2.new(1, -12, 0.75, -10)
 	PickerRegion.ZIndex = 502
 	PickerRegion.Parent = Region
+	AddCorner(PickerRegion, CORNER_SM)
 
-	local PickerRegionStroke = Instance.new("UIStroke")
-	PickerRegionStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	PickerRegionStroke.Color = T.Stroke
-	PickerRegionStroke.LineJoinMode = Enum.LineJoinMode.Round
-	PickerRegionStroke.Thickness = 1
-	PickerRegionStroke.Parent = PickerRegion
+	local PickerRegionStroke = AddStroke(PickerRegion, T.Stroke)
 
 	local ColorWheel = Instance.new("ImageLabel")
 	ColorWheel.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -345,22 +341,14 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	WheelOutline.SizeConstraint = Enum.SizeConstraint.RelativeYY
 	WheelOutline.ZIndex = 503
 	WheelOutline.Parent = ColorWheel
+	AddCorner(WheelOutline, UDim.new(1, 0))
 
-	local WheelOutlineCorner = Instance.new("UICorner")
-	WheelOutlineCorner.CornerRadius = UDim.new(1, 0)
-	WheelOutlineCorner.Parent = WheelOutline
-
-	local WheelOutlineStroke = Instance.new("UIStroke")
-	WheelOutlineStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	WheelOutlineStroke.Color = T.Stroke
-	WheelOutlineStroke.LineJoinMode = Enum.LineJoinMode.Round
-	WheelOutlineStroke.Thickness = 2
-	WheelOutlineStroke.Parent = WheelOutline
+	local WheelOutlineStroke = AddStroke(WheelOutline, T.Stroke, 2)
 
 	local PickerCursor = Instance.new("Frame")
 	PickerCursor.AnchorPoint = Vector2.new(0.5, 0.5)
 	PickerCursor.BackgroundTransparency = 1
-	PickerCursor.Size = UDim2.fromOffset(8, 8)
+	PickerCursor.Size = UDim2.fromOffset(10, 10)
 	PickerCursor.ZIndex = 506
 	PickerCursor.Parent = ColorWheel
 
@@ -371,60 +359,35 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 		PickerCursor.Position = UDim2.fromScale(cx + 0.5, cy + 0.5)
 	end
 
-	local PickerCursorCorner = Instance.new("UICorner")
-	PickerCursorCorner.CornerRadius = UDim.new(1, 0)
-	PickerCursorCorner.Parent = PickerCursor
-
-	local PickerCursorStroke = Instance.new("UIStroke")
-	PickerCursorStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	PickerCursorStroke.Color = Color3.fromRGB(255, 255, 255)
-	PickerCursorStroke.LineJoinMode = Enum.LineJoinMode.Round
-	PickerCursorStroke.Thickness = 1
-	PickerCursorStroke.Parent = PickerCursor
+	AddCorner(PickerCursor, UDim.new(1, 0))
+	local PickerCursorStroke = AddStroke(PickerCursor, Color3.fromRGB(255, 255, 255))
 
 	local PickerCursorOuter = Instance.new("Frame")
 	PickerCursorOuter.BackgroundTransparency = 1
-	PickerCursorOuter.Position = UDim2.fromOffset(-1, -1)
-	PickerCursorOuter.Size = UDim2.fromOffset(10, 10)
+	PickerCursorOuter.Position = UDim2.fromOffset(-2, -2)
+	PickerCursorOuter.Size = UDim2.fromOffset(14, 14)
 	PickerCursorOuter.ZIndex = 506
 	PickerCursorOuter.Parent = PickerCursor
-
-	local PickerCursorOuterCorner = Instance.new("UICorner")
-	PickerCursorOuterCorner.CornerRadius = UDim.new(1, 0)
-	PickerCursorOuterCorner.Parent = PickerCursorOuter
-
-	local PickerCursorOuterStroke = Instance.new("UIStroke")
-	PickerCursorOuterStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	PickerCursorOuterStroke.Color = Color3.fromRGB(0, 0, 5)
-	PickerCursorOuterStroke.LineJoinMode = Enum.LineJoinMode.Round
-	PickerCursorOuterStroke.Thickness = 1
-	PickerCursorOuterStroke.Parent = PickerCursorOuter
+	AddCorner(PickerCursorOuter, UDim.new(1, 0))
+	AddStroke(PickerCursorOuter, Color3.fromRGB(0, 0, 5))
 
 	local ValSlider = Instance.new("Frame")
 	ValSlider.AnchorPoint = Vector2.new(0.5, 1)
 	ValSlider.BackgroundTransparency = 1
 	ValSlider.Position = UDim2.fromScale(0.5, 1)
-	ValSlider.Size = UDim2.new(0.8, 0, 0, 24)
+	ValSlider.Size = UDim2.new(0.85, 0, 0, 26)
 	ValSlider.ZIndex = 503
 	ValSlider.Parent = PickerRegion
 
 	local ValSliderContainer = Instance.new("Frame")
 	ValSliderContainer.BackgroundColor3 = Color3.fromHSV(hue, sat, 1)
-	ValSliderContainer.Position = UDim2.fromOffset(3, 6)
-	ValSliderContainer.Size = UDim2.new(1, -6, 0, 12)
+	ValSliderContainer.Position = UDim2.fromOffset(0, 7)
+	ValSliderContainer.Size = UDim2.new(1, 0, 0, 12)
 	ValSliderContainer.ZIndex = 503
 	ValSliderContainer.Parent = ValSlider
+	AddCorner(ValSliderContainer, UDim.new(1, 0))
 
-	local ValSliderContainerCorner = Instance.new("UICorner")
-	ValSliderContainerCorner.CornerRadius = UDim.new(0, 2)
-	ValSliderContainerCorner.Parent = ValSliderContainer
-
-	local ValSliderContainerStroke = Instance.new("UIStroke")
-	ValSliderContainerStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	ValSliderContainerStroke.Color = T.Stroke
-	ValSliderContainerStroke.LineJoinMode = Enum.LineJoinMode.Round
-	ValSliderContainerStroke.Thickness = 1
-	ValSliderContainerStroke.Parent = ValSliderContainer
+	local ValSliderContainerStroke = AddStroke(ValSliderContainer, T.Stroke)
 
 	local ValGradientFrame = Instance.new("Frame")
 	ValGradientFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -432,6 +395,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	ValGradientFrame.Size = UDim2.fromScale(1, 1)
 	ValGradientFrame.ZIndex = 504
 	ValGradientFrame.Parent = ValSliderContainer
+	AddCorner(ValGradientFrame, UDim.new(1, 0))
 
 	local ValGradient = Instance.new("UIGradient")
 	ValGradient.Color = ColorSequence.new(Color3.fromRGB(0, 0, 0))
@@ -442,69 +406,40 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	})
 	ValGradient.Parent = ValGradientFrame
 
-	local ValGradientCorner = Instance.new("UICorner")
-	ValGradientCorner.CornerRadius = UDim.new(0, 2)
-	ValGradientCorner.Parent = ValGradientFrame
-
 	local ValCursor = Instance.new("Frame")
 	ValCursor.AnchorPoint = Vector2.new(0.5, 0)
 	ValCursor.BackgroundTransparency = 1
 	ValCursor.Position = UDim2.fromScale(val, 0)
-	ValCursor.Size = UDim2.fromOffset(4, 12)
+	ValCursor.Size = UDim2.fromOffset(6, 12)
 	ValCursor.ZIndex = 504
 	ValCursor.Parent = ValSliderContainer
+	AddCorner(ValCursor, UDim.new(1, 0))
 
-	local ValCursorCorner = Instance.new("UICorner")
-	ValCursorCorner.CornerRadius = UDim.new(0, 2)
-	ValCursorCorner.Parent = ValCursor
-
-	local ValCursorStroke = Instance.new("UIStroke")
-	ValCursorStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	ValCursorStroke.Color = Color3.fromRGB(255, 255, 255)
-	ValCursorStroke.LineJoinMode = Enum.LineJoinMode.Round
-	ValCursorStroke.Thickness = 1
-	ValCursorStroke.Parent = ValCursor
+	local ValCursorStroke = AddStroke(ValCursor, Color3.fromRGB(255, 255, 255))
 
 	local ValCursorOuter = Instance.new("Frame")
 	ValCursorOuter.AnchorPoint = Vector2.new(0.5, 0.5)
 	ValCursorOuter.BackgroundTransparency = 1
 	ValCursorOuter.Position = UDim2.fromScale(0.5, 0.5)
-	ValCursorOuter.Size = UDim2.new(1, 2, 1, 2)
+	ValCursorOuter.Size = UDim2.new(1, 3, 1, 3)
 	ValCursorOuter.ZIndex = 504
 	ValCursorOuter.Parent = ValCursor
-
-	local ValCursorOuterCorner = Instance.new("UICorner")
-	ValCursorOuterCorner.CornerRadius = UDim.new(0, 2)
-	ValCursorOuterCorner.Parent = ValCursorOuter
-
-	local ValCursorOuterStroke = Instance.new("UIStroke")
-	ValCursorOuterStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	ValCursorOuterStroke.Color = Color3.fromRGB(0, 0, 5)
-	ValCursorOuterStroke.LineJoinMode = Enum.LineJoinMode.Round
-	ValCursorOuterStroke.Thickness = 1
-	ValCursorOuterStroke.Parent = ValCursorOuter
+	AddCorner(ValCursorOuter, UDim.new(1, 0))
+	AddStroke(ValCursorOuter, Color3.fromRGB(0, 0, 5))
 
 	local ChromaBtn = Instance.new("TextButton")
 	ChromaBtn.Active = true
 	ChromaBtn.AnchorPoint = Vector2.new(0, 1)
 	ChromaBtn.AutoButtonColor = false
 	ChromaBtn.BackgroundColor3 = T.Button1
-	ChromaBtn.Position = UDim2.new(0, 8, 1, -4)
-	ChromaBtn.Size = UDim2.fromOffset(16, 16)
+	ChromaBtn.Position = UDim2.new(0, 6, 1, -5)
+	ChromaBtn.Size = UDim2.fromOffset(18, 18)
 	ChromaBtn.Text = ""
 	ChromaBtn.ZIndex = 503
 	ChromaBtn.Parent = PickerRegion
+	AddCorner(ChromaBtn, CORNER_SM)
 
-	local ChromaBtnCorner = Instance.new("UICorner")
-	ChromaBtnCorner.CornerRadius = UDim.new(0, 2)
-	ChromaBtnCorner.Parent = ChromaBtn
-
-	local ChromaBtnStroke = Instance.new("UIStroke")
-	ChromaBtnStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	ChromaBtnStroke.Color = T.Stroke
-	ChromaBtnStroke.LineJoinMode = Enum.LineJoinMode.Round
-	ChromaBtnStroke.Thickness = 1
-	ChromaBtnStroke.Parent = ChromaBtn
+	local ChromaBtnStroke = AddStroke(ChromaBtn, T.Stroke)
 
 	local ChromaBtnIcon = Instance.new("ImageLabel")
 	ChromaBtnIcon.BackgroundTransparency = 1
@@ -517,20 +452,16 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	ChromaBtnIcon.Parent = ChromaBtn
 
 	local InputRegion = Instance.new("Frame")
-	InputRegion.BackgroundColor3 = T.Window2
+	InputRegion.BackgroundColor3 = T.Window3
 	InputRegion.BorderSizePixel = 0
 	InputRegion.ClipsDescendants = true
-	InputRegion.Position = UDim2.new(0, 2, 0.75, 2)
-	InputRegion.Size = UDim2.new(1, -4, 0.25, -4)
+	InputRegion.Position = UDim2.new(0, 6, 0.75, 4)
+	InputRegion.Size = UDim2.new(1, -12, 0.25, -10)
 	InputRegion.ZIndex = 502
 	InputRegion.Parent = Region
+	AddCorner(InputRegion, CORNER_SM)
 
-	local InputRegionStroke = Instance.new("UIStroke")
-	InputRegionStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	InputRegionStroke.Color = T.Stroke
-	InputRegionStroke.LineJoinMode = Enum.LineJoinMode.Round
-	InputRegionStroke.Thickness = 1
-	InputRegionStroke.Parent = InputRegion
+	local InputRegionStroke = AddStroke(InputRegion, T.Stroke)
 
 	local function makeRGBSlider(yOffset, labelText, initVal)
 		local SliderFrame = Instance.new("Frame")
@@ -542,33 +473,22 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 		local Container = Instance.new("Frame")
 		Container.BackgroundColor3 = T.Button1
-		Container.Position = UDim2.fromOffset(3, 6)
-		Container.Size = UDim2.new(1, -6, 0, 12)
+		Container.Position = UDim2.fromOffset(6, 6)
+		Container.Size = UDim2.new(1, -12, 0, 12)
 		Container.ZIndex = 503
 		Container.Parent = SliderFrame
+		AddCorner(Container, UDim.new(1, 0))
 
-		local ContainerCorner = Instance.new("UICorner")
-		ContainerCorner.CornerRadius = UDim.new(0, 2)
-		ContainerCorner.Parent = Container
-
-		local ContainerStroke = Instance.new("UIStroke")
-		ContainerStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-		ContainerStroke.Color = T.Stroke
-		ContainerStroke.LineJoinMode = Enum.LineJoinMode.Round
-		ContainerStroke.Thickness = 1
-		ContainerStroke.Parent = Container
+		local ContainerStroke = AddStroke(Container, T.Stroke)
 
 		local Fill = Instance.new("Frame")
 		Fill.BackgroundColor3 = T.Primary
-		Fill.BackgroundTransparency = 0.6
+		Fill.BackgroundTransparency = 0.5
 		Fill.BorderSizePixel = 0
 		Fill.Size = UDim2.fromScale(initVal / 255, 1)
 		Fill.ZIndex = 504
 		Fill.Parent = Container
-
-		local FillCorner = Instance.new("UICorner")
-		FillCorner.CornerRadius = UDim.new(0, 2)
-		FillCorner.Parent = Fill
+		AddCorner(Fill, UDim.new(1, 0))
 
 		local FillGrad = Instance.new("UIGradient")
 		FillGrad.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(200, 200, 200))
@@ -577,38 +497,34 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 		local TitleLabel = Instance.new("TextLabel")
 		TitleLabel.BackgroundTransparency = 1
-		TitleLabel.Font = Enum.Font.SourceSans
+		TitleLabel.Font = Enum.Font.Gotham
 		TitleLabel.Size = UDim2.new(1, 0, 1, -1)
 		TitleLabel.Text = labelText
 		TitleLabel.TextColor3 = T.TextPrimary
-		TitleLabel.TextSize = 14
-		TitleLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-		TitleLabel.TextStrokeTransparency = 0.8
+		TitleLabel.TextSize = 12
 		TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
 		TitleLabel.TextYAlignment = Enum.TextYAlignment.Center
 		TitleLabel.ZIndex = 504
 		TitleLabel.Parent = SliderFrame
 
 		local TitlePad = Instance.new("UIPadding")
-		TitlePad.PaddingLeft = UDim.new(0, 6)
+		TitlePad.PaddingLeft = UDim.new(0, 8)
 		TitlePad.Parent = TitleLabel
 
 		local ValLabel = Instance.new("TextLabel")
 		ValLabel.BackgroundTransparency = 1
-		ValLabel.Font = Enum.Font.SourceSans
+		ValLabel.Font = Enum.Font.Gotham
 		ValLabel.Size = UDim2.new(1, 0, 1, -1)
 		ValLabel.Text = tostring(math.floor(initVal))
 		ValLabel.TextColor3 = T.TextPrimary
-		ValLabel.TextSize = 14
-		ValLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-		ValLabel.TextStrokeTransparency = 0.8
+		ValLabel.TextSize = 12
 		ValLabel.TextXAlignment = Enum.TextXAlignment.Right
 		ValLabel.TextYAlignment = Enum.TextYAlignment.Center
 		ValLabel.ZIndex = 504
 		ValLabel.Parent = SliderFrame
 
 		local ValPad = Instance.new("UIPadding")
-		ValPad.PaddingRight = UDim.new(0, 6)
+		ValPad.PaddingRight = UDim.new(0, 8)
 		ValPad.Parent = ValLabel
 
 		return Container, Fill, ValLabel
@@ -911,7 +827,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 				for _, v in ipairs(textTransparency) do v.TextTransparency += dt end
 			end)
 		end)
-		Tween(PickerScale, { Scale = 0.6 }, 0.5, 1).Completed:Wait()
+		Tween(PickerScale, { Scale = 0.7 }, 0.4, 1).Completed:Wait()
 		if animCon then animCon:Disconnect() end
 		PickerGui:Destroy()
 	end
@@ -962,23 +878,19 @@ function SimpleKavo.CreateLib(title, themeName)
 	Main.BackgroundColor3 = T.Window2
 	Main.BackgroundTransparency = 0
 	Main.Position = UDim2.new(0.3, 0, 0.3, 0)
-	Main.Size = UDim2.new(0, 500, 0, 370)
+	Main.Size = UDim2.new(0, 520, 0, 380)
 	Main.BorderSizePixel = 0
 	Main.ClipsDescendants = false
 	Main.ZIndex = 5
+	AddCorner(Main, CORNER_RADIUS)
 
 	local MainScale = Instance.new("UIScale")
 	MainScale.Scale = 1
 	MainScale.Name = "Scale"
 	MainScale.Parent = Main
 
-	local MainStroke = Instance.new("UIStroke")
-	MainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	MainStroke.Color = T.Stroke
-	MainStroke.LineJoinMode = Enum.LineJoinMode.Round
-	MainStroke.Thickness = 1
+	local MainStroke = AddStroke(Main, T.Stroke)
 	MainStroke.Name = "Stroke"
-	MainStroke.Parent = Main
 
 	local MainShadow = Instance.new("ImageLabel")
 	MainShadow.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -989,7 +901,7 @@ function SimpleKavo.CreateLib(title, themeName)
 	MainShadow.Name = "Shadow"
 	MainShadow.Position = UDim2.fromScale(0.5, 0.5)
 	MainShadow.ScaleType = Enum.ScaleType.Slice
-	MainShadow.Size = UDim2.new(1, 60, 1, 60)
+	MainShadow.Size = UDim2.new(1, 80, 1, 80)
 	MainShadow.SliceCenter = Rect.new(40, 40, 260, 260)
 	MainShadow.ZIndex = 4
 	MainShadow.Parent = Main
@@ -999,8 +911,8 @@ function SimpleKavo.CreateLib(title, themeName)
 	TrimLine.BackgroundTransparency = 0
 	TrimLine.BorderSizePixel = 0
 	TrimLine.Name = "Trim"
-	TrimLine.Position = UDim2.fromOffset(0, -1)
-	TrimLine.Size = UDim2.new(1, 0, 0, 1)
+	TrimLine.Position = UDim2.fromOffset(0, 0)
+	TrimLine.Size = UDim2.new(1, 0, 0, 2)
 	TrimLine.ZIndex = 64
 	TrimLine.Parent = Main
 
@@ -1016,16 +928,21 @@ function SimpleKavo.CreateLib(title, themeName)
 	Header.BackgroundColor3 = T.Window1
 	Header.BackgroundTransparency = 0
 	Header.BorderSizePixel = 0
-	Header.Size = UDim2.new(1, 0, 0, 28)
+	Header.Size = UDim2.new(1, 0, 0, 36)
 	Header.ZIndex = 50
-	Header.ClipsDescendants = true
+	Header.ClipsDescendants = false
+	AddCorner(Header, CORNER_RADIUS)
 
-	local HeaderStroke = Instance.new("UIStroke")
-	HeaderStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	HeaderStroke.Color = T.Stroke
-	HeaderStroke.LineJoinMode = Enum.LineJoinMode.Round
-	HeaderStroke.Thickness = 1
-	HeaderStroke.Parent = Header
+	-- Faixa para cobrir cantos inferiores arredondados do header
+	local HeaderBot = Instance.new("Frame")
+	HeaderBot.BackgroundColor3 = T.Window1
+	HeaderBot.BorderSizePixel = 0
+	HeaderBot.Position = UDim2.new(0, 0, 1, -12)
+	HeaderBot.Size = UDim2.new(1, 0, 0, 12)
+	HeaderBot.ZIndex = 50
+	HeaderBot.Parent = Header
+
+	local HeaderStroke = AddStroke(Header, T.Stroke)
 
 	local HeaderFade = Instance.new("Frame")
 	HeaderFade.BackgroundColor3 = T.Window1
@@ -1041,16 +958,14 @@ function SimpleKavo.CreateLib(title, themeName)
 	local Title = Instance.new("TextLabel")
 	Title.Parent = Header
 	Title.BackgroundTransparency = 1
-	Title.Position = UDim2.fromOffset(28, 0)
-	Title.Size = UDim2.new(1, -120, 1, 0)
-	Title.Font = Enum.Font.RobotoCondensed
+	Title.Position = UDim2.fromOffset(34, 0)
+	Title.Size = UDim2.new(1, -150, 1, 0)
+	Title.Font = Enum.Font.GothamBold
 	Title.Text = title
 	Title.TextColor3 = T.TextPrimary
-	Title.TextSize = 17
+	Title.TextSize = 15
 	Title.TextXAlignment = Enum.TextXAlignment.Left
 	Title.TextYAlignment = Enum.TextYAlignment.Center
-	Title.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-	Title.TextStrokeTransparency = 0.8
 	Title.ZIndex = 52
 
 	local TitlePad = Instance.new("UIPadding")
@@ -1063,7 +978,7 @@ function SimpleKavo.CreateLib(title, themeName)
 	WindowIcon.Image = "rbxassetid://10152328589"
 	WindowIcon.ImageColor3 = T.Primary
 	WindowIcon.Name = "Icon"
-	WindowIcon.Position = UDim2.fromOffset(2, 2)
+	WindowIcon.Position = UDim2.fromOffset(6, 7)
 	WindowIcon.Size = UDim2.fromOffset(22, 22)
 	WindowIcon.ZIndex = 52
 	WindowIcon.Parent = Header
@@ -1074,47 +989,31 @@ function SimpleKavo.CreateLib(title, themeName)
 	KeybindBtn.BackgroundColor3 = T.Button1
 	KeybindBtn.BackgroundTransparency = 0
 	KeybindBtn.AnchorPoint = Vector2.new(1, 0.5)
-	KeybindBtn.Position = UDim2.new(1, -32, 0.5, 0)
-	KeybindBtn.Size = UDim2.new(0, 64, 0, 16)
-	KeybindBtn.Font = Enum.Font.SourceSans
+	KeybindBtn.Position = UDim2.new(1, -36, 0.5, 0)
+	KeybindBtn.Size = UDim2.new(0, 70, 0, 20)
+	KeybindBtn.Font = Enum.Font.Gotham
 	KeybindBtn.Text = "[" .. toggleKey.Name .. "]"
 	KeybindBtn.TextColor3 = T.TextDim
-	KeybindBtn.TextSize = 13
+	KeybindBtn.TextSize = 12
 	KeybindBtn.AutoButtonColor = false
 	KeybindBtn.ZIndex = 52
+	AddCorner(KeybindBtn, CORNER_SM)
 
-	local KeybindBtnCorner = Instance.new("UICorner")
-	KeybindBtnCorner.CornerRadius = UDim.new(0, 2)
-	KeybindBtnCorner.Parent = KeybindBtn
-
-	local KeybindBtnStroke = Instance.new("UIStroke")
-	KeybindBtnStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	KeybindBtnStroke.Color = T.Stroke
-	KeybindBtnStroke.LineJoinMode = Enum.LineJoinMode.Round
-	KeybindBtnStroke.Thickness = 1
-	KeybindBtnStroke.Parent = KeybindBtn
+	local KeybindBtnStroke = AddStroke(KeybindBtn, T.Stroke)
 
 	local Close = Instance.new("TextButton")
 	Close.Parent = Header
 	Close.BackgroundColor3 = T.Button1
 	Close.BackgroundTransparency = 0
 	Close.AnchorPoint = Vector2.new(1, 0.5)
-	Close.Position = UDim2.new(1, -4, 0.5, 0)
-	Close.Size = UDim2.fromOffset(18, 18)
+	Close.Position = UDim2.new(1, -6, 0.5, 0)
+	Close.Size = UDim2.fromOffset(22, 22)
 	Close.Text = ""
 	Close.AutoButtonColor = false
 	Close.ZIndex = 52
+	AddCorner(Close, CORNER_SM)
 
-	local CloseCorner = Instance.new("UICorner")
-	CloseCorner.CornerRadius = UDim.new(0, 2)
-	CloseCorner.Parent = Close
-
-	local CloseStroke = Instance.new("UIStroke")
-	CloseStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	CloseStroke.Color = T.Stroke
-	CloseStroke.LineJoinMode = Enum.LineJoinMode.Round
-	CloseStroke.Thickness = 1
-	CloseStroke.Parent = Close
+	local CloseStroke = AddStroke(Close, T.Stroke)
 
 	local CloseIcon = Instance.new("ImageLabel")
 	CloseIcon.Active = false
@@ -1169,7 +1068,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				for _, v in ipairs(textTransparency) do v.TextTransparency = v.TextTransparency + dt end
 			end)
 		end)
-		Tween(MainScale, { Scale = 0.6 }, 0.5, 2).Completed:Wait()
+		Tween(MainScale, { Scale = 0.7 }, 0.4, 2).Completed:Wait()
 		if animCon then animCon:Disconnect() end
 		ScreenGui:Destroy()
 	end)
@@ -1202,16 +1101,30 @@ function SimpleKavo.CreateLib(title, themeName)
 	SideBar.BackgroundColor3 = T.Window3
 	SideBar.BackgroundTransparency = 0
 	SideBar.BorderSizePixel = 0
-	SideBar.Position = UDim2.fromOffset(0, 28)
-	SideBar.Size = UDim2.new(0, 125, 1, -28)
+	SideBar.Position = UDim2.fromOffset(0, 36)
+	SideBar.Size = UDim2.new(0, 130, 1, -36)
 	SideBar.ZIndex = 50
+	AddCorner(SideBar, CORNER_RADIUS)
 
-	local SideBarStroke = Instance.new("UIStroke")
-	SideBarStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	SideBarStroke.Color = T.Stroke
-	SideBarStroke.LineJoinMode = Enum.LineJoinMode.Round
-	SideBarStroke.Thickness = 1
-	SideBarStroke.Parent = SideBar
+	-- Cobrir cantos superiores arredondados da sidebar
+	local SideBarTop = Instance.new("Frame")
+	SideBarTop.BackgroundColor3 = T.Window3
+	SideBarTop.BorderSizePixel = 0
+	SideBarTop.Position = UDim2.fromOffset(0, 0)
+	SideBarTop.Size = UDim2.new(1, 0, 0, 12)
+	SideBarTop.ZIndex = 50
+	SideBarTop.Parent = SideBar
+
+	-- Cobrir canto direito da sidebar
+	local SideBarRight = Instance.new("Frame")
+	SideBarRight.BackgroundColor3 = T.Window3
+	SideBarRight.BorderSizePixel = 0
+	SideBarRight.Position = UDim2.new(1, -12, 0, 0)
+	SideBarRight.Size = UDim2.new(0, 12, 1, 0)
+	SideBarRight.ZIndex = 50
+	SideBarRight.Parent = SideBar
+
+	local SideBarStroke = AddStroke(SideBar, T.Stroke)
 
 	local TabMenu = Instance.new("ScrollingFrame")
 	TabMenu.Name = "TabMenu"
@@ -1222,25 +1135,25 @@ function SimpleKavo.CreateLib(title, themeName)
 	TabMenu.BottomImage = "rbxassetid://9416839567"
 	TabMenu.CanvasSize = UDim2.fromOffset(0, 0)
 	TabMenu.MidImage = "rbxassetid://9416839567"
-	TabMenu.Position = UDim2.fromOffset(1, 1)
+	TabMenu.Position = UDim2.fromOffset(2, 2)
 	TabMenu.ScrollBarImageColor3 = Color3.fromRGB(255, 255, 255)
 	TabMenu.ScrollBarImageTransparency = 0.9
-	TabMenu.ScrollBarThickness = 1
+	TabMenu.ScrollBarThickness = 2
 	TabMenu.ScrollingDirection = Enum.ScrollingDirection.Y
-	TabMenu.Size = UDim2.new(1, -2, 1, -2)
+	TabMenu.Size = UDim2.new(1, -4, 1, -4)
 	TabMenu.TopImage = "rbxassetid://9416839567"
 	TabMenu.ZIndex = 51
 
 	local TabMenuLayout = Instance.new("UIListLayout")
 	TabMenuLayout.FillDirection = Enum.FillDirection.Vertical
 	TabMenuLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-	TabMenuLayout.Padding = UDim.new(0, 6)
+	TabMenuLayout.Padding = UDim.new(0, 5)
 	TabMenuLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	TabMenuLayout.VerticalAlignment = Enum.VerticalAlignment.Top
 	TabMenuLayout.Parent = TabMenu
 
 	local TabMenuPadding = Instance.new("UIPadding")
-	TabMenuPadding.PaddingTop = UDim.new(0, 5)
+	TabMenuPadding.PaddingTop = UDim.new(0, 6)
 	TabMenuPadding.Parent = TabMenu
 
 	local Content = Instance.new("Frame")
@@ -1249,17 +1162,30 @@ function SimpleKavo.CreateLib(title, themeName)
 	Content.BackgroundColor3 = T.Window2
 	Content.BackgroundTransparency = 0
 	Content.BorderSizePixel = 0
-	Content.Position = UDim2.fromOffset(126, 28)
-	Content.Size = UDim2.new(1, -126, 1, -28)
+	Content.Position = UDim2.fromOffset(132, 36)
+	Content.Size = UDim2.new(1, -132, 1, -36)
 	Content.ZIndex = 30
 	Content.ClipsDescendants = true
+	AddCorner(Content, CORNER_RADIUS)
 
-	local ContentStroke = Instance.new("UIStroke")
-	ContentStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	ContentStroke.Color = T.Stroke
-	ContentStroke.LineJoinMode = Enum.LineJoinMode.Round
-	ContentStroke.Thickness = 1
-	ContentStroke.Parent = Content
+	-- Cobrir cantos esquerdos e superiores do content
+	local ContentLeft = Instance.new("Frame")
+	ContentLeft.BackgroundColor3 = T.Window2
+	ContentLeft.BorderSizePixel = 0
+	ContentLeft.Position = UDim2.fromOffset(0, 0)
+	ContentLeft.Size = UDim2.new(0, 12, 1, 0)
+	ContentLeft.ZIndex = 30
+	ContentLeft.Parent = Content
+
+	local ContentTop = Instance.new("Frame")
+	ContentTop.BackgroundColor3 = T.Window2
+	ContentTop.BorderSizePixel = 0
+	ContentTop.Position = UDim2.fromOffset(0, 0)
+	ContentTop.Size = UDim2.new(1, 0, 0, 12)
+	ContentTop.ZIndex = 30
+	ContentTop.Parent = Content
+
+	local ContentStroke = AddStroke(Content, T.Stroke)
 
 	local Minimized = false
 
@@ -1302,8 +1228,8 @@ function SimpleKavo.CreateLib(title, themeName)
 	SimpleKavo:DraggingEnabled(Header, Main)
 
 	task.spawn(function()
-		Main.Size = UDim2.fromOffset(500, 30)
-		Tween(Main, { Size = UDim2.new(0, 500, 0, 370) }, 0.5, 2)
+		Main.Size = UDim2.fromOffset(520, 36)
+		Tween(Main, { Size = UDim2.new(0, 520, 0, 380) }, 0.5, 2)
 		HeaderFade.BackgroundTransparency = 0
 		HeaderFade.Visible = true
 		Tween(HeaderFade, { BackgroundTransparency = 1 }, 2, 2).Completed:Wait()
@@ -1321,8 +1247,13 @@ function SimpleKavo.CreateLib(title, themeName)
 		local newT = Themes[newThemeName]
 		Main.BackgroundColor3 = newT.Window2
 		Header.BackgroundColor3 = newT.Window1
+		HeaderBot.BackgroundColor3 = newT.Window1
 		SideBar.BackgroundColor3 = newT.Window3
+		SideBarTop.BackgroundColor3 = newT.Window3
+		SideBarRight.BackgroundColor3 = newT.Window3
 		Content.BackgroundColor3 = newT.Window2
+		ContentLeft.BackgroundColor3 = newT.Window2
+		ContentTop.BackgroundColor3 = newT.Window2
 		Title.TextColor3 = newT.TextPrimary
 		WindowIcon.ImageColor3 = newT.Primary
 		TrimGradient.Color = ColorSequence.new(newT.Primary, newT.Secondary)
@@ -1354,25 +1285,17 @@ function SimpleKavo.CreateLib(title, themeName)
 		TabButton.BackgroundColor3 = T.Button1
 		TabButton.BackgroundTransparency = 0
 		TabButton.BorderSizePixel = 0
-		TabButton.Size = UDim2.new(1, -8, 0, 18)
-		TabButton.Font = Enum.Font.SourceSans
+		TabButton.Size = UDim2.new(1, -10, 0, 22)
+		TabButton.Font = Enum.Font.Gotham
 		TabButton.Text = name
 		TabButton.TextColor3 = T.TextPrimary
-		TabButton.TextSize = 15
+		TabButton.TextSize = 13
 		TabButton.AutoButtonColor = false
 		TabButton.LayoutOrder = #tabsOrder + 1
 		TabButton.ZIndex = 52
+		AddCorner(TabButton, CORNER_SM)
 
-		local TabButtonCorner = Instance.new("UICorner")
-		TabButtonCorner.CornerRadius = UDim.new(0, 2)
-		TabButtonCorner.Parent = TabButton
-
-		local TabButtonStroke = Instance.new("UIStroke")
-		TabButtonStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-		TabButtonStroke.Color = T.Stroke
-		TabButtonStroke.LineJoinMode = Enum.LineJoinMode.Round
-		TabButtonStroke.Thickness = 1
-		TabButtonStroke.Parent = TabButton
+		local TabButtonStroke = AddStroke(TabButton, T.Stroke)
 
 		local TabContent = Instance.new("ScrollingFrame")
 		TabContent.Name = name .. "_Content"
@@ -1380,11 +1303,11 @@ function SimpleKavo.CreateLib(title, themeName)
 		TabContent.BackgroundTransparency = 1
 		TabContent.BorderSizePixel = 0
 		TabContent.Size = UDim2.fromScale(1, 1)
-		TabContent.Position = UDim2.fromOffset(1, 1)
+		TabContent.Position = UDim2.fromOffset(2, 2)
 		TabContent.Visible = false
-		TabContent.ScrollBarThickness = 1
+		TabContent.ScrollBarThickness = 2
 		TabContent.ScrollBarImageColor3 = T.Primary
-		TabContent.ScrollBarImageTransparency = 0.9
+		TabContent.ScrollBarImageTransparency = 0.8
 		TabContent.BottomImage = "rbxassetid://9416839567"
 		TabContent.MidImage = "rbxassetid://9416839567"
 		TabContent.TopImage = "rbxassetid://9416839567"
@@ -1394,14 +1317,14 @@ function SimpleKavo.CreateLib(title, themeName)
 
 		local TabContentLayout = Instance.new("UIListLayout")
 		TabContentLayout.Parent = TabContent
-		TabContentLayout.Padding = UDim.new(0, 4)
+		TabContentLayout.Padding = UDim.new(0, 5)
 		TabContentLayout.FillDirection = Enum.FillDirection.Vertical
 		TabContentLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 		TabContentLayout.VerticalAlignment = Enum.VerticalAlignment.Top
 		TabContentLayout.SortOrder = Enum.SortOrder.LayoutOrder
 
 		local TabContentPadding = Instance.new("UIPadding")
-		TabContentPadding.PaddingTop = UDim.new(0, 4)
+		TabContentPadding.PaddingTop = UDim.new(0, 6)
 		TabContentPadding.Parent = TabContent
 
 		table.insert(tabsOrder, { button = TabButton, content = TabContent, stroke = TabButtonStroke })
@@ -1440,42 +1363,43 @@ function SimpleKavo.CreateLib(title, themeName)
 			local SectionFrame = Instance.new("Frame")
 			SectionFrame.Name = sectionName .. "_Section"
 			SectionFrame.Parent = TabContent
-			SectionFrame.BackgroundColor3 = T.Window2
+			SectionFrame.BackgroundColor3 = T.Window3
 			SectionFrame.BorderSizePixel = 0
 			SectionFrame.Size = UDim2.new(0.95, 0, 0, 0)
 			SectionFrame.AutomaticSize = Enum.AutomaticSize.Y
 			SectionFrame.ZIndex = 32
+			AddCorner(SectionFrame, CORNER_SM)
 
-			local SectionFrameStroke = Instance.new("UIStroke")
-			SectionFrameStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-			SectionFrameStroke.Color = T.Stroke
-			SectionFrameStroke.LineJoinMode = Enum.LineJoinMode.Round
-			SectionFrameStroke.Thickness = 1
-			SectionFrameStroke.Parent = SectionFrame
+			local SectionFrameStroke = AddStroke(SectionFrame, T.Stroke)
 
 			local SectionTitleBar = Instance.new("Frame")
 			SectionTitleBar.Name = "TitleBar"
 			SectionTitleBar.Parent = SectionFrame
-			SectionTitleBar.BackgroundColor3 = T.Window3
+			SectionTitleBar.BackgroundColor3 = T.Window1
 			SectionTitleBar.BorderSizePixel = 0
-			SectionTitleBar.Size = UDim2.new(1, 0, 0, 16)
+			SectionTitleBar.Size = UDim2.new(1, 0, 0, 20)
 			SectionTitleBar.ZIndex = 33
+			AddCorner(SectionTitleBar, CORNER_SM)
 
-			local SectionTitleBarStroke = Instance.new("UIStroke")
-			SectionTitleBarStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-			SectionTitleBarStroke.Color = T.Stroke
-			SectionTitleBarStroke.LineJoinMode = Enum.LineJoinMode.Round
-			SectionTitleBarStroke.Thickness = 1
-			SectionTitleBarStroke.Parent = SectionTitleBar
+			-- Cobrir cantos inferiores
+			local STBot = Instance.new("Frame")
+			STBot.BackgroundColor3 = T.Window1
+			STBot.BorderSizePixel = 0
+			STBot.Position = UDim2.new(0, 0, 1, -8)
+			STBot.Size = UDim2.new(1, 0, 0, 8)
+			STBot.ZIndex = 33
+			STBot.Parent = SectionTitleBar
+
+			local SectionTitleBarStroke = AddStroke(SectionTitleBar, T.Stroke)
 
 			local SectionTrim = Instance.new("Frame")
 			SectionTrim.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			SectionTrim.BackgroundTransparency = 0
 			SectionTrim.BorderSizePixel = 0
 			SectionTrim.Name = "Trim"
-			SectionTrim.Position = UDim2.fromOffset(-1, -2)
-			SectionTrim.Size = UDim2.new(1, 2, 0, 1)
-			SectionTrim.ZIndex = 33
+			SectionTrim.Position = UDim2.fromOffset(0, 0)
+			SectionTrim.Size = UDim2.new(1, 0, 0, 2)
+			SectionTrim.ZIndex = 34
 			SectionTrim.Parent = SectionTitleBar
 
 			local SectionTrimGrad = Instance.new("UIGradient")
@@ -1487,18 +1411,16 @@ function SimpleKavo.CreateLib(title, themeName)
 			SectionLabel.Parent = SectionTitleBar
 			SectionLabel.BackgroundTransparency = 1
 			SectionLabel.Size = UDim2.fromScale(1, 1)
-			SectionLabel.Font = Enum.Font.SourceSans
+			SectionLabel.Font = Enum.Font.GothamSemibold
 			SectionLabel.Text = sectionName
 			SectionLabel.TextColor3 = T.TextPrimary
-			SectionLabel.TextSize = 14
-			SectionLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-			SectionLabel.TextStrokeTransparency = 0.8
+			SectionLabel.TextSize = 13
 			SectionLabel.TextXAlignment = Enum.TextXAlignment.Left
 			SectionLabel.TextYAlignment = Enum.TextYAlignment.Center
 			SectionLabel.ZIndex = 35
 
 			local SectionLabelPad = Instance.new("UIPadding")
-			SectionLabelPad.PaddingLeft = UDim.new(0, 5)
+			SectionLabelPad.PaddingLeft = UDim.new(0, 8)
 			SectionLabelPad.Parent = SectionLabel
 
 			local SectionContent = Instance.new("Frame")
@@ -1506,7 +1428,7 @@ function SimpleKavo.CreateLib(title, themeName)
 			SectionContent.Parent = SectionFrame
 			SectionContent.BackgroundTransparency = 1
 			SectionContent.BorderSizePixel = 0
-			SectionContent.Position = UDim2.fromOffset(0, 17)
+			SectionContent.Position = UDim2.fromOffset(0, 22)
 			SectionContent.Size = UDim2.new(1, 0, 0, 0)
 			SectionContent.AutomaticSize = Enum.AutomaticSize.Y
 			SectionContent.ZIndex = 33
@@ -1520,8 +1442,10 @@ function SimpleKavo.CreateLib(title, themeName)
 			SectionList.VerticalAlignment = Enum.VerticalAlignment.Top
 
 			local SectionPad = Instance.new("UIPadding")
-			SectionPad.PaddingTop = UDim.new(0, 3)
-			SectionPad.PaddingBottom = UDim.new(0, 3)
+			SectionPad.PaddingTop = UDim.new(0, 4)
+			SectionPad.PaddingBottom = UDim.new(0, 5)
+			SectionPad.PaddingLeft = UDim.new(0, 2)
+			SectionPad.PaddingRight = UDim.new(0, 2)
 			SectionPad.Parent = SectionContent
 
 			local SectionFunctions = {}
@@ -1530,12 +1454,14 @@ function SimpleKavo.CreateLib(title, themeName)
 				local elementOrder = #SectionContent:GetChildren()
 
 				local ControlFrame = Instance.new("Frame")
-				ControlFrame.BackgroundTransparency = 1
+				ControlFrame.BackgroundColor3 = T.Button1
 				ControlFrame.Name = btnName .. "_Control"
-				ControlFrame.Size = UDim2.new(1, 0, 0, 20)
+				ControlFrame.Size = UDim2.new(1, -4, 0, description and 36 or 22)
 				ControlFrame.ZIndex = 34
 				ControlFrame.LayoutOrder = elementOrder
 				ControlFrame.Parent = SectionContent
+				AddCorner(ControlFrame, CORNER_XS)
+				AddStroke(ControlFrame, T.Stroke)
 
 				local ClickSensor = Instance.new("TextButton")
 				ClickSensor.BackgroundTransparency = 1
@@ -1547,41 +1473,30 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local BtnLabel = Instance.new("TextLabel")
 				BtnLabel.BackgroundTransparency = 1
-				BtnLabel.Font = Enum.Font.SourceSans
+				BtnLabel.Font = Enum.Font.Gotham
 				BtnLabel.Name = "Label"
 				BtnLabel.Size = UDim2.fromScale(1, 1)
 				BtnLabel.Text = btnName
 				BtnLabel.TextColor3 = T.TextPrimary
-				BtnLabel.TextSize = 14
-				BtnLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-				BtnLabel.TextStrokeTransparency = 0.8
+				BtnLabel.TextSize = 13
 				BtnLabel.TextXAlignment = Enum.TextXAlignment.Left
 				BtnLabel.ZIndex = 35
 				BtnLabel.Parent = ClickSensor
 
 				local BtnLabelPad = Instance.new("UIPadding")
-				BtnLabelPad.PaddingLeft = UDim.new(0, 6)
+				BtnLabelPad.PaddingLeft = UDim.new(0, 8)
 				BtnLabelPad.Parent = BtnLabel
 
 				local BtnFrame = Instance.new("Frame")
 				BtnFrame.AnchorPoint = Vector2.new(1, 0.5)
-				BtnFrame.BackgroundColor3 = T.Button1
+				BtnFrame.BackgroundColor3 = T.Button2
 				BtnFrame.Name = "Button"
-				BtnFrame.Position = UDim2.new(1, -3, 0.5, 0)
-				BtnFrame.Size = UDim2.fromOffset(16, 16)
+				BtnFrame.Position = UDim2.new(1, -5, 0.5, 0)
+				BtnFrame.Size = UDim2.fromOffset(18, 18)
 				BtnFrame.ZIndex = 35
 				BtnFrame.Parent = ClickSensor
-
-				local BtnCorner = Instance.new("UICorner")
-				BtnCorner.CornerRadius = UDim.new(0, 2)
-				BtnCorner.Parent = BtnFrame
-
-				local BtnStroke = Instance.new("UIStroke")
-				BtnStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-				BtnStroke.Color = T.Stroke
-				BtnStroke.LineJoinMode = Enum.LineJoinMode.Round
-				BtnStroke.Thickness = 1
-				BtnStroke.Parent = BtnFrame
+				AddCorner(BtnFrame, CORNER_SM)
+				local BtnStroke = AddStroke(BtnFrame, T.Stroke)
 
 				local BtnIcon = Instance.new("ImageLabel")
 				BtnIcon.Active = false
@@ -1595,42 +1510,34 @@ function SimpleKavo.CreateLib(title, themeName)
 				BtnIcon.ZIndex = 35
 				BtnIcon.Parent = BtnFrame
 
-				local BtnIconGrad = Instance.new("UIGradient")
-				BtnIconGrad.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(200, 200, 200))
-				BtnIconGrad.Rotation = 90
-				BtnIconGrad.Parent = BtnIcon
-
 				if description then
 					local DescLabel = Instance.new("TextLabel")
 					DescLabel.Name = "Description"
 					DescLabel.Parent = ControlFrame
 					DescLabel.BackgroundTransparency = 1
-					DescLabel.Position = UDim2.new(0, 6, 0, 20)
-					DescLabel.Size = UDim2.new(1, -20, 0, 12)
-					DescLabel.Font = Enum.Font.SourceSans
+					DescLabel.Position = UDim2.new(0, 8, 0, 22)
+					DescLabel.Size = UDim2.new(1, -28, 0, 14)
+					DescLabel.Font = Enum.Font.Gotham
 					DescLabel.Text = description
 					DescLabel.TextColor3 = T.TextDim
-					DescLabel.TextSize = 12
+					DescLabel.TextSize = 11
 					DescLabel.TextXAlignment = Enum.TextXAlignment.Left
 					DescLabel.ZIndex = 35
-					ControlFrame.Size = UDim2.new(1, 0, 0, 32)
 				end
 
 				ClickSensor.MouseEnter:Connect(function()
-					Tween(BtnFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+					Tween(ControlFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+					Tween(BtnFrame, { BackgroundColor3 = T.Button3 }, 0.2, 2)
 					Tween(BtnStroke, { Color = T.StrokeHover }, 0.2, 2)
 				end)
 				ClickSensor.MouseLeave:Connect(function()
-					Tween(BtnFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
+					Tween(ControlFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
+					Tween(BtnFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
 					Tween(BtnStroke, { Color = T.Stroke }, 0.2, 2)
 				end)
 				ClickSensor.MouseButton1Click:Connect(function()
-					if BtnFrame.BackgroundColor3 ~= T.Button3 then
-						BtnFrame.BackgroundColor3 = T.Button3
-						Tween(BtnFrame, { BackgroundColor3 = T.Button1 }, 1, 2)
-					end
 					BtnIcon.ImageColor3 = T.Primary
-					Tween(BtnIcon, { ImageColor3 = Color3.fromRGB(255, 255, 255) }, 1, 2)
+					Tween(BtnIcon, { ImageColor3 = Color3.fromRGB(255, 255, 255) }, 0.8, 2)
 					if callback then callback() end
 				end)
 
@@ -1641,12 +1548,14 @@ function SimpleKavo.CreateLib(title, themeName)
 				local elementOrder = #SectionContent:GetChildren()
 
 				local ControlFrame = Instance.new("Frame")
-				ControlFrame.BackgroundTransparency = 1
+				ControlFrame.BackgroundColor3 = T.Button1
 				ControlFrame.Name = toggleName .. "_Control"
-				ControlFrame.Size = UDim2.new(1, 0, 0, description and 32 or 20)
+				ControlFrame.Size = UDim2.new(1, -4, 0, description and 36 or 22)
 				ControlFrame.ZIndex = 34
 				ControlFrame.LayoutOrder = elementOrder
 				ControlFrame.Parent = SectionContent
+				AddCorner(ControlFrame, CORNER_XS)
+				AddStroke(ControlFrame, T.Stroke)
 
 				local BackToggle = Instance.new("TextButton")
 				BackToggle.BackgroundTransparency = 1
@@ -1658,41 +1567,30 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local TogLabel = Instance.new("TextLabel")
 				TogLabel.BackgroundTransparency = 1
-				TogLabel.Font = Enum.Font.SourceSans
+				TogLabel.Font = Enum.Font.Gotham
 				TogLabel.Name = "Label"
 				TogLabel.Size = UDim2.fromScale(1, 1)
 				TogLabel.Text = toggleName
 				TogLabel.TextColor3 = T.TextPrimary
-				TogLabel.TextSize = 14
-				TogLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-				TogLabel.TextStrokeTransparency = 0.8
+				TogLabel.TextSize = 13
 				TogLabel.TextXAlignment = Enum.TextXAlignment.Left
 				TogLabel.ZIndex = 35
 				TogLabel.Parent = BackToggle
 
 				local TogLabelPad = Instance.new("UIPadding")
-				TogLabelPad.PaddingLeft = UDim.new(0, 6)
+				TogLabelPad.PaddingLeft = UDim.new(0, 8)
 				TogLabelPad.Parent = TogLabel
 
 				local TogFrame = Instance.new("Frame")
 				TogFrame.AnchorPoint = Vector2.new(1, 0.5)
-				TogFrame.BackgroundColor3 = T.Button1
+				TogFrame.BackgroundColor3 = T.Button2
 				TogFrame.Name = "Toggle"
-				TogFrame.Position = UDim2.new(1, -3, 0.5, 0)
-				TogFrame.Size = UDim2.fromOffset(16, 16)
+				TogFrame.Position = UDim2.new(1, -5, 0.5, 0)
+				TogFrame.Size = UDim2.fromOffset(18, 18)
 				TogFrame.ZIndex = 35
 				TogFrame.Parent = BackToggle
-
-				local TogCorner = Instance.new("UICorner")
-				TogCorner.CornerRadius = UDim.new(0, 2)
-				TogCorner.Parent = TogFrame
-
-				local TogStroke = Instance.new("UIStroke")
-				TogStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-				TogStroke.Color = T.Stroke
-				TogStroke.LineJoinMode = Enum.LineJoinMode.Round
-				TogStroke.Thickness = 1
-				TogStroke.Parent = TogFrame
+				AddCorner(TogFrame, CORNER_SM)
+				local TogStroke = AddStroke(TogFrame, T.Stroke)
 
 				local TogIcon = Instance.new("ImageLabel")
 				TogIcon.Active = false
@@ -1706,22 +1604,17 @@ function SimpleKavo.CreateLib(title, themeName)
 				TogIcon.ZIndex = 35
 				TogIcon.Parent = TogFrame
 
-				local TogIconGrad = Instance.new("UIGradient")
-				TogIconGrad.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(200, 200, 200))
-				TogIconGrad.Rotation = 90
-				TogIconGrad.Parent = TogIcon
-
 				if description then
 					local DescLabel = Instance.new("TextLabel")
 					DescLabel.Name = "Description"
 					DescLabel.Parent = ControlFrame
 					DescLabel.BackgroundTransparency = 1
-					DescLabel.Position = UDim2.new(0, 6, 0, 20)
-					DescLabel.Size = UDim2.new(1, -30, 0, 12)
-					DescLabel.Font = Enum.Font.SourceSans
+					DescLabel.Position = UDim2.new(0, 8, 0, 22)
+					DescLabel.Size = UDim2.new(1, -34, 0, 14)
+					DescLabel.Font = Enum.Font.Gotham
 					DescLabel.Text = description
 					DescLabel.TextColor3 = T.TextDim
-					DescLabel.TextSize = 12
+					DescLabel.TextSize = 11
 					DescLabel.TextXAlignment = Enum.TextXAlignment.Left
 					DescLabel.ZIndex = 35
 				end
@@ -1733,40 +1626,34 @@ function SimpleKavo.CreateLib(title, themeName)
 					if state then
 						TogIcon.Image = "rbxassetid://9801457539"
 						Tween(TogIcon, { Rotation = 0, ImageColor3 = T.Primary }, 0.3, 2)
-						if focused then
-							Tween(TogFrame, { BackgroundColor3 = T.Button3 }, 0.2, 2)
-						else
-							Tween(TogFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
-						end
+						Tween(TogFrame, { BackgroundColor3 = focused and T.Button3 or T.Button2 }, 0.2, 2)
 					else
 						TogIcon.Image = "rbxassetid://9801456486"
 						Tween(TogIcon, { Rotation = 360, ImageColor3 = T.Secondary }, 0.3, 2)
-						if focused then
-							Tween(TogFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
-						else
-							Tween(TogFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
-						end
+						Tween(TogFrame, { BackgroundColor3 = focused and T.Button2 or T.Button1 }, 0.2, 2)
 					end
 				end
 				UpdateToggleVisual(State)
 
 				BackToggle.MouseEnter:Connect(function()
 					focused = true
+					Tween(ControlFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+					Tween(TogStroke, { Color = T.StrokeHover }, 0.2, 2)
 					if State then
 						Tween(TogFrame, { BackgroundColor3 = T.Button3 }, 0.2, 2)
 					else
 						Tween(TogFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
 					end
-					Tween(TogStroke, { Color = T.StrokeHover }, 0.2, 2)
 				end)
 				BackToggle.MouseLeave:Connect(function()
 					focused = false
+					Tween(ControlFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
+					Tween(TogStroke, { Color = T.Stroke }, 0.2, 2)
 					if State then
 						Tween(TogFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
 					else
 						Tween(TogFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
 					end
-					Tween(TogStroke, { Color = T.Stroke }, 0.2, 2)
 				end)
 				BackToggle.MouseButton1Click:Connect(function()
 					State = not State
@@ -1791,45 +1678,36 @@ function SimpleKavo.CreateLib(title, themeName)
 				local elementOrder = #SectionContent:GetChildren()
 
 				local ControlFrame = Instance.new("Frame")
-				ControlFrame.BackgroundTransparency = 1
+				ControlFrame.BackgroundColor3 = T.Button1
 				ControlFrame.Name = sliderName .. "_Control"
-				ControlFrame.Size = UDim2.new(1, 0, 0, 20)
+				ControlFrame.Size = UDim2.new(1, -4, 0, 22)
 				ControlFrame.ZIndex = 34
 				ControlFrame.LayoutOrder = elementOrder
 				ControlFrame.Parent = SectionContent
+				AddCorner(ControlFrame, CORNER_XS)
+				AddStroke(ControlFrame, T.Stroke)
 
 				local SliderContainer = Instance.new("Frame")
-				SliderContainer.BackgroundColor3 = T.Button1
+				SliderContainer.BackgroundColor3 = T.Button2
 				SliderContainer.Name = "SliderContainer"
-				SliderContainer.Position = UDim2.fromOffset(3, 2)
-				SliderContainer.Size = UDim2.new(1, -6, 0, 16)
+				SliderContainer.Position = UDim2.fromOffset(5, 5)
+				SliderContainer.Size = UDim2.new(1, -10, 0, 12)
 				SliderContainer.ZIndex = 35
 				SliderContainer.Parent = ControlFrame
+				AddCorner(SliderContainer, UDim.new(1, 0))
 
-				local SliderContainerCorner = Instance.new("UICorner")
-				SliderContainerCorner.CornerRadius = UDim.new(0, 2)
-				SliderContainerCorner.Parent = SliderContainer
-
-				local SliderContainerStroke = Instance.new("UIStroke")
-				SliderContainerStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-				SliderContainerStroke.Color = T.Stroke
-				SliderContainerStroke.LineJoinMode = Enum.LineJoinMode.Round
-				SliderContainerStroke.Thickness = 1
-				SliderContainerStroke.Parent = SliderContainer
+				local SliderContainerStroke = AddStroke(SliderContainer, T.Stroke)
 
 				local SliderFill = Instance.new("Frame")
 				SliderFill.Active = false
 				SliderFill.BackgroundColor3 = T.Primary
-				SliderFill.BackgroundTransparency = 0.6
+				SliderFill.BackgroundTransparency = 0.4
 				SliderFill.BorderSizePixel = 0
 				SliderFill.Name = "Fill"
 				SliderFill.Size = UDim2.fromScale(math.clamp((default - min) / (max - min), 0, 1), 1)
 				SliderFill.ZIndex = 36
 				SliderFill.Parent = SliderContainer
-
-				local SliderFillCorner = Instance.new("UICorner")
-				SliderFillCorner.CornerRadius = UDim.new(0, 2)
-				SliderFillCorner.Parent = SliderFill
+				AddCorner(SliderFill, UDim.new(1, 0))
 
 				local SliderFillGrad = Instance.new("UIGradient")
 				SliderFillGrad.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(200, 200, 200))
@@ -1838,38 +1716,34 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local SliderLabel = Instance.new("TextLabel")
 				SliderLabel.BackgroundTransparency = 1
-				SliderLabel.Font = Enum.Font.SourceSans
+				SliderLabel.Font = Enum.Font.Gotham
 				SliderLabel.Name = "Label"
 				SliderLabel.Size = UDim2.fromScale(1, 1)
 				SliderLabel.Text = sliderName
 				SliderLabel.TextColor3 = T.TextPrimary
-				SliderLabel.TextSize = 14
-				SliderLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-				SliderLabel.TextStrokeTransparency = 0.8
+				SliderLabel.TextSize = 13
 				SliderLabel.TextXAlignment = Enum.TextXAlignment.Left
 				SliderLabel.ZIndex = 37
 				SliderLabel.Parent = ControlFrame
 
 				local SliderLabelPad = Instance.new("UIPadding")
-				SliderLabelPad.PaddingLeft = UDim.new(0, 6)
+				SliderLabelPad.PaddingLeft = UDim.new(0, 8)
 				SliderLabelPad.Parent = SliderLabel
 
 				local SliderVal = Instance.new("TextLabel")
 				SliderVal.BackgroundTransparency = 1
-				SliderVal.Font = Enum.Font.SourceSans
+				SliderVal.Font = Enum.Font.Gotham
 				SliderVal.Name = "Value"
 				SliderVal.Size = UDim2.fromScale(1, 1)
 				SliderVal.Text = tostring(math.floor(default))
-				SliderVal.TextColor3 = T.TextPrimary
-				SliderVal.TextSize = 14
-				SliderVal.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-				SliderVal.TextStrokeTransparency = 0.8
+				SliderVal.TextColor3 = T.TextDim
+				SliderVal.TextSize = 13
 				SliderVal.TextXAlignment = Enum.TextXAlignment.Right
 				SliderVal.ZIndex = 37
 				SliderVal.Parent = ControlFrame
 
 				local SliderValPad = Instance.new("UIPadding")
-				SliderValPad.PaddingRight = UDim.new(0, 6)
+				SliderValPad.PaddingRight = UDim.new(0, 8)
 				SliderValPad.Parent = SliderVal
 
 				if callback then callback(default) end
@@ -1879,11 +1753,9 @@ function SimpleKavo.CreateLib(title, themeName)
 				local aCon
 
 				SliderContainer.MouseEnter:Connect(function()
-					Tween(SliderContainer, { BackgroundColor3 = T.Button2 }, 0.2, 2)
 					Tween(SliderContainerStroke, { Color = T.StrokeHover }, 0.2, 2)
 				end)
 				SliderContainer.MouseLeave:Connect(function()
-					Tween(SliderContainer, { BackgroundColor3 = T.Button1 }, 0.2, 2)
 					Tween(SliderContainerStroke, { Color = T.Stroke }, 0.2, 2)
 				end)
 
@@ -1949,45 +1821,36 @@ function SimpleKavo.CreateLib(title, themeName)
 				local elementOrder = #SectionContent:GetChildren()
 
 				local ControlFrame = Instance.new("Frame")
-				ControlFrame.BackgroundTransparency = 1
+				ControlFrame.BackgroundColor3 = T.Button1
 				ControlFrame.Name = sliderName .. "_Control"
-				ControlFrame.Size = UDim2.new(1, 0, 0, 20)
+				ControlFrame.Size = UDim2.new(1, -4, 0, 22)
 				ControlFrame.ZIndex = 34
 				ControlFrame.LayoutOrder = elementOrder
 				ControlFrame.Parent = SectionContent
+				AddCorner(ControlFrame, CORNER_XS)
+				AddStroke(ControlFrame, T.Stroke)
 
 				local SliderContainer = Instance.new("Frame")
-				SliderContainer.BackgroundColor3 = T.Button1
+				SliderContainer.BackgroundColor3 = T.Button2
 				SliderContainer.Name = "SliderContainer"
-				SliderContainer.Position = UDim2.fromOffset(3, 2)
-				SliderContainer.Size = UDim2.new(1, -6, 0, 16)
+				SliderContainer.Position = UDim2.fromOffset(5, 5)
+				SliderContainer.Size = UDim2.new(1, -10, 0, 12)
 				SliderContainer.ZIndex = 35
 				SliderContainer.Parent = ControlFrame
+				AddCorner(SliderContainer, UDim.new(1, 0))
 
-				local SliderContainerCorner = Instance.new("UICorner")
-				SliderContainerCorner.CornerRadius = UDim.new(0, 2)
-				SliderContainerCorner.Parent = SliderContainer
-
-				local SliderContainerStroke = Instance.new("UIStroke")
-				SliderContainerStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-				SliderContainerStroke.Color = T.Stroke
-				SliderContainerStroke.LineJoinMode = Enum.LineJoinMode.Round
-				SliderContainerStroke.Thickness = 1
-				SliderContainerStroke.Parent = SliderContainer
+				local SliderContainerStroke = AddStroke(SliderContainer, T.Stroke)
 
 				local SliderFill = Instance.new("Frame")
 				SliderFill.Active = false
 				SliderFill.BackgroundColor3 = T.Primary
-				SliderFill.BackgroundTransparency = 0.6
+				SliderFill.BackgroundTransparency = 0.4
 				SliderFill.BorderSizePixel = 0
 				SliderFill.Name = "Fill"
 				SliderFill.Size = UDim2.fromScale(math.clamp((default - min) / (max - min), 0, 1), 1)
 				SliderFill.ZIndex = 36
 				SliderFill.Parent = SliderContainer
-
-				local SliderFillCorner = Instance.new("UICorner")
-				SliderFillCorner.CornerRadius = UDim.new(0, 2)
-				SliderFillCorner.Parent = SliderFill
+				AddCorner(SliderFill, UDim.new(1, 0))
 
 				local SliderFillGrad = Instance.new("UIGradient")
 				SliderFillGrad.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(200, 200, 200))
@@ -1996,38 +1859,34 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local SliderLabel = Instance.new("TextLabel")
 				SliderLabel.BackgroundTransparency = 1
-				SliderLabel.Font = Enum.Font.SourceSans
+				SliderLabel.Font = Enum.Font.Gotham
 				SliderLabel.Name = "Label"
 				SliderLabel.Size = UDim2.fromScale(1, 1)
 				SliderLabel.Text = sliderName
 				SliderLabel.TextColor3 = T.TextPrimary
-				SliderLabel.TextSize = 14
-				SliderLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-				SliderLabel.TextStrokeTransparency = 0.8
+				SliderLabel.TextSize = 13
 				SliderLabel.TextXAlignment = Enum.TextXAlignment.Left
 				SliderLabel.ZIndex = 37
 				SliderLabel.Parent = ControlFrame
 
 				local SliderLabelPad = Instance.new("UIPadding")
-				SliderLabelPad.PaddingLeft = UDim.new(0, 6)
+				SliderLabelPad.PaddingLeft = UDim.new(0, 8)
 				SliderLabelPad.Parent = SliderLabel
 
 				local SliderVal = Instance.new("TextLabel")
 				SliderVal.BackgroundTransparency = 1
-				SliderVal.Font = Enum.Font.SourceSans
+				SliderVal.Font = Enum.Font.Gotham
 				SliderVal.Name = "Value"
 				SliderVal.Size = UDim2.fromScale(1, 1)
 				SliderVal.Text = string.format(fmt, default)
-				SliderVal.TextColor3 = T.TextPrimary
-				SliderVal.TextSize = 14
-				SliderVal.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-				SliderVal.TextStrokeTransparency = 0.8
+				SliderVal.TextColor3 = T.TextDim
+				SliderVal.TextSize = 13
 				SliderVal.TextXAlignment = Enum.TextXAlignment.Right
 				SliderVal.ZIndex = 37
 				SliderVal.Parent = ControlFrame
 
 				local SliderValPad = Instance.new("UIPadding")
-				SliderValPad.PaddingRight = UDim.new(0, 6)
+				SliderValPad.PaddingRight = UDim.new(0, 8)
 				SliderValPad.Parent = SliderVal
 
 				if callback then callback(default) end
@@ -2037,11 +1896,9 @@ function SimpleKavo.CreateLib(title, themeName)
 				local aCon
 
 				SliderContainer.MouseEnter:Connect(function()
-					Tween(SliderContainer, { BackgroundColor3 = T.Button2 }, 0.2, 2)
 					Tween(SliderContainerStroke, { Color = T.StrokeHover }, 0.2, 2)
 				end)
 				SliderContainer.MouseLeave:Connect(function()
-					Tween(SliderContainer, { BackgroundColor3 = T.Button1 }, 0.2, 2)
 					Tween(SliderContainerStroke, { Color = T.Stroke }, 0.2, 2)
 				end)
 
@@ -2099,7 +1956,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				local DropFrame = Instance.new("Frame")
 				DropFrame.Name = dropName .. "_Dropdown"
 				DropFrame.BackgroundTransparency = 1
-				DropFrame.Size = UDim2.new(1, 0, 0, 20)
+				DropFrame.Size = UDim2.new(1, -4, 0, 22)
 				DropFrame.ClipsDescendants = true
 				DropFrame.LayoutOrder = elementOrder
 				DropFrame.ZIndex = 34
@@ -2109,40 +1966,30 @@ function SimpleKavo.CreateLib(title, themeName)
 				MainButton.Name = "MainButton"
 				MainButton.Parent = DropFrame
 				MainButton.BackgroundColor3 = T.Button1
-				MainButton.Size = UDim2.new(1, -6, 0, 16)
-				MainButton.Position = UDim2.fromOffset(3, 2)
-				MainButton.Font = Enum.Font.SourceSans
+				MainButton.Size = UDim2.fromScale(1, 1)
+				MainButton.Position = UDim2.fromOffset(0, 0)
+				MainButton.Font = Enum.Font.Gotham
 				MainButton.Text = ""
 				MainButton.AutoButtonColor = false
 				MainButton.ZIndex = 35
+				AddCorner(MainButton, CORNER_XS)
 
-				local MainBtnCorner = Instance.new("UICorner")
-				MainBtnCorner.CornerRadius = UDim.new(0, 2)
-				MainBtnCorner.Parent = MainButton
-
-				local MainBtnStroke = Instance.new("UIStroke")
-				MainBtnStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-				MainBtnStroke.Color = T.Stroke
-				MainBtnStroke.LineJoinMode = Enum.LineJoinMode.Round
-				MainBtnStroke.Thickness = 1
-				MainBtnStroke.Parent = MainButton
+				local MainBtnStroke = AddStroke(MainButton, T.Stroke)
 
 				local MainBtnLabel = Instance.new("TextLabel")
 				MainBtnLabel.BackgroundTransparency = 1
-				MainBtnLabel.Font = Enum.Font.SourceSans
+				MainBtnLabel.Font = Enum.Font.Gotham
 				MainBtnLabel.Name = "Label"
 				MainBtnLabel.Size = UDim2.fromScale(1, 1)
 				MainBtnLabel.Text = dropName .. ": " .. tostring(selectedOption)
 				MainBtnLabel.TextColor3 = T.TextPrimary
-				MainBtnLabel.TextSize = 14
-				MainBtnLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-				MainBtnLabel.TextStrokeTransparency = 0.8
+				MainBtnLabel.TextSize = 13
 				MainBtnLabel.TextXAlignment = Enum.TextXAlignment.Left
 				MainBtnLabel.ZIndex = 36
 				MainBtnLabel.Parent = MainButton
 
 				local MainBtnLabelPad = Instance.new("UIPadding")
-				MainBtnLabelPad.PaddingLeft = UDim.new(0, 6)
+				MainBtnLabelPad.PaddingLeft = UDim.new(0, 8)
 				MainBtnLabelPad.Parent = MainBtnLabel
 
 				local ArrowIcon = Instance.new("ImageLabel")
@@ -2157,33 +2004,24 @@ function SimpleKavo.CreateLib(title, themeName)
 				ArrowIcon.ZIndex = 36
 				ArrowIcon.Parent = MainButton
 
-				local ArrowIconGrad = Instance.new("UIGradient")
-				ArrowIconGrad.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(200, 200, 200))
-				ArrowIconGrad.Rotation = 90
-				ArrowIconGrad.Parent = ArrowIcon
-
 				local OptionsFrame = Instance.new("Frame")
 				OptionsFrame.Name = "OptionsFrame"
 				OptionsFrame.Parent = DropFrame
 				OptionsFrame.BackgroundColor3 = T.Window3
 				OptionsFrame.BackgroundTransparency = 0
 				OptionsFrame.BorderSizePixel = 0
-				OptionsFrame.Position = UDim2.fromOffset(3, 22)
-				OptionsFrame.Size = UDim2.new(1, -6, 0, 0)
+				OptionsFrame.Position = UDim2.fromOffset(0, 26)
+				OptionsFrame.Size = UDim2.new(1, 0, 0, 0)
 				OptionsFrame.Visible = false
 				OptionsFrame.ClipsDescendants = true
 				OptionsFrame.ZIndex = 36
+				AddCorner(OptionsFrame, CORNER_XS)
 
-				local OptionsFrameStroke = Instance.new("UIStroke")
-				OptionsFrameStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-				OptionsFrameStroke.Color = T.Stroke
-				OptionsFrameStroke.LineJoinMode = Enum.LineJoinMode.Round
-				OptionsFrameStroke.Thickness = 1
-				OptionsFrameStroke.Parent = OptionsFrame
+				local OptionsFrameStroke = AddStroke(OptionsFrame, T.Stroke)
 
 				local OptionsList = Instance.new("UIListLayout")
 				OptionsList.Parent = OptionsFrame
-				OptionsList.Padding = UDim.new(0, 4)
+				OptionsList.Padding = UDim.new(0, 3)
 				OptionsList.HorizontalAlignment = Enum.HorizontalAlignment.Center
 				OptionsList.VerticalAlignment = Enum.VerticalAlignment.Top
 				OptionsList.SortOrder = Enum.SortOrder.LayoutOrder
@@ -2202,25 +2040,16 @@ function SimpleKavo.CreateLib(title, themeName)
 						OptButton.Name = tostring(option)
 						OptButton.Parent = OptionsFrame
 						OptButton.BackgroundColor3 = T.Button1
-						OptButton.Size = UDim2.new(1, -6, 0, 16)
-						OptButton.Font = Enum.Font.SourceSans
+						OptButton.Size = UDim2.new(1, -8, 0, 18)
+						OptButton.Font = Enum.Font.Gotham
 						OptButton.Text = tostring(option)
 						OptButton.TextColor3 = T.TextPrimary
-						OptButton.TextSize = 14
+						OptButton.TextSize = 13
 						OptButton.AutoButtonColor = false
 						OptButton.ZIndex = 37
 						OptButton.LayoutOrder = i
-
-						local OptCorner = Instance.new("UICorner")
-						OptCorner.CornerRadius = UDim.new(0, 2)
-						OptCorner.Parent = OptButton
-
-						local OptStroke = Instance.new("UIStroke")
-						OptStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-						OptStroke.Color = T.Stroke
-						OptStroke.LineJoinMode = Enum.LineJoinMode.Round
-						OptStroke.Thickness = 1
-						OptStroke.Parent = OptButton
+						AddCorner(OptButton, CORNER_XS)
+						local OptStroke = AddStroke(OptButton, T.Stroke)
 
 						OptButton.MouseEnter:Connect(function()
 							Tween(OptButton, { BackgroundColor3 = T.Button2 }, 0.2, 2)
@@ -2235,8 +2064,8 @@ function SimpleKavo.CreateLib(title, themeName)
 							MainBtnLabel.Text = dropName .. ": " .. tostring(selectedOption)
 							isOpen = false
 							Tween(ArrowIcon, { Rotation = 0, ImageColor3 = T.Secondary }, 0.2, 2)
-							Tween(OptionsFrame, { Size = UDim2.new(1, -6, 0, 0) }, 0.2, 2)
-							Tween(DropFrame, { Size = UDim2.new(1, 0, 0, 20) }, 0.2, 2)
+							Tween(OptionsFrame, { Size = UDim2.new(1, 0, 0, 0) }, 0.2, 2)
+							Tween(DropFrame, { Size = UDim2.new(1, -4, 0, 22) }, 0.2, 2)
 							task.delay(0.21, function()
 								if not isOpen then OptionsFrame.Visible = false end
 							end)
@@ -2251,13 +2080,13 @@ function SimpleKavo.CreateLib(title, themeName)
 					Tween(ArrowIcon, { Rotation = isOpen and 180 or 0, ImageColor3 = isOpen and T.Primary or T.Secondary }, 0.2, 2)
 					if isOpen then
 						local optionCount = #options > 0 and #options or 1
-						local totalHeight = optionCount * 20 + (optionCount - 1) * 4 + 8
+						local totalHeight = optionCount * 21 + (optionCount - 1) * 3 + 8
 						OptionsFrame.Visible = true
-						Tween(DropFrame, { Size = UDim2.new(1, 0, 0, 20 + totalHeight + 6) }, 0.2, 2)
-						Tween(OptionsFrame, { Size = UDim2.new(1, -6, 0, totalHeight) }, 0.2, 2)
+						Tween(DropFrame, { Size = UDim2.new(1, -4, 0, 22 + totalHeight + 8) }, 0.2, 2)
+						Tween(OptionsFrame, { Size = UDim2.new(1, 0, 0, totalHeight) }, 0.2, 2)
 					else
-						Tween(DropFrame, { Size = UDim2.new(1, 0, 0, 20) }, 0.2, 2)
-						Tween(OptionsFrame, { Size = UDim2.new(1, -6, 0, 0) }, 0.2, 2)
+						Tween(DropFrame, { Size = UDim2.new(1, -4, 0, 22) }, 0.2, 2)
+						Tween(OptionsFrame, { Size = UDim2.new(1, 0, 0, 0) }, 0.2, 2)
 						task.delay(0.21, function()
 							if not isOpen then OptionsFrame.Visible = false end
 						end)
@@ -2322,12 +2151,14 @@ function SimpleKavo.CreateLib(title, themeName)
 				local pickerOpening = false
 
 				local ControlFrame = Instance.new("Frame")
-				ControlFrame.BackgroundTransparency = 1
+				ControlFrame.BackgroundColor3 = T.Button1
 				ControlFrame.Name = pickerName .. "_Control"
-				ControlFrame.Size = UDim2.new(1, 0, 0, 20)
+				ControlFrame.Size = UDim2.new(1, -4, 0, 22)
 				ControlFrame.ZIndex = 34
 				ControlFrame.LayoutOrder = elementOrder
 				ControlFrame.Parent = SectionContent
+				AddCorner(ControlFrame, CORNER_XS)
+				AddStroke(ControlFrame, T.Stroke)
 
 				local ClickSensor = Instance.new("TextButton")
 				ClickSensor.BackgroundTransparency = 1
@@ -2339,66 +2170,48 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local PickerLabel = Instance.new("TextLabel")
 				PickerLabel.BackgroundTransparency = 1
-				PickerLabel.Font = Enum.Font.SourceSans
+				PickerLabel.Font = Enum.Font.Gotham
 				PickerLabel.Name = "Label"
 				PickerLabel.Size = UDim2.fromScale(1, 1)
 				PickerLabel.Text = pickerName
 				PickerLabel.TextColor3 = T.TextPrimary
-				PickerLabel.TextSize = 14
-				PickerLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-				PickerLabel.TextStrokeTransparency = 0.8
+				PickerLabel.TextSize = 13
 				PickerLabel.TextXAlignment = Enum.TextXAlignment.Left
 				PickerLabel.ZIndex = 35
 				PickerLabel.Parent = ClickSensor
 
 				local PickerLabelPad = Instance.new("UIPadding")
-				PickerLabelPad.PaddingLeft = UDim.new(0, 6)
+				PickerLabelPad.PaddingLeft = UDim.new(0, 8)
 				PickerLabelPad.Parent = PickerLabel
 
 				local ColorDisplay = Instance.new("Frame")
 				ColorDisplay.AnchorPoint = Vector2.new(1, 0.5)
-				ColorDisplay.BackgroundColor3 = T.Button1
+				ColorDisplay.BackgroundColor3 = T.Button2
 				ColorDisplay.Name = "ColorDisplay"
-				ColorDisplay.Position = UDim2.new(1, -3, 0.5, 0)
-				ColorDisplay.Size = UDim2.fromOffset(16, 16)
+				ColorDisplay.Position = UDim2.new(1, -5, 0.5, 0)
+				ColorDisplay.Size = UDim2.fromOffset(18, 18)
 				ColorDisplay.ZIndex = 35
 				ColorDisplay.Parent = ClickSensor
+				AddCorner(ColorDisplay, UDim.new(1, 0))
 
-				local ColorDisplayCorner = Instance.new("UICorner")
-				ColorDisplayCorner.CornerRadius = UDim.new(1, 0)
-				ColorDisplayCorner.Parent = ColorDisplay
-
-				local ColorDisplayStroke = Instance.new("UIStroke")
-				ColorDisplayStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-				ColorDisplayStroke.Color = T.Stroke
-				ColorDisplayStroke.LineJoinMode = Enum.LineJoinMode.Round
-				ColorDisplayStroke.Thickness = 1
-				ColorDisplayStroke.Parent = ColorDisplay
+				local ColorDisplayStroke = AddStroke(ColorDisplay, T.Stroke)
 
 				local ColorInner = Instance.new("Frame")
 				ColorInner.BorderSizePixel = 0
 				ColorInner.BackgroundColor3 = currentColor
 				ColorInner.Name = "ColorInner"
-				ColorInner.Position = UDim2.fromOffset(2, 2)
+				ColorInner.Position = UDim2.fromOffset(3, 3)
 				ColorInner.Size = UDim2.fromOffset(12, 12)
 				ColorInner.ZIndex = 35
 				ColorInner.Parent = ColorDisplay
-
-				local ColorInnerCorner = Instance.new("UICorner")
-				ColorInnerCorner.CornerRadius = UDim.new(1, 0)
-				ColorInnerCorner.Parent = ColorInner
-
-				local ColorInnerGrad = Instance.new("UIGradient")
-				ColorInnerGrad.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(200, 200, 200))
-				ColorInnerGrad.Rotation = 90
-				ColorInnerGrad.Parent = ColorInner
+				AddCorner(ColorInner, UDim.new(1, 0))
 
 				ClickSensor.MouseEnter:Connect(function()
-					Tween(ColorDisplay, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+					Tween(ControlFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
 					Tween(ColorDisplayStroke, { Color = T.StrokeHover }, 0.2, 2)
 				end)
 				ClickSensor.MouseLeave:Connect(function()
-					Tween(ColorDisplay, { BackgroundColor3 = T.Button1 }, 0.2, 2)
+					Tween(ControlFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
 					Tween(ColorDisplayStroke, { Color = T.Stroke }, 0.2, 2)
 				end)
 
@@ -2494,7 +2307,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				local DropFrame = Instance.new("Frame")
 				DropFrame.Name = tdName .. "_ToggleDropdown"
 				DropFrame.BackgroundTransparency = 1
-				DropFrame.Size = UDim2.new(1, 0, 0, 20)
+				DropFrame.Size = UDim2.new(1, -4, 0, 22)
 				DropFrame.ClipsDescendants = true
 				DropFrame.LayoutOrder = elementOrder
 				DropFrame.ZIndex = 34
@@ -2504,40 +2317,30 @@ function SimpleKavo.CreateLib(title, themeName)
 				MainButton.Name = "MainButton"
 				MainButton.Parent = DropFrame
 				MainButton.BackgroundColor3 = T.Button1
-				MainButton.Size = UDim2.new(1, -6, 0, 16)
-				MainButton.Position = UDim2.fromOffset(3, 2)
-				MainButton.Font = Enum.Font.SourceSans
+				MainButton.Size = UDim2.fromScale(1, 1)
+				MainButton.Position = UDim2.fromOffset(0, 0)
+				MainButton.Font = Enum.Font.Gotham
 				MainButton.Text = ""
 				MainButton.AutoButtonColor = false
 				MainButton.ZIndex = 35
+				AddCorner(MainButton, CORNER_XS)
 
-				local MainBtnCorner = Instance.new("UICorner")
-				MainBtnCorner.CornerRadius = UDim.new(0, 2)
-				MainBtnCorner.Parent = MainButton
-
-				local MainBtnStroke = Instance.new("UIStroke")
-				MainBtnStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-				MainBtnStroke.Color = T.Stroke
-				MainBtnStroke.LineJoinMode = Enum.LineJoinMode.Round
-				MainBtnStroke.Thickness = 1
-				MainBtnStroke.Parent = MainButton
+				local MainBtnStroke = AddStroke(MainButton, T.Stroke)
 
 				local MainBtnLabel = Instance.new("TextLabel")
 				MainBtnLabel.BackgroundTransparency = 1
-				MainBtnLabel.Font = Enum.Font.SourceSans
+				MainBtnLabel.Font = Enum.Font.Gotham
 				MainBtnLabel.Name = "Label"
 				MainBtnLabel.Size = UDim2.fromScale(1, 1)
 				MainBtnLabel.Text = tdName
 				MainBtnLabel.TextColor3 = T.TextPrimary
-				MainBtnLabel.TextSize = 14
-				MainBtnLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-				MainBtnLabel.TextStrokeTransparency = 0.8
+				MainBtnLabel.TextSize = 13
 				MainBtnLabel.TextXAlignment = Enum.TextXAlignment.Left
 				MainBtnLabel.ZIndex = 36
 				MainBtnLabel.Parent = MainButton
 
 				local MainBtnLabelPad = Instance.new("UIPadding")
-				MainBtnLabelPad.PaddingLeft = UDim.new(0, 6)
+				MainBtnLabelPad.PaddingLeft = UDim.new(0, 8)
 				MainBtnLabelPad.Parent = MainBtnLabel
 
 				local ArrowIcon = Instance.new("ImageLabel")
@@ -2552,29 +2355,20 @@ function SimpleKavo.CreateLib(title, themeName)
 				ArrowIcon.ZIndex = 36
 				ArrowIcon.Parent = MainButton
 
-				local ArrowIconGrad = Instance.new("UIGradient")
-				ArrowIconGrad.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(200, 200, 200))
-				ArrowIconGrad.Rotation = 90
-				ArrowIconGrad.Parent = ArrowIcon
-
 				local OptionsFrame = Instance.new("Frame")
 				OptionsFrame.Name = "OptionsFrame"
 				OptionsFrame.Parent = DropFrame
 				OptionsFrame.BackgroundColor3 = T.Window3
 				OptionsFrame.BackgroundTransparency = 0
 				OptionsFrame.BorderSizePixel = 0
-				OptionsFrame.Position = UDim2.fromOffset(3, 22)
-				OptionsFrame.Size = UDim2.new(1, -6, 0, 0)
+				OptionsFrame.Position = UDim2.fromOffset(0, 26)
+				OptionsFrame.Size = UDim2.new(1, 0, 0, 0)
 				OptionsFrame.Visible = false
 				OptionsFrame.ClipsDescendants = true
 				OptionsFrame.ZIndex = 36
+				AddCorner(OptionsFrame, CORNER_XS)
 
-				local OptionsFrameStroke = Instance.new("UIStroke")
-				OptionsFrameStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-				OptionsFrameStroke.Color = T.Stroke
-				OptionsFrameStroke.LineJoinMode = Enum.LineJoinMode.Round
-				OptionsFrameStroke.Thickness = 1
-				OptionsFrameStroke.Parent = OptionsFrame
+				local OptionsFrameStroke = AddStroke(OptionsFrame, T.Stroke)
 
 				local OptionsList = Instance.new("UIListLayout")
 				OptionsList.Parent = OptionsFrame
@@ -2582,11 +2376,11 @@ function SimpleKavo.CreateLib(title, themeName)
 				OptionsList.HorizontalAlignment = Enum.HorizontalAlignment.Left
 				OptionsList.SortOrder = Enum.SortOrder.LayoutOrder
 
-				local TOGGLE_ROW_H   = 24
+				local TOGGLE_ROW_H   = 26
 				local SLIDER_ONLY_H  = 40
 				local SLIDER_EXTRA_H = 26
 				local KEYBIND_ROW_H  = 28
-				local COLOR_ROW_H    = 24
+				local COLOR_ROW_H    = 26
 
 				local rows = {}
 				local totalOptionsHeight = 0
@@ -2629,10 +2423,10 @@ function SimpleKavo.CreateLib(title, themeName)
 					if i > 1 then
 						local Sep = Instance.new("Frame")
 						Sep.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-						Sep.BackgroundTransparency = 0.9
+						Sep.BackgroundTransparency = 0.88
 						Sep.BorderSizePixel = 0
-						Sep.Size = UDim2.new(1, -12, 0, 1)
-						Sep.Position = UDim2.fromOffset(6, 0)
+						Sep.Size = UDim2.new(1, -16, 0, 1)
+						Sep.Position = UDim2.fromOffset(8, 0)
 						Sep.ZIndex = 37
 						Sep.Parent = Row
 					end
@@ -2644,64 +2438,46 @@ function SimpleKavo.CreateLib(title, themeName)
 
 						local CPLabel = Instance.new("TextLabel")
 						CPLabel.BackgroundTransparency = 1
-						CPLabel.Font = Enum.Font.SourceSans
+						CPLabel.Font = Enum.Font.Gotham
 						CPLabel.Name = "Label"
-						CPLabel.Position = UDim2.fromOffset(8, 0)
+						CPLabel.Position = UDim2.fromOffset(10, 0)
 						CPLabel.Size = UDim2.new(1, -50, 1, 0)
 						CPLabel.Text = opt.name
 						CPLabel.TextColor3 = T.TextPrimary
-						CPLabel.TextSize = 14
-						CPLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-						CPLabel.TextStrokeTransparency = 0.8
+						CPLabel.TextSize = 13
 						CPLabel.TextXAlignment = Enum.TextXAlignment.Left
 						CPLabel.ZIndex = 38
 						CPLabel.Parent = Row
 
 						local CPDisplay = Instance.new("TextButton")
 						CPDisplay.AnchorPoint = Vector2.new(1, 0.5)
-						CPDisplay.BackgroundColor3 = T.Button1
+						CPDisplay.BackgroundColor3 = T.Button2
 						CPDisplay.Name = "ColorDisplay"
-						CPDisplay.Position = UDim2.new(1, -6, 0.5, 0)
-						CPDisplay.Size = UDim2.fromOffset(16, 16)
+						CPDisplay.Position = UDim2.new(1, -8, 0.5, 0)
+						CPDisplay.Size = UDim2.fromOffset(18, 18)
 						CPDisplay.Text = ""
 						CPDisplay.AutoButtonColor = false
 						CPDisplay.ZIndex = 38
 						CPDisplay.Parent = Row
+						AddCorner(CPDisplay, UDim.new(1, 0))
 
-						local CPDisplayCorner = Instance.new("UICorner")
-						CPDisplayCorner.CornerRadius = UDim.new(1, 0)
-						CPDisplayCorner.Parent = CPDisplay
-
-						local CPDisplayStroke = Instance.new("UIStroke")
-						CPDisplayStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-						CPDisplayStroke.Color = T.Stroke
-						CPDisplayStroke.LineJoinMode = Enum.LineJoinMode.Round
-						CPDisplayStroke.Thickness = 1
-						CPDisplayStroke.Parent = CPDisplay
+						local CPDisplayStroke = AddStroke(CPDisplay, T.Stroke)
 
 						local CPInner = Instance.new("Frame")
 						CPInner.BorderSizePixel = 0
 						CPInner.BackgroundColor3 = initColor
-						CPInner.Position = UDim2.fromOffset(2, 2)
+						CPInner.Position = UDim2.fromOffset(3, 3)
 						CPInner.Size = UDim2.fromOffset(12, 12)
 						CPInner.ZIndex = 38
 						CPInner.Parent = CPDisplay
-
-						local CPInnerCorner = Instance.new("UICorner")
-						CPInnerCorner.CornerRadius = UDim.new(1, 0)
-						CPInnerCorner.Parent = CPInner
-
-						local CPInnerGrad = Instance.new("UIGradient")
-						CPInnerGrad.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(200, 200, 200))
-						CPInnerGrad.Rotation = 90
-						CPInnerGrad.Parent = CPInner
+						AddCorner(CPInner, UDim.new(1, 0))
 
 						CPDisplay.MouseEnter:Connect(function()
-							Tween(CPDisplay, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+							Tween(CPDisplay, { BackgroundColor3 = T.Button3 }, 0.2, 2)
 							Tween(CPDisplayStroke, { Color = T.StrokeHover }, 0.2, 2)
 						end)
 						CPDisplay.MouseLeave:Connect(function()
-							Tween(CPDisplay, { BackgroundColor3 = T.Button1 }, 0.2, 2)
+							Tween(CPDisplay, { BackgroundColor3 = T.Button2 }, 0.2, 2)
 							Tween(CPDisplayStroke, { Color = T.Stroke }, 0.2, 2)
 						end)
 
@@ -2750,40 +2526,30 @@ function SimpleKavo.CreateLib(title, themeName)
 					elseif hasToggle then
 						local RowLabel = Instance.new("TextLabel")
 						RowLabel.BackgroundTransparency = 1
-						RowLabel.Font = Enum.Font.SourceSans
+						RowLabel.Font = Enum.Font.Gotham
 						RowLabel.Name = "Label"
-						RowLabel.Position = UDim2.fromOffset(8, 0)
+						RowLabel.Position = UDim2.fromOffset(10, 0)
 						RowLabel.Size = UDim2.new(1, -50, 0, TOGGLE_ROW_H)
 						RowLabel.Text = opt.name
 						RowLabel.TextColor3 = T.TextPrimary
-						RowLabel.TextSize = 14
-						RowLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-						RowLabel.TextStrokeTransparency = 0.8
+						RowLabel.TextSize = 13
 						RowLabel.TextXAlignment = Enum.TextXAlignment.Left
 						RowLabel.ZIndex = 38
 						RowLabel.Parent = Row
 
 						local TogBtn = Instance.new("TextButton")
 						TogBtn.AnchorPoint = Vector2.new(1, 0)
-						TogBtn.BackgroundColor3 = T.Button1
+						TogBtn.BackgroundColor3 = T.Button2
 						TogBtn.Name = "Toggle"
-						TogBtn.Position = UDim2.new(1, -6, 0, 4)
-						TogBtn.Size = UDim2.fromOffset(16, 16)
+						TogBtn.Position = UDim2.new(1, -8, 0, 5)
+						TogBtn.Size = UDim2.fromOffset(18, 18)
 						TogBtn.Text = ""
 						TogBtn.AutoButtonColor = false
 						TogBtn.ZIndex = 38
 						TogBtn.Parent = Row
+						AddCorner(TogBtn, CORNER_SM)
 
-						local TBCorner = Instance.new("UICorner")
-						TBCorner.CornerRadius = UDim.new(0, 2)
-						TBCorner.Parent = TogBtn
-
-						local TBStroke = Instance.new("UIStroke")
-						TBStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-						TBStroke.Color = T.Stroke
-						TBStroke.LineJoinMode = Enum.LineJoinMode.Round
-						TBStroke.Thickness = 1
-						TBStroke.Parent = TogBtn
+						local TBStroke = AddStroke(TogBtn, T.Stroke)
 
 						local TBIcon = Instance.new("ImageLabel")
 						TBIcon.Active = false
@@ -2797,20 +2563,15 @@ function SimpleKavo.CreateLib(title, themeName)
 						TBIcon.ZIndex = 38
 						TBIcon.Parent = TogBtn
 
-						local TBIconGrad = Instance.new("UIGradient")
-						TBIconGrad.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(200, 200, 200))
-						TBIconGrad.Rotation = 90
-						TBIconGrad.Parent = TBIcon
-
 						local function updateToggleVisual(state)
 							if state then
 								TBIcon.Image = "rbxassetid://9801457539"
 								Tween(TBIcon, { Rotation = 0, ImageColor3 = T.Primary }, 0.3, 2)
-								Tween(TogBtn, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+								Tween(TogBtn, { BackgroundColor3 = T.Button3 }, 0.2, 2)
 							else
 								TBIcon.Image = "rbxassetid://9801456486"
 								Tween(TBIcon, { Rotation = 360, ImageColor3 = T.Secondary }, 0.3, 2)
-								Tween(TogBtn, { BackgroundColor3 = T.Button1 }, 0.2, 2)
+								Tween(TogBtn, { BackgroundColor3 = T.Button2 }, 0.2, 2)
 							end
 						end
 						updateToggleVisual(allStates[opt.name].toggleValue)
@@ -2837,59 +2598,46 @@ function SimpleKavo.CreateLib(title, themeName)
 
 						local SliderText = Instance.new("TextLabel")
 						SliderText.BackgroundTransparency = 1
-						SliderText.Font = Enum.Font.SourceSans
+						SliderText.Font = Enum.Font.Gotham
 						SliderText.TextColor3 = T.TextDim
 						SliderText.TextSize = 12
-						SliderText.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-						SliderText.TextStrokeTransparency = 0.8
 						SliderText.ZIndex = 38
 						SliderText.Parent = Row
 
 						if hasToggle then
 							SliderText.Text = isFloat and string.format(fmt, sliderDefault) or tostring(math.floor(sliderDefault))
 							SliderText.TextXAlignment = Enum.TextXAlignment.Right
-							SliderText.Position = UDim2.new(0, 8, 0, sliderYOffset)
-							SliderText.Size = UDim2.new(1, -16, 0, 12)
+							SliderText.Position = UDim2.new(0, 10, 0, sliderYOffset)
+							SliderText.Size = UDim2.new(1, -18, 0, 12)
 						else
 							SliderText.Text = opt.name .. ": " .. (isFloat and string.format(fmt, sliderDefault) or tostring(math.floor(sliderDefault)))
 							SliderText.TextXAlignment = Enum.TextXAlignment.Left
-							SliderText.Position = UDim2.new(0, 8, 0, sliderYOffset)
-							SliderText.Size = UDim2.new(1, -16, 0, 14)
+							SliderText.Position = UDim2.new(0, 10, 0, sliderYOffset)
+							SliderText.Size = UDim2.new(1, -18, 0, 14)
 						end
 
 						local barYOffset = sliderYOffset + (hasToggle and 12 or 16)
 
 						local SliderBar = Instance.new("Frame")
-						SliderBar.BackgroundColor3 = T.Button1
+						SliderBar.BackgroundColor3 = T.Button2
 						SliderBar.Name = "Bar"
-						SliderBar.Position = UDim2.new(0, 8, 0, barYOffset)
-						SliderBar.Size = UDim2.new(1, -16, 0, 6)
+						SliderBar.Position = UDim2.new(0, 10, 0, barYOffset)
+						SliderBar.Size = UDim2.new(1, -20, 0, 6)
 						SliderBar.ZIndex = 38
 						SliderBar.Parent = Row
+						AddCorner(SliderBar, UDim.new(1, 0))
 
-						local SliderBarCorner = Instance.new("UICorner")
-						SliderBarCorner.CornerRadius = UDim.new(0, 2)
-						SliderBarCorner.Parent = SliderBar
-
-						local SliderBarStroke = Instance.new("UIStroke")
-						SliderBarStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-						SliderBarStroke.Color = T.Stroke
-						SliderBarStroke.LineJoinMode = Enum.LineJoinMode.Round
-						SliderBarStroke.Thickness = 1
-						SliderBarStroke.Parent = SliderBar
+						local SliderBarStroke = AddStroke(SliderBar, T.Stroke)
 
 						local initPercent = math.clamp((sliderDefault - sliderMin) / (sliderMax - sliderMin), 0, 1)
 						local SliderFill = Instance.new("Frame")
 						SliderFill.BackgroundColor3 = T.Primary
-						SliderFill.BackgroundTransparency = 0.6
+						SliderFill.BackgroundTransparency = 0.4
 						SliderFill.Name = "Fill"
 						SliderFill.Size = UDim2.fromScale(initPercent, 1)
 						SliderFill.ZIndex = 39
 						SliderFill.Parent = SliderBar
-
-						local SliderFillCorner = Instance.new("UICorner")
-						SliderFillCorner.CornerRadius = UDim.new(0, 2)
-						SliderFillCorner.Parent = SliderFill
+						AddCorner(SliderFill, UDim.new(1, 0))
 
 						local SliderFillGrad = Instance.new("UIGradient")
 						SliderFillGrad.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(200, 200, 200))
@@ -2953,53 +2701,43 @@ function SimpleKavo.CreateLib(title, themeName)
 
 						local KBLabel = Instance.new("TextLabel")
 						KBLabel.BackgroundTransparency = 1
-						KBLabel.Font = Enum.Font.SourceSans
+						KBLabel.Font = Enum.Font.Gotham
 						KBLabel.Name = "Label"
-						KBLabel.Position = UDim2.fromOffset(8, 0)
+						KBLabel.Position = UDim2.fromOffset(10, 0)
 						KBLabel.Size = UDim2.new(0.55, 0, 1, 0)
 						KBLabel.Text = opt.name
 						KBLabel.TextColor3 = T.TextPrimary
-						KBLabel.TextSize = 14
-						KBLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-						KBLabel.TextStrokeTransparency = 0.8
+						KBLabel.TextSize = 13
 						KBLabel.TextXAlignment = Enum.TextXAlignment.Left
 						KBLabel.ZIndex = 38
 						KBLabel.Parent = Row
 
 						local KBButton = Instance.new("TextButton")
 						KBButton.AnchorPoint = Vector2.new(1, 0.5)
-						KBButton.BackgroundColor3 = T.Button1
+						KBButton.BackgroundColor3 = T.Button2
 						KBButton.Name = "KeybindButton"
-						KBButton.Position = UDim2.new(1, -6, 0.5, 0)
-						KBButton.Size = UDim2.new(0, 72, 0, 16)
-						KBButton.Font = Enum.Font.SourceSans
+						KBButton.Position = UDim2.new(1, -8, 0.5, 0)
+						KBButton.Size = UDim2.new(0, 72, 0, 18)
+						KBButton.Font = Enum.Font.Gotham
 						KBButton.Text = (currentKey and currentKey ~= Enum.KeyCode.Unknown) and currentKey.Name or "[None]"
 						KBButton.TextColor3 = T.TextDim
-						KBButton.TextSize = 13
+						KBButton.TextSize = 12
 						KBButton.AutoButtonColor = false
 						KBButton.ZIndex = 38
 						KBButton.Parent = Row
+						AddCorner(KBButton, CORNER_SM)
 
-						local KBCorner = Instance.new("UICorner")
-						KBCorner.CornerRadius = UDim.new(0, 2)
-						KBCorner.Parent = KBButton
-
-						local KBStroke = Instance.new("UIStroke")
-						KBStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-						KBStroke.Color = T.Stroke
-						KBStroke.LineJoinMode = Enum.LineJoinMode.Round
-						KBStroke.Thickness = 1
-						KBStroke.Parent = KBButton
+						local KBStroke = AddStroke(KBButton, T.Stroke)
 
 						KBButton.MouseEnter:Connect(function()
 							if not listeningKB then
-								Tween(KBButton, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+								Tween(KBButton, { BackgroundColor3 = T.Button3 }, 0.2, 2)
 								Tween(KBStroke, { Color = T.StrokeHover }, 0.2, 2)
 							end
 						end)
 						KBButton.MouseLeave:Connect(function()
 							if not listeningKB then
-								Tween(KBButton, { BackgroundColor3 = T.Button1 }, 0.2, 2)
+								Tween(KBButton, { BackgroundColor3 = T.Button2 }, 0.2, 2)
 								Tween(KBStroke, { Color = T.Stroke }, 0.2, 2)
 							end
 						end)
@@ -3029,7 +2767,7 @@ function SimpleKavo.CreateLib(title, themeName)
 							allStates[opt.name].keybindValue = currentKey
 							listeningKB = false
 							KBButton.Text = currentKey.Name
-							Tween(KBButton, { BackgroundColor3 = T.Button1, TextColor3 = T.TextDim }, 0.15, 2)
+							Tween(KBButton, { BackgroundColor3 = T.Button2, TextColor3 = T.TextDim }, 0.15, 2)
 							if callback then
 								callback(opt.name, currentKey, nil, allStates)
 							end
@@ -3055,11 +2793,11 @@ function SimpleKavo.CreateLib(title, themeName)
 					Tween(ArrowIcon, { Rotation = isOpen and 180 or 0, ImageColor3 = isOpen and T.Primary or T.Secondary }, 0.2, 2)
 					if isOpen then
 						OptionsFrame.Visible = true
-						Tween(DropFrame, { Size = UDim2.new(1, 0, 0, 20 + 6 + totalOptionsHeight) }, 0.2, 2)
-						Tween(OptionsFrame, { Size = UDim2.new(1, -6, 0, totalOptionsHeight) }, 0.2, 2)
+						Tween(DropFrame, { Size = UDim2.new(1, -4, 0, 22 + 8 + totalOptionsHeight) }, 0.2, 2)
+						Tween(OptionsFrame, { Size = UDim2.new(1, 0, 0, totalOptionsHeight) }, 0.2, 2)
 					else
-						Tween(DropFrame, { Size = UDim2.new(1, 0, 0, 20) }, 0.2, 2)
-						Tween(OptionsFrame, { Size = UDim2.new(1, -6, 0, 0) }, 0.2, 2)
+						Tween(DropFrame, { Size = UDim2.new(1, -4, 0, 22) }, 0.2, 2)
+						Tween(OptionsFrame, { Size = UDim2.new(1, 0, 0, 0) }, 0.2, 2)
 						task.delay(0.21, function()
 							if not isOpen then OptionsFrame.Visible = false end
 						end)
@@ -3159,19 +2897,15 @@ function SimpleKavo.CreateLib(title, themeName)
 				function methods:GetToggle(optName)
 					if allStates[optName] then return allStates[optName].toggleValue end
 				end
-
 				function methods:GetSlider(optName)
 					if allStates[optName] then return allStates[optName].sliderValue end
 				end
-
 				function methods:GetKeybind(optName)
 					if allStates[optName] then return allStates[optName].keybindValue end
 				end
-
 				function methods:GetColor(optName)
 					if allStates[optName] then return allStates[optName].colorValue end
 				end
-
 				function methods:GetAll()
 					local copy = {}
 					for k, v in pairs(allStates) do
@@ -3204,7 +2938,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				local ControlFrame = Instance.new("Frame")
 				ControlFrame.BackgroundTransparency = 1
 				ControlFrame.Name = tbName .. "_Control"
-				ControlFrame.Size = UDim2.new(1, 0, 0, 20)
+				ControlFrame.Size = UDim2.new(1, -4, 0, 22)
 				ControlFrame.ZIndex = 34
 				ControlFrame.LayoutOrder = elementOrder
 				ControlFrame.Parent = SectionContent
@@ -3212,36 +2946,26 @@ function SimpleKavo.CreateLib(title, themeName)
 				local TextBox = Instance.new("TextBox")
 				TextBox.Name = "Input"
 				TextBox.Parent = ControlFrame
-				TextBox.BackgroundColor3 = T.Window1
+				TextBox.BackgroundColor3 = T.Button1
 				TextBox.BackgroundTransparency = 0
-				TextBox.Position = UDim2.fromOffset(3, 2)
-				TextBox.Size = UDim2.new(1, -6, 0, 16)
-				TextBox.Font = Enum.Font.SourceSans
+				TextBox.Position = UDim2.fromOffset(0, 0)
+				TextBox.Size = UDim2.fromScale(1, 1)
+				TextBox.Font = Enum.Font.Gotham
 				TextBox.PlaceholderText = placeholder or "..."
 				TextBox.PlaceholderColor3 = T.TextDim
 				TextBox.Text = tbName
 				TextBox.TextColor3 = T.TextPrimary
-				TextBox.TextSize = 14
-				TextBox.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-				TextBox.TextStrokeTransparency = 0.8
+				TextBox.TextSize = 13
 				TextBox.TextXAlignment = Enum.TextXAlignment.Left
 				TextBox.TextTruncate = Enum.TextTruncate.AtEnd
 				TextBox.ClearTextOnFocus = true
 				TextBox.ZIndex = 35
+				AddCorner(TextBox, CORNER_XS)
 
-				local TBCorner = Instance.new("UICorner")
-				TBCorner.CornerRadius = UDim.new(0, 2)
-				TBCorner.Parent = TextBox
-
-				local TBStroke = Instance.new("UIStroke")
-				TBStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-				TBStroke.Color = T.Stroke
-				TBStroke.LineJoinMode = Enum.LineJoinMode.Round
-				TBStroke.Thickness = 1
-				TBStroke.Parent = TextBox
+				local TBStroke = AddStroke(TextBox, T.Stroke)
 
 				local TBPad = Instance.new("UIPadding")
-				TBPad.PaddingLeft = UDim.new(0, 5)
+				TBPad.PaddingLeft = UDim.new(0, 8)
 				TBPad.Parent = TextBox
 
 				TextBox.Focused:Connect(function()
@@ -3249,7 +2973,7 @@ function SimpleKavo.CreateLib(title, themeName)
 					Tween(TBStroke, { Color = T.StrokeHover }, 0.2, 2)
 				end)
 				TextBox.FocusLost:Connect(function(enterPressed)
-					Tween(TextBox, { BackgroundColor3 = T.Window1, TextColor3 = T.TextPrimary }, 0.2, 2)
+					Tween(TextBox, { BackgroundColor3 = T.Button1, TextColor3 = T.TextPrimary }, 0.2, 2)
 					Tween(TBStroke, { Color = T.Stroke }, 0.2, 2)
 					if enterPressed then
 						TextBox.Text = tbName
@@ -3276,12 +3000,14 @@ function SimpleKavo.CreateLib(title, themeName)
 				local focused = false
 
 				local ControlFrame = Instance.new("Frame")
-				ControlFrame.BackgroundTransparency = 1
+				ControlFrame.BackgroundColor3 = T.Button1
 				ControlFrame.Name = kbName .. "_Control"
-				ControlFrame.Size = UDim2.new(1, 0, 0, 20)
+				ControlFrame.Size = UDim2.new(1, -4, 0, 22)
 				ControlFrame.ZIndex = 34
 				ControlFrame.LayoutOrder = elementOrder
 				ControlFrame.Parent = SectionContent
+				AddCorner(ControlFrame, CORNER_XS)
+				AddStroke(ControlFrame, T.Stroke)
 
 				local BackButton = Instance.new("TextButton")
 				BackButton.BackgroundTransparency = 1
@@ -3293,40 +3019,37 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local KBLabel = Instance.new("TextLabel")
 				KBLabel.BackgroundTransparency = 1
-				KBLabel.Font = Enum.Font.SourceSans
+				KBLabel.Font = Enum.Font.Gotham
 				KBLabel.Name = "Label"
 				KBLabel.Size = UDim2.fromScale(1, 1)
 				KBLabel.Text = kbName
 				KBLabel.TextColor3 = T.TextPrimary
-				KBLabel.TextSize = 14
-				KBLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-				KBLabel.TextStrokeTransparency = 0.8
+				KBLabel.TextSize = 13
 				KBLabel.TextXAlignment = Enum.TextXAlignment.Left
 				KBLabel.ZIndex = 35
 				KBLabel.Parent = BackButton
 
 				local KBLabelPad = Instance.new("UIPadding")
-				KBLabelPad.PaddingLeft = UDim.new(0, 6)
+				KBLabelPad.PaddingLeft = UDim.new(0, 8)
 				KBLabelPad.Parent = KBLabel
 
 				local KBDisplay = Instance.new("TextLabel")
 				KBDisplay.AnchorPoint = Vector2.new(1, 0.5)
 				KBDisplay.BackgroundTransparency = 1
-				KBDisplay.Font = Enum.Font.SourceSans
+				KBDisplay.Font = Enum.Font.Gotham
 				KBDisplay.Name = "Hotkey"
-				KBDisplay.Position = UDim2.new(1, -3, 0.5, 0)
-				KBDisplay.Size = UDim2.fromOffset(80, 16)
+				KBDisplay.Position = UDim2.new(1, -5, 0.5, 0)
+				KBDisplay.Size = UDim2.fromOffset(80, 18)
 				KBDisplay.Text = ("[%s]"):format(currentKey.Name ~= "Unknown" and currentKey.Name or "None")
 				KBDisplay.TextColor3 = T.TextDim
-				KBDisplay.TextSize = 13
-				KBDisplay.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-				KBDisplay.TextStrokeTransparency = 0.8
+				KBDisplay.TextSize = 12
 				KBDisplay.TextXAlignment = Enum.TextXAlignment.Right
 				KBDisplay.ZIndex = 35
 				KBDisplay.Parent = BackButton
 
 				BackButton.MouseEnter:Connect(function()
 					focused = true
+					Tween(ControlFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
 					if listening then
 						Tween(KBDisplay, { TextColor3 = T.Primary }, 0.2, 2)
 					else
@@ -3335,6 +3058,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				end)
 				BackButton.MouseLeave:Connect(function()
 					focused = false
+					Tween(ControlFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
 					if not listening then
 						Tween(KBDisplay, { TextColor3 = T.TextDim }, 0.2, 2)
 					end
