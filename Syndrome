@@ -291,18 +291,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	PickerShadow.ZIndex = 499
 	PickerShadow.Parent = PickerGui
 
-	local PickerTrim = Instance.new("Frame")
-	PickerTrim.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	PickerTrim.BorderSizePixel = 0
-	PickerTrim.Position = UDim2.fromOffset(0, 0)
-	PickerTrim.Size = UDim2.new(1, 0, 0, 2)
-	PickerTrim.ZIndex = 510
-	PickerTrim.Parent = PickerGui
-
-	local PickerTrimGrad = Instance.new("UIGradient")
-	PickerTrimGrad.Color = ColorSequence.new(T.Primary, T.Secondary)
-	PickerTrimGrad.Parent = PickerTrim
-
 	local PickerHeader = Instance.new("Frame")
 	PickerHeader.Name = "Header"
 	PickerHeader.BackgroundColor3 = T.Window1
@@ -1026,19 +1014,6 @@ function SimpleKavo.CreateLib(title, themeName)
 	WindowIcon.Size = UDim2.fromOffset(22, 22)
 	WindowIcon.ZIndex = 52
 	WindowIcon.Parent = Header
-
-	local TrimFrame = Instance.new("Frame")
-	TrimFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	TrimFrame.BorderSizePixel = 0
-	TrimFrame.Name = "Trim"
-	TrimFrame.Position = UDim2.fromOffset(0, 0)
-	TrimFrame.Size = UDim2.new(1, 0, 0, 2)
-	TrimFrame.ZIndex = 55
-	TrimFrame.Parent = Header
-
-	local TrimGradient = Instance.new("UIGradient")
-	TrimGradient.Color = ColorSequence.new(T.Primary, T.Secondary)
-	TrimGradient.Parent = TrimFrame
 
 	local KeybindBtn = Instance.new("TextButton")
 	KeybindBtn.Name = "KeybindBtn"
