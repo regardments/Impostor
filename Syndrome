@@ -193,7 +193,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	local PickerGui = Instance.new("Frame")
 	PickerGui.Name = "ColorPickerWindow"
 	PickerGui.BackgroundColor3 = T.Window2
-	PickerGui.BackgroundTransparency = 0.15
 	PickerGui.BorderSizePixel = 0
 	PickerGui.Size = UDim2.fromOffset(300, 300)
 	PickerGui.Position = UDim2.fromOffset(200, 150)
@@ -235,7 +234,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	local PickerHeader = Instance.new("Frame")
 	PickerHeader.Name = "Header"
 	PickerHeader.BackgroundColor3 = T.Window1
-	PickerHeader.BackgroundTransparency = 0.15
 	PickerHeader.BorderSizePixel = 0
 	PickerHeader.Size = UDim2.new(1, 0, 0, 32)
 	PickerHeader.ZIndex = 501
@@ -245,7 +243,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local PickerHeaderBot = Instance.new("Frame")
 	PickerHeaderBot.BackgroundColor3 = T.Window1
-	PickerHeaderBot.BackgroundTransparency = 0.15
 	PickerHeaderBot.BorderSizePixel = 0
 	PickerHeaderBot.Position = UDim2.new(0, 0, 1, -10)
 	PickerHeaderBot.Size = UDim2.new(1, 0, 0, 10)
@@ -281,7 +278,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	CloseBtn.AnchorPoint = Vector2.new(1, 0.5)
 	CloseBtn.AutoButtonColor = false
 	CloseBtn.BackgroundColor3 = T.Button1
-	CloseBtn.BackgroundTransparency = 0.15
 	CloseBtn.BorderSizePixel = 0
 	CloseBtn.Position = UDim2.new(1, -6, 0.5, 0)
 	CloseBtn.Size = UDim2.fromOffset(22, 22)
@@ -303,7 +299,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local Region = Instance.new("Frame")
 	Region.BackgroundColor3 = T.Window2
-	Region.BackgroundTransparency = 0.15
 	Region.BorderSizePixel = 0
 	Region.ClipsDescendants = true
 	Region.Position = UDim2.fromOffset(0, 34)
@@ -314,7 +309,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local PickerRegion = Instance.new("Frame")
 	PickerRegion.BackgroundColor3 = T.Window2
-	PickerRegion.BackgroundTransparency = 0.15
 	PickerRegion.BorderSizePixel = 0
 	PickerRegion.ClipsDescendants = true
 	PickerRegion.Position = UDim2.fromOffset(6, 6)
@@ -337,7 +331,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local WheelOutline = Instance.new("Frame")
 	WheelOutline.BackgroundColor3 = T.Stroke
-	WheelOutline.BackgroundTransparency = 0.15
 	WheelOutline.BorderSizePixel = 0
 	WheelOutline.Position = UDim2.fromOffset(1, 1)
 	WheelOutline.Size = UDim2.new(1, -2, 1, -2)
@@ -384,7 +377,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local ValSliderContainer = Instance.new("Frame")
 	ValSliderContainer.BackgroundColor3 = Color3.fromHSV(hue, sat, 1)
-	ValSliderContainer.BackgroundTransparency = 0.15
 	ValSliderContainer.Position = UDim2.fromOffset(0, 7)
 	ValSliderContainer.Size = UDim2.new(1, 0, 0, 12)
 	ValSliderContainer.ZIndex = 503
@@ -436,7 +428,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	ChromaBtn.AnchorPoint = Vector2.new(0, 1)
 	ChromaBtn.AutoButtonColor = false
 	ChromaBtn.BackgroundColor3 = T.Button1
-	ChromaBtn.BackgroundTransparency = 0.15
 	ChromaBtn.Position = UDim2.new(0, 6, 1, -5)
 	ChromaBtn.Size = UDim2.fromOffset(18, 18)
 	ChromaBtn.Text = ""
@@ -458,7 +449,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local InputRegion = Instance.new("Frame")
 	InputRegion.BackgroundColor3 = T.Window3
-	InputRegion.BackgroundTransparency = 0.15
 	InputRegion.BorderSizePixel = 0
 	InputRegion.ClipsDescendants = true
 	InputRegion.Position = UDim2.new(0, 6, 0.75, 4)
@@ -479,7 +469,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 		local Container = Instance.new("Frame")
 		Container.BackgroundColor3 = T.Button1
-		Container.BackgroundTransparency = 0.15
 		Container.Position = UDim2.fromOffset(6, 6)
 		Container.Size = UDim2.new(1, -12, 0, 12)
 		Container.ZIndex = 503
@@ -705,7 +694,8 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 				local function computePos(position)
 					local x = (position.X - pickerPos.X) / pickerWidth
-					local y = (position.Y - pickerPos.Y) / pickerWidth					local radius, theta = cartToPolar(x - 0.5, y - 0.5)
+					local y = (position.Y - pickerPos.Y) / pickerWidth
+					local radius, theta = cartToPolar(x - 0.5, y - 0.5)
 					local centerMag = (Vector2.new(x, y) - center).Magnitude
 					if centerMag > 0.5 then
 						x, y = polarToCart(radius - (centerMag - 0.5), theta)
@@ -870,6 +860,7 @@ function SimpleKavo.CreateLib(title, themeName)
 	ScreenGui.ResetOnSpawn = false
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 	ScreenGui.DisplayOrder = 1000
+	ScreenGui.BackgroundTransparency = 1
 	local ok, err = pcall(function()
 		ScreenGui.Parent = game.Players.LocalPlayer.PlayerGui
 	end)
@@ -882,7 +873,7 @@ function SimpleKavo.CreateLib(title, themeName)
 	Main.Name = "Main"
 	Main.Parent = ScreenGui
 	Main.BackgroundColor3 = T.Window2
-	Main.BackgroundTransparency = 0
+	Main.BackgroundTransparency = 0.25
 	Main.Position = UDim2.new(0.3, 0, 0.3, 0)
 	Main.Size = UDim2.new(0, 520, 0, 380)
 	Main.BorderSizePixel = 0
@@ -902,7 +893,7 @@ function SimpleKavo.CreateLib(title, themeName)
 	Header.Name = "Header"
 	Header.Parent = Main
 	Header.BackgroundColor3 = T.Window1
-	Header.BackgroundTransparency = 0
+	Header.BackgroundTransparency = 0.25
 	Header.BorderSizePixel = 0
 	Header.Size = UDim2.new(1, 0, 0, 36)
 	Header.ZIndex = 50
@@ -911,6 +902,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 	local HeaderBot = Instance.new("Frame")
 	HeaderBot.BackgroundColor3 = T.Window1
+	HeaderBot.BackgroundTransparency = 0.25
 	HeaderBot.BorderSizePixel = 0
 	HeaderBot.Position = UDim2.new(0, 0, 1, -12)
 	HeaderBot.Size = UDim2.new(1, 0, 0, 12)
@@ -962,7 +954,7 @@ function SimpleKavo.CreateLib(title, themeName)
 	KeybindBtn.Name = "KeybindBtn"
 	KeybindBtn.Parent = Header
 	KeybindBtn.BackgroundColor3 = T.Button1
-	KeybindBtn.BackgroundTransparency = 0
+	KeybindBtn.BackgroundTransparency = 0.25
 	KeybindBtn.AnchorPoint = Vector2.new(1, 0.5)
 	KeybindBtn.Position = UDim2.new(1, -36, 0.5, 0)
 	KeybindBtn.Size = UDim2.new(0, 70, 0, 20)
@@ -979,7 +971,7 @@ function SimpleKavo.CreateLib(title, themeName)
 	local Close = Instance.new("TextButton")
 	Close.Parent = Header
 	Close.BackgroundColor3 = T.Button1
-	Close.BackgroundTransparency = 0
+	Close.BackgroundTransparency = 0.25
 	Close.AnchorPoint = Vector2.new(1, 0.5)
 	Close.Position = UDim2.new(1, -6, 0.5, 0)
 	Close.Size = UDim2.fromOffset(22, 22)
@@ -1074,7 +1066,7 @@ function SimpleKavo.CreateLib(title, themeName)
 	SideBar.Name = "SideBar"
 	SideBar.Parent = Main
 	SideBar.BackgroundColor3 = T.Window3
-	SideBar.BackgroundTransparency = 0
+	SideBar.BackgroundTransparency = 0.25
 	SideBar.BorderSizePixel = 0
 	SideBar.Position = UDim2.fromOffset(0, 36)
 	SideBar.Size = UDim2.new(0, 130, 1, -36)
@@ -1083,6 +1075,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 	local SideBarTop = Instance.new("Frame")
 	SideBarTop.BackgroundColor3 = T.Window3
+	SideBarTop.BackgroundTransparency = 0.25
 	SideBarTop.BorderSizePixel = 0
 	SideBarTop.Position = UDim2.fromOffset(0, 0)
 	SideBarTop.Size = UDim2.new(1, 0, 0, 12)
@@ -1091,6 +1084,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 	local SideBarRight = Instance.new("Frame")
 	SideBarRight.BackgroundColor3 = T.Window3
+	SideBarRight.BackgroundTransparency = 0.25
 	SideBarRight.BorderSizePixel = 0
 	SideBarRight.Position = UDim2.new(1, -12, 0, 0)
 	SideBarRight.Size = UDim2.new(0, 12, 1, 0)
@@ -1133,7 +1127,7 @@ function SimpleKavo.CreateLib(title, themeName)
 	Content.Name = "Content"
 	Content.Parent = Main
 	Content.BackgroundColor3 = T.Window2
-	Content.BackgroundTransparency = 0
+	Content.BackgroundTransparency = 0.25
 	Content.BorderSizePixel = 0
 	Content.Position = UDim2.fromOffset(132, 36)
 	Content.Size = UDim2.new(1, -132, 1, -36)
@@ -1143,6 +1137,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 	local ContentLeft = Instance.new("Frame")
 	ContentLeft.BackgroundColor3 = T.Window2
+	ContentLeft.BackgroundTransparency = 0.25
 	ContentLeft.BorderSizePixel = 0
 	ContentLeft.Position = UDim2.fromOffset(0, 0)
 	ContentLeft.Size = UDim2.new(0, 12, 1, 0)
@@ -1151,6 +1146,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 	local ContentTop = Instance.new("Frame")
 	ContentTop.BackgroundColor3 = T.Window2
+	ContentTop.BackgroundTransparency = 0.25
 	ContentTop.BorderSizePixel = 0
 	ContentTop.Position = UDim2.fromOffset(0, 0)
 	ContentTop.Size = UDim2.new(1, 0, 0, 12)
@@ -1255,7 +1251,7 @@ function SimpleKavo.CreateLib(title, themeName)
 		TabButton.Name = name
 		TabButton.Parent = TabMenu
 		TabButton.BackgroundColor3 = T.Button1
-		TabButton.BackgroundTransparency = 0
+		TabButton.BackgroundTransparency = 0.25
 		TabButton.BorderSizePixel = 0
 		TabButton.Size = UDim2.new(1, -10, 0, 22)
 		TabButton.Font = Enum.Font.Gotham
@@ -1336,7 +1332,7 @@ function SimpleKavo.CreateLib(title, themeName)
 			SectionFrame.Name = sectionName .. "_Section"
 			SectionFrame.Parent = TabContent
 			SectionFrame.BackgroundColor3 = T.Window3
-			SectionFrame.BackgroundTransparency = 0
+			SectionFrame.BackgroundTransparency = 0.15
 			SectionFrame.BorderSizePixel = 0
 			SectionFrame.Size = UDim2.new(0.95, 0, 0, 0)
 			SectionFrame.AutomaticSize = Enum.AutomaticSize.Y
@@ -1349,7 +1345,7 @@ function SimpleKavo.CreateLib(title, themeName)
 			SectionTitleBar.Name = "TitleBar"
 			SectionTitleBar.Parent = SectionFrame
 			SectionTitleBar.BackgroundColor3 = T.Window1
-			SectionTitleBar.BackgroundTransparency = 0
+			SectionTitleBar.BackgroundTransparency = 0.15
 			SectionTitleBar.BorderSizePixel = 0
 			SectionTitleBar.Size = UDim2.new(1, 0, 0, 20)
 			SectionTitleBar.ZIndex = 33
@@ -1357,6 +1353,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 			local STBot = Instance.new("Frame")
 			STBot.BackgroundColor3 = T.Window1
+			STBot.BackgroundTransparency = 0.15
 			STBot.BorderSizePixel = 0
 			STBot.Position = UDim2.new(0, 0, 1, -8)
 			STBot.Size = UDim2.new(1, 0, 0, 8)
@@ -1428,6 +1425,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local ControlFrame = Instance.new("Frame")
 				ControlFrame.BackgroundColor3 = T.Button1
+				ControlFrame.BackgroundTransparency = 0.15
 				ControlFrame.Name = btnName .. "_Control"
 				ControlFrame.Size = UDim2.new(1, -4, 0, description and 36 or 22)
 				ControlFrame.ZIndex = 34
@@ -1463,6 +1461,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				local BtnFrame = Instance.new("Frame")
 				BtnFrame.AnchorPoint = Vector2.new(1, 0.5)
 				BtnFrame.BackgroundColor3 = T.Button2
+				BtnFrame.BackgroundTransparency = 0.15
 				BtnFrame.Name = "Button"
 				BtnFrame.Position = UDim2.new(1, -5, 0.5, 0)
 				BtnFrame.Size = UDim2.fromOffset(18, 18)
@@ -1522,6 +1521,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local ControlFrame = Instance.new("Frame")
 				ControlFrame.BackgroundColor3 = T.Button1
+				ControlFrame.BackgroundTransparency = 0.15
 				ControlFrame.Name = toggleName .. "_Control"
 				ControlFrame.Size = UDim2.new(1, -4, 0, description and 36 or 22)
 				ControlFrame.ZIndex = 34
@@ -1557,6 +1557,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				local TogFrame = Instance.new("Frame")
 				TogFrame.AnchorPoint = Vector2.new(1, 0.5)
 				TogFrame.BackgroundColor3 = T.Button2
+				TogFrame.BackgroundTransparency = 0.15
 				TogFrame.Name = "Toggle"
 				TogFrame.Position = UDim2.new(1, -5, 0.5, 0)
 				TogFrame.Size = UDim2.fromOffset(18, 18)
@@ -1652,6 +1653,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local ControlFrame = Instance.new("Frame")
 				ControlFrame.BackgroundColor3 = T.Button1
+				ControlFrame.BackgroundTransparency = 0.15
 				ControlFrame.Name = sliderName .. "_Control"
 				ControlFrame.Size = UDim2.new(1, -4, 0, 22)
 				ControlFrame.ZIndex = 34
@@ -1662,6 +1664,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local SliderContainer = Instance.new("Frame")
 				SliderContainer.BackgroundColor3 = T.Button2
+				SliderContainer.BackgroundTransparency = 0.15
 				SliderContainer.Name = "SliderContainer"
 				SliderContainer.Position = UDim2.fromOffset(5, 5)
 				SliderContainer.Size = UDim2.new(1, -10, 0, 12)
@@ -1674,7 +1677,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				local SliderFill = Instance.new("Frame")
 				SliderFill.Active = false
 				SliderFill.BackgroundColor3 = T.Primary
-				SliderFill.BackgroundTransparency = 0.4
+				SliderFill.BackgroundTransparency = 0.5
 				SliderFill.BorderSizePixel = 0
 				SliderFill.Name = "Fill"
 				SliderFill.Size = UDim2.fromScale(math.clamp((default - min) / (max - min), 0, 1), 1)
@@ -1795,6 +1798,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local ControlFrame = Instance.new("Frame")
 				ControlFrame.BackgroundColor3 = T.Button1
+				ControlFrame.BackgroundTransparency = 0.15
 				ControlFrame.Name = sliderName .. "_Control"
 				ControlFrame.Size = UDim2.new(1, -4, 0, 22)
 				ControlFrame.ZIndex = 34
@@ -1805,6 +1809,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local SliderContainer = Instance.new("Frame")
 				SliderContainer.BackgroundColor3 = T.Button2
+				SliderContainer.BackgroundTransparency = 0.15
 				SliderContainer.Name = "SliderContainer"
 				SliderContainer.Position = UDim2.fromOffset(5, 5)
 				SliderContainer.Size = UDim2.new(1, -10, 0, 12)
@@ -1817,7 +1822,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				local SliderFill = Instance.new("Frame")
 				SliderFill.Active = false
 				SliderFill.BackgroundColor3 = T.Primary
-				SliderFill.BackgroundTransparency = 0.4
+				SliderFill.BackgroundTransparency = 0.5
 				SliderFill.BorderSizePixel = 0
 				SliderFill.Name = "Fill"
 				SliderFill.Size = UDim2.fromScale(math.clamp((default - min) / (max - min), 0, 1), 1)
@@ -1939,6 +1944,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				MainButton.Name = "MainButton"
 				MainButton.Parent = DropFrame
 				MainButton.BackgroundColor3 = T.Button1
+				MainButton.BackgroundTransparency = 0.15
 				MainButton.Size = UDim2.fromScale(1, 1)
 				MainButton.Position = UDim2.fromOffset(0, 0)
 				MainButton.Font = Enum.Font.Gotham
@@ -1981,7 +1987,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				OptionsFrame.Name = "OptionsFrame"
 				OptionsFrame.Parent = DropFrame
 				OptionsFrame.BackgroundColor3 = T.Window3
-				OptionsFrame.BackgroundTransparency = 0
+				OptionsFrame.BackgroundTransparency = 0.15
 				OptionsFrame.BorderSizePixel = 0
 				OptionsFrame.Position = UDim2.fromOffset(0, 26)
 				OptionsFrame.Size = UDim2.new(1, 0, 0, 0)
@@ -2013,6 +2019,7 @@ function SimpleKavo.CreateLib(title, themeName)
 						OptButton.Name = tostring(option)
 						OptButton.Parent = OptionsFrame
 						OptButton.BackgroundColor3 = T.Button1
+						OptButton.BackgroundTransparency = 0.15
 						OptButton.Size = UDim2.new(1, -8, 0, 18)
 						OptButton.Font = Enum.Font.Gotham
 						OptButton.Text = tostring(option)
@@ -2125,6 +2132,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local ControlFrame = Instance.new("Frame")
 				ControlFrame.BackgroundColor3 = T.Button1
+				ControlFrame.BackgroundTransparency = 0.15
 				ControlFrame.Name = pickerName .. "_Control"
 				ControlFrame.Size = UDim2.new(1, -4, 0, 22)
 				ControlFrame.ZIndex = 34
@@ -2160,6 +2168,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				local ColorDisplay = Instance.new("Frame")
 				ColorDisplay.AnchorPoint = Vector2.new(1, 0.5)
 				ColorDisplay.BackgroundColor3 = T.Button2
+				ColorDisplay.BackgroundTransparency = 0.15
 				ColorDisplay.Name = "ColorDisplay"
 				ColorDisplay.Position = UDim2.new(1, -5, 0.5, 0)
 				ColorDisplay.Size = UDim2.fromOffset(18, 18)
@@ -2290,6 +2299,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				MainButton.Name = "MainButton"
 				MainButton.Parent = DropFrame
 				MainButton.BackgroundColor3 = T.Button1
+				MainButton.BackgroundTransparency = 0.15
 				MainButton.Size = UDim2.fromScale(1, 1)
 				MainButton.Position = UDim2.fromOffset(0, 0)
 				MainButton.Font = Enum.Font.Gotham
@@ -2332,7 +2342,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				OptionsFrame.Name = "OptionsFrame"
 				OptionsFrame.Parent = DropFrame
 				OptionsFrame.BackgroundColor3 = T.Window3
-				OptionsFrame.BackgroundTransparency = 0
+				OptionsFrame.BackgroundTransparency = 0.15
 				OptionsFrame.BorderSizePixel = 0
 				OptionsFrame.Position = UDim2.fromOffset(0, 26)
 				OptionsFrame.Size = UDim2.new(1, 0, 0, 0)
@@ -2425,6 +2435,7 @@ function SimpleKavo.CreateLib(title, themeName)
 						local CPDisplay = Instance.new("TextButton")
 						CPDisplay.AnchorPoint = Vector2.new(1, 0.5)
 						CPDisplay.BackgroundColor3 = T.Button2
+						CPDisplay.BackgroundTransparency = 0.15
 						CPDisplay.Name = "ColorDisplay"
 						CPDisplay.Position = UDim2.new(1, -8, 0.5, 0)
 						CPDisplay.Size = UDim2.fromOffset(18, 18)
@@ -2513,6 +2524,7 @@ function SimpleKavo.CreateLib(title, themeName)
 						local TogBtn = Instance.new("TextButton")
 						TogBtn.AnchorPoint = Vector2.new(1, 0)
 						TogBtn.BackgroundColor3 = T.Button2
+						TogBtn.BackgroundTransparency = 0.15
 						TogBtn.Name = "Toggle"
 						TogBtn.Position = UDim2.new(1, -8, 0, 5)
 						TogBtn.Size = UDim2.fromOffset(18, 18)
@@ -2593,6 +2605,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 						local SliderBar = Instance.new("Frame")
 						SliderBar.BackgroundColor3 = T.Button2
+						SliderBar.BackgroundTransparency = 0.15
 						SliderBar.Name = "Bar"
 						SliderBar.Position = UDim2.new(0, 10, 0, barYOffset)
 						SliderBar.Size = UDim2.new(1, -20, 0, 6)
@@ -2605,7 +2618,7 @@ function SimpleKavo.CreateLib(title, themeName)
 						local initPercent = math.clamp((sliderDefault - sliderMin) / (sliderMax - sliderMin), 0, 1)
 						local SliderFill = Instance.new("Frame")
 						SliderFill.BackgroundColor3 = T.Primary
-						SliderFill.BackgroundTransparency = 0.4
+						SliderFill.BackgroundTransparency = 0.5
 						SliderFill.Name = "Fill"
 						SliderFill.Size = UDim2.fromScale(initPercent, 1)
 						SliderFill.ZIndex = 39
@@ -2688,6 +2701,7 @@ function SimpleKavo.CreateLib(title, themeName)
 						local KBButton = Instance.new("TextButton")
 						KBButton.AnchorPoint = Vector2.new(1, 0.5)
 						KBButton.BackgroundColor3 = T.Button2
+						KBButton.BackgroundTransparency = 0.15
 						KBButton.Name = "KeybindButton"
 						KBButton.Position = UDim2.new(1, -8, 0.5, 0)
 						KBButton.Size = UDim2.new(0, 72, 0, 18)
@@ -2920,7 +2934,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				TextBox.Name = "Input"
 				TextBox.Parent = ControlFrame
 				TextBox.BackgroundColor3 = T.Button1
-				TextBox.BackgroundTransparency = 0
+				TextBox.BackgroundTransparency = 0.15
 				TextBox.Position = UDim2.fromOffset(0, 0)
 				TextBox.Size = UDim2.fromScale(1, 1)
 				TextBox.Font = Enum.Font.Gotham
@@ -2974,6 +2988,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local ControlFrame = Instance.new("Frame")
 				ControlFrame.BackgroundColor3 = T.Button1
+				ControlFrame.BackgroundTransparency = 0.15
 				ControlFrame.Name = kbName .. "_Control"
 				ControlFrame.Size = UDim2.new(1, -4, 0, 22)
 				ControlFrame.ZIndex = 34
