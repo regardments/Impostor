@@ -879,6 +879,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	SimpleKavo:DraggingEnabled(PickerHeader, PickerGui)
 
 	local pickerObj = {}
+	pickerObj.guiRef = PickerGui
 
 	pickerObj.destroy = function()
 		if chromaCon then chromaCon:Disconnect() end
@@ -2318,6 +2319,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				local elementOrder = #SectionContent:GetChildren()
 				local currentColor = defaultColor or Color3.fromRGB(255, 255, 255)
 				local pickerWindowObj = nil
+				local pickerOpening = false
 
 				local ControlFrame = Instance.new("Frame")
 				ControlFrame.BackgroundTransparency = 1
@@ -2401,27 +2403,37 @@ function SimpleKavo.CreateLib(title, themeName)
 				end)
 
 				ClickSensor.MouseButton1Click:Connect(function()
-				    if pickerWindowObj then
-				        pickerWindowObj.destroy()
-				        pickerWindowObj = nil
-				    else
-				        local libPos = Main.AbsolutePosition
-				        local libSize = Main.AbsoluteSize
-				        local centerX = libPos.X + (libSize.X / 2) - 150
-				        local centerY = libPos.Y + (libSize.Y / 2) - 150
-				        pickerWindowObj = CreatePickerWindow(T, pickerName, currentColor, ScreenGui, function(color)
-				            currentColor = color
-				            ColorInner.BackgroundColor3 = color
-				            if callback then callback(color) end
-				        end)
-				        if pickerWindowObj and pickerWindowObj.guiRef then
-				            pickerWindowObj.guiRef.Position = UDim2.fromOffset(
-				                math.clamp(centerX, 50, 1200),
-				                math.clamp(centerY, 50, 700)
-				            )
-				        end
-				    end
+					if pickerOpening then return end
+					if pickerWindowObj then
+						pickerOpening = true
+						pickerWindowObj.destroy()
+						pickerWindowObj = nil
+						task.delay(0.1, function()
+							pickerOpening = false
+						end)
+					else
+						pickerOpening = true
+						local libPos = Main.AbsolutePosition
+						local libSize = Main.AbsoluteSize
+						local centerX = libPos.X + (libSize.X / 2) - 150
+						local centerY = libPos.Y + (libSize.Y / 2) - 150
+						pickerWindowObj = CreatePickerWindow(T, pickerName, currentColor, ScreenGui, function(color)
+							currentColor = color
+							ColorInner.BackgroundColor3 = color
+							if callback then callback(color) end
+						end)
+						if pickerWindowObj and pickerWindowObj.guiRef then
+							pickerWindowObj.guiRef.Position = UDim2.fromOffset(
+								math.clamp(centerX, 50, 1200),
+								math.clamp(centerY, 50, 700)
+							)
+						end
+						task.delay(0.1, function()
+							pickerOpening = false
+						end)
+					end
 				end)
+
 				local pickerObj = { Frame = ControlFrame }
 				function pickerObj:Set(color)
 					if typeof(color) ~= "Color3" then return end
@@ -2580,6 +2592,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				local totalOptionsHeight = 0
 				local keybindInputConns = {}
 				local colorPickerWindows = {}
+				local colorPickerOpening = {}
 
 				for i, opt in ipairs(normOptions) do
 					local t = opt.type
@@ -2627,6 +2640,7 @@ function SimpleKavo.CreateLib(title, themeName)
 					if isColorPicker then
 						local initColor = allStates[opt.name].colorValue
 						local cpWindowObj = nil
+						colorPickerOpening[opt.name] = false
 
 						local CPLabel = Instance.new("TextLabel")
 						CPLabel.BackgroundTransparency = 1
@@ -2691,31 +2705,41 @@ function SimpleKavo.CreateLib(title, themeName)
 							Tween(CPDisplayStroke, { Color = T.Stroke }, 0.2, 2)
 						end)
 
+						local optName = opt.name
 						CPDisplay.MouseButton1Click:Connect(function()
-						    if cpWindowObj then
-						        cpWindowObj.destroy()
-						        cpWindowObj = nil
-						        colorPickerWindows[opt.name] = nil
-						    else
-						        local libPos = Main.AbsolutePosition
-						        local libSize = Main.AbsoluteSize
-						        local centerX = libPos.X + (libSize.X / 2) - 150
-						        local centerY = libPos.Y + (libSize.Y / 2) - 150
-						        cpWindowObj = CreatePickerWindow(T, opt.name, allStates[opt.name].colorValue, ScreenGui, function(color)
-						            allStates[opt.name].colorValue = color
-						            CPInner.BackgroundColor3 = color
-						            if callback then
-						                callback(opt.name, nil, nil, allStates)
-						            end
-						        end)
-						        if cpWindowObj and cpWindowObj.guiRef then
-						            cpWindowObj.guiRef.Position = UDim2.fromOffset(
-						                math.clamp(centerX, 50, 1200),
-						                math.clamp(centerY, 50, 700)
-						            )
-						        end
-						        colorPickerWindows[opt.name] = cpWindowObj
-						    end
+							if colorPickerOpening[optName] then return end
+							if cpWindowObj then
+								colorPickerOpening[optName] = true
+								cpWindowObj.destroy()
+								cpWindowObj = nil
+								colorPickerWindows[optName] = nil
+								task.delay(0.1, function()
+									colorPickerOpening[optName] = false
+								end)
+							else
+								colorPickerOpening[optName] = true
+								local libPos = Main.AbsolutePosition
+								local libSize = Main.AbsoluteSize
+								local centerX = libPos.X + (libSize.X / 2) - 150
+								local centerY = libPos.Y + (libSize.Y / 2) - 150
+								cpWindowObj = CreatePickerWindow(T, optName, allStates[optName].colorValue, ScreenGui, function(color)
+									allStates[optName].colorValue = color
+									CPInner.BackgroundColor3 = color
+									if callback then
+										callback(optName, nil, nil, allStates)
+									end
+								end)
+								if cpWindowObj and cpWindowObj.guiRef then
+									cpWindowObj.guiRef.Position = UDim2.fromOffset(
+										math.clamp(centerX, 50, 1200),
+										math.clamp(centerY, 50, 700)
+									)
+								end
+								colorPickerWindows[optName] = cpWindowObj
+								task.delay(0.1, function()
+									colorPickerOpening[optName] = false
+								end)
+							end
 						end)
 
 						rows[opt.name] = rows[opt.name] or {}
@@ -3063,7 +3087,7 @@ function SimpleKavo.CreateLib(title, themeName)
 						local fp = DropFrame.AbsolutePosition
 						local fs = DropFrame.AbsoluteSize
 						local shouldClose = true
-						
+
 						for _, cpw in pairs(colorPickerWindows) do
 							if cpw and cpw.guiRef and cpw.guiRef.Parent then
 								local cpPos = cpw.guiRef.AbsolutePosition
@@ -3075,7 +3099,7 @@ function SimpleKavo.CreateLib(title, themeName)
 								end
 							end
 						end
-						
+
 						if shouldClose and not (pos.X >= fp.X and pos.X <= fp.X + fs.X and
 								pos.Y >= fp.Y and pos.Y <= fp.Y + fs.Y) then
 							toggleOpen()
@@ -3379,784 +3403,6 @@ function SimpleKavo.CreateLib(title, themeName)
 		end,
 		ChangeTheme = updateTheme,
 	}
-end
-
-do
-	local _mt = getmetatable(CreatePickerWindow) or {}
-	local _orig = CreatePickerWindow
-	CreatePickerWindow = function(T, pickerName, initialColor, screenGui, onColorChanged)
-		local obj = _orig(T, pickerName, initialColor, screenGui, onColorChanged)
-		local gui = screenGui:FindFirstChild("ColorPickerWindow")
-		if not gui then
-			for _, v in ipairs(screenGui:GetChildren()) do
-				if v.Name == "ColorPickerWindow" then gui = v break end
-			end
-		end
-		obj.guiRef = gui
-		return obj
-	end
-end
-
-local _realCreate = CreatePickerWindow
-CreatePickerWindow = function(T, pickerName, initialColor, screenGui, onColorChanged)
-	local guiRef = nil
-	local _onChanged = onColorChanged
-
-	local PickerGui = Instance.new("Frame")
-	PickerGui.Name = "ColorPickerWindow"
-	PickerGui.BackgroundColor3 = T.Window2
-	PickerGui.BorderSizePixel = 0
-	PickerGui.Size = UDim2.fromOffset(300, 300)
-	PickerGui.Position = UDim2.fromOffset(200, 150)
-	PickerGui.ZIndex = 500
-	PickerGui.Parent = screenGui
-
-	local hue, sat, val = initialColor:ToHSV()
-	local red, green, blue = initialColor.R * 255, initialColor.G * 255, initialColor.B * 255
-	local chromaEnabled = false
-	local chromaCon = nil
-	local chromaSpeed = 0.1
-	local pickerMoving = false
-
-	local PickerScale = Instance.new("UIScale")
-	PickerScale.Scale = 1
-	PickerScale.Parent = PickerGui
-
-	local PickerStroke = Instance.new("UIStroke")
-	PickerStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	PickerStroke.Color = T.Stroke
-	PickerStroke.LineJoinMode = Enum.LineJoinMode.Round
-	PickerStroke.Thickness = 1
-	PickerStroke.Parent = PickerGui
-
-	local PickerShadow = Instance.new("ImageLabel")
-	PickerShadow.AnchorPoint = Vector2.new(0.5, 0.5)
-	PickerShadow.BackgroundTransparency = 1
-	PickerShadow.BorderSizePixel = 0
-	PickerShadow.Image = "rbxassetid://7331400934"
-	PickerShadow.ImageColor3 = Color3.fromRGB(0, 0, 5)
-	PickerShadow.Position = UDim2.fromScale(0.5, 0.5)
-	PickerShadow.ScaleType = Enum.ScaleType.Slice
-	PickerShadow.Size = UDim2.new(1, 50, 1, 50)
-	PickerShadow.SliceCenter = Rect.new(40, 40, 260, 260)
-	PickerShadow.ZIndex = 499
-	PickerShadow.Parent = PickerGui
-
-	local PickerTrim = Instance.new("Frame")
-	PickerTrim.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	PickerTrim.BorderSizePixel = 0
-	PickerTrim.Position = UDim2.fromOffset(0, -1)
-	PickerTrim.Size = UDim2.new(1, 0, 0, 1)
-	PickerTrim.ZIndex = 510
-	PickerTrim.Parent = PickerGui
-
-	local PickerTrimGrad = Instance.new("UIGradient")
-	PickerTrimGrad.Color = ColorSequence.new(T.Primary, T.Secondary)
-	PickerTrimGrad.Parent = PickerTrim
-
-	local PickerHeader = Instance.new("Frame")
-	PickerHeader.Name = "Header"
-	PickerHeader.BackgroundColor3 = T.Window1
-	PickerHeader.BorderSizePixel = 0
-	PickerHeader.Size = UDim2.new(1, 0, 0, 26)
-	PickerHeader.ZIndex = 501
-	PickerHeader.ClipsDescendants = true
-	PickerHeader.Parent = PickerGui
-
-	local PickerHeaderStroke = Instance.new("UIStroke")
-	PickerHeaderStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	PickerHeaderStroke.Color = T.Stroke
-	PickerHeaderStroke.LineJoinMode = Enum.LineJoinMode.Round
-	PickerHeaderStroke.Thickness = 1
-	PickerHeaderStroke.Parent = PickerHeader
-
-	local PickerIconL = Instance.new("ImageLabel")
-	PickerIconL.BackgroundTransparency = 1
-	PickerIconL.BorderSizePixel = 0
-	PickerIconL.Image = "rbxassetid://9658988382"
-	PickerIconL.ImageColor3 = T.Primary
-	PickerIconL.Position = UDim2.fromOffset(2, 2)
-	PickerIconL.Size = UDim2.fromOffset(22, 22)
-	PickerIconL.ZIndex = 502
-	PickerIconL.Parent = PickerHeader
-
-	local PickerTitleL = Instance.new("TextLabel")
-	PickerTitleL.BackgroundTransparency = 1
-	PickerTitleL.Font = Enum.Font.RobotoCondensed
-	PickerTitleL.Position = UDim2.fromOffset(24, 0)
-	PickerTitleL.Size = UDim2.new(1, -50, 1, 0)
-	PickerTitleL.Text = pickerName
-	PickerTitleL.TextColor3 = T.TextPrimary
-	PickerTitleL.TextSize = 17
-	PickerTitleL.TextXAlignment = Enum.TextXAlignment.Left
-	PickerTitleL.TextYAlignment = Enum.TextYAlignment.Center
-	PickerTitleL.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-	PickerTitleL.TextStrokeTransparency = 0.8
-	PickerTitleL.ZIndex = 502
-	PickerTitleL.Parent = PickerHeader
-
-	local PickerTitlePadL = Instance.new("UIPadding")
-	PickerTitlePadL.PaddingLeft = UDim.new(0, 4)
-	PickerTitlePadL.Parent = PickerTitleL
-
-	local CloseBtn = Instance.new("TextButton")
-	CloseBtn.AnchorPoint = Vector2.new(1, 0)
-	CloseBtn.AutoButtonColor = false
-	CloseBtn.BackgroundColor3 = T.Button1
-	CloseBtn.BorderSizePixel = 0
-	CloseBtn.Position = UDim2.new(1, -3, 0, 2)
-	CloseBtn.Size = UDim2.fromOffset(20, 20)
-	CloseBtn.Text = ""
-	CloseBtn.ZIndex = 502
-	CloseBtn.Parent = PickerHeader
-
-	local CloseBtnCorner = Instance.new("UICorner")
-	CloseBtnCorner.CornerRadius = UDim.new(0, 2)
-	CloseBtnCorner.Parent = CloseBtn
-
-	local CloseBtnStroke = Instance.new("UIStroke")
-	CloseBtnStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	CloseBtnStroke.Color = T.Stroke
-	CloseBtnStroke.LineJoinMode = Enum.LineJoinMode.Round
-	CloseBtnStroke.Thickness = 1
-	CloseBtnStroke.Parent = CloseBtn
-
-	local CloseBtnIcon = Instance.new("ImageLabel")
-	CloseBtnIcon.BackgroundTransparency = 1
-	CloseBtnIcon.BorderSizePixel = 0
-	CloseBtnIcon.Image = "rbxassetid://9801460300"
-	CloseBtnIcon.ImageColor3 = Color3.fromRGB(255, 255, 255)
-	CloseBtnIcon.Size = UDim2.fromScale(1, 1)
-	CloseBtnIcon.ZIndex = 502
-	CloseBtnIcon.Parent = CloseBtn
-
-	local CloseBtnIconGrad2 = Instance.new("UIGradient")
-	CloseBtnIconGrad2.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(200, 200, 200))
-	CloseBtnIconGrad2.Rotation = 90
-	CloseBtnIconGrad2.Parent = CloseBtnIcon
-
-	local Region = Instance.new("Frame")
-	Region.BackgroundColor3 = T.Window2
-	Region.BorderSizePixel = 0
-	Region.ClipsDescendants = true
-	Region.Position = UDim2.fromOffset(0, 27)
-	Region.Size = UDim2.new(1, 0, 1, -27)
-	Region.ZIndex = 501
-	Region.Parent = PickerGui
-
-	local RegionStroke = Instance.new("UIStroke")
-	RegionStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	RegionStroke.Color = T.Stroke
-	RegionStroke.LineJoinMode = Enum.LineJoinMode.Round
-	RegionStroke.Thickness = 1
-	RegionStroke.Parent = Region
-
-	local PickerRegion = Instance.new("Frame")
-	PickerRegion.BackgroundColor3 = T.Window2
-	PickerRegion.BorderSizePixel = 0
-	PickerRegion.ClipsDescendants = true
-	PickerRegion.Position = UDim2.fromOffset(2, 2)
-	PickerRegion.Size = UDim2.new(1, -4, 0.75, -4)
-	PickerRegion.ZIndex = 502
-	PickerRegion.Parent = Region
-
-	local PickerRegionStroke = Instance.new("UIStroke")
-	PickerRegionStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	PickerRegionStroke.Color = T.Stroke
-	PickerRegionStroke.LineJoinMode = Enum.LineJoinMode.Round
-	PickerRegionStroke.Thickness = 1
-	PickerRegionStroke.Parent = PickerRegion
-
-	local ColorWheel = Instance.new("ImageLabel")
-	ColorWheel.AnchorPoint = Vector2.new(0.5, 0.5)
-	ColorWheel.BackgroundTransparency = 1
-	ColorWheel.Image = "rbxassetid://9801454501"
-	ColorWheel.Position = UDim2.fromScale(0.5, 0.5)
-	ColorWheel.Size = UDim2.fromScale(0.7, 0.7)
-	ColorWheel.SizeConstraint = Enum.SizeConstraint.RelativeYY
-	ColorWheel.ZIndex = 504
-	ColorWheel.Parent = PickerRegion
-
-	local WheelOutline = Instance.new("Frame")
-	WheelOutline.BackgroundColor3 = T.Stroke
-	WheelOutline.BorderSizePixel = 0
-	WheelOutline.Position = UDim2.fromOffset(1, 1)
-	WheelOutline.Size = UDim2.new(1, -2, 1, -2)
-	WheelOutline.SizeConstraint = Enum.SizeConstraint.RelativeYY
-	WheelOutline.ZIndex = 503
-	WheelOutline.Parent = ColorWheel
-
-	local WheelOutlineCorner = Instance.new("UICorner")
-	WheelOutlineCorner.CornerRadius = UDim.new(1, 0)
-	WheelOutlineCorner.Parent = WheelOutline
-
-	local WheelOutlineStroke = Instance.new("UIStroke")
-	WheelOutlineStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	WheelOutlineStroke.Color = T.Stroke
-	WheelOutlineStroke.LineJoinMode = Enum.LineJoinMode.Round
-	WheelOutlineStroke.Thickness = 2
-	WheelOutlineStroke.Parent = WheelOutline
-
-	local PickerCursor = Instance.new("Frame")
-	PickerCursor.AnchorPoint = Vector2.new(0.5, 0.5)
-	PickerCursor.BackgroundTransparency = 1
-	PickerCursor.Size = UDim2.fromOffset(8, 8)
-	PickerCursor.ZIndex = 506
-	PickerCursor.Parent = ColorWheel
-
-	do
-		local radius = sat / 2
-		local theta = (hue * (math.pi * 2)) - (math.pi * 2)
-		local cx, cy = radius * math.cos(theta), radius * math.sin(theta)
-		PickerCursor.Position = UDim2.fromScale(cx + 0.5, cy + 0.5)
-	end
-
-	local PickerCursorCorner = Instance.new("UICorner")
-	PickerCursorCorner.CornerRadius = UDim.new(1, 0)
-	PickerCursorCorner.Parent = PickerCursor
-
-	local PickerCursorStroke = Instance.new("UIStroke")
-	PickerCursorStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	PickerCursorStroke.Color = Color3.fromRGB(255, 255, 255)
-	PickerCursorStroke.LineJoinMode = Enum.LineJoinMode.Round
-	PickerCursorStroke.Thickness = 1
-	PickerCursorStroke.Parent = PickerCursor
-
-	local PickerCursorOuter = Instance.new("Frame")
-	PickerCursorOuter.BackgroundTransparency = 1
-	PickerCursorOuter.Position = UDim2.fromOffset(-1, -1)
-	PickerCursorOuter.Size = UDim2.fromOffset(10, 10)
-	PickerCursorOuter.ZIndex = 506
-	PickerCursorOuter.Parent = PickerCursor
-
-	local PickerCursorOuterCorner = Instance.new("UICorner")
-	PickerCursorOuterCorner.CornerRadius = UDim.new(1, 0)
-	PickerCursorOuterCorner.Parent = PickerCursorOuter
-
-	local PickerCursorOuterStroke = Instance.new("UIStroke")
-	PickerCursorOuterStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	PickerCursorOuterStroke.Color = Color3.fromRGB(0, 0, 5)
-	PickerCursorOuterStroke.LineJoinMode = Enum.LineJoinMode.Round
-	PickerCursorOuterStroke.Thickness = 1
-	PickerCursorOuterStroke.Parent = PickerCursorOuter
-
-	local ValSlider = Instance.new("Frame")
-	ValSlider.AnchorPoint = Vector2.new(0.5, 1)
-	ValSlider.BackgroundTransparency = 1
-	ValSlider.Position = UDim2.fromScale(0.5, 1)
-	ValSlider.Size = UDim2.new(0.8, 0, 0, 24)
-	ValSlider.ZIndex = 503
-	ValSlider.Parent = PickerRegion
-
-	local ValSliderContainer = Instance.new("Frame")
-	ValSliderContainer.BackgroundColor3 = Color3.fromHSV(hue, sat, 1)
-	ValSliderContainer.Position = UDim2.fromOffset(3, 6)
-	ValSliderContainer.Size = UDim2.new(1, -6, 0, 12)
-	ValSliderContainer.ZIndex = 503
-	ValSliderContainer.Parent = ValSlider
-
-	local ValSliderContainerCorner = Instance.new("UICorner")
-	ValSliderContainerCorner.CornerRadius = UDim.new(0, 2)
-	ValSliderContainerCorner.Parent = ValSliderContainer
-
-	local ValSliderContainerStroke = Instance.new("UIStroke")
-	ValSliderContainerStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	ValSliderContainerStroke.Color = T.Stroke
-	ValSliderContainerStroke.LineJoinMode = Enum.LineJoinMode.Round
-	ValSliderContainerStroke.Thickness = 1
-	ValSliderContainerStroke.Parent = ValSliderContainer
-
-	local ValGradientFrame = Instance.new("Frame")
-	ValGradientFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	ValGradientFrame.BorderSizePixel = 0
-	ValGradientFrame.Size = UDim2.fromScale(1, 1)
-	ValGradientFrame.ZIndex = 504
-	ValGradientFrame.Parent = ValSliderContainer
-
-	local ValGradient = Instance.new("UIGradient")
-	ValGradient.Color = ColorSequence.new(Color3.fromRGB(0, 0, 0))
-	ValGradient.Rotation = 180
-	ValGradient.Transparency = NumberSequence.new({
-		NumberSequenceKeypoint.new(0, 1),
-		NumberSequenceKeypoint.new(1, 0),
-	})
-	ValGradient.Parent = ValGradientFrame
-
-	local ValGradientCorner = Instance.new("UICorner")
-	ValGradientCorner.CornerRadius = UDim.new(0, 2)
-	ValGradientCorner.Parent = ValGradientFrame
-
-	local ValCursor = Instance.new("Frame")
-	ValCursor.AnchorPoint = Vector2.new(0.5, 0)
-	ValCursor.BackgroundTransparency = 1
-	ValCursor.Position = UDim2.fromScale(val, 0)
-	ValCursor.Size = UDim2.fromOffset(4, 12)
-	ValCursor.ZIndex = 504
-	ValCursor.Parent = ValSliderContainer
-
-	local ValCursorCorner = Instance.new("UICorner")
-	ValCursorCorner.CornerRadius = UDim.new(0, 2)
-	ValCursorCorner.Parent = ValCursor
-
-	local ValCursorStroke = Instance.new("UIStroke")
-	ValCursorStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	ValCursorStroke.Color = Color3.fromRGB(255, 255, 255)
-	ValCursorStroke.LineJoinMode = Enum.LineJoinMode.Round
-	ValCursorStroke.Thickness = 1
-	ValCursorStroke.Parent = ValCursor
-
-	local ValCursorOuter = Instance.new("Frame")
-	ValCursorOuter.AnchorPoint = Vector2.new(0.5, 0.5)
-	ValCursorOuter.BackgroundTransparency = 1
-	ValCursorOuter.Position = UDim2.fromScale(0.5, 0.5)
-	ValCursorOuter.Size = UDim2.new(1, 2, 1, 2)
-	ValCursorOuter.ZIndex = 504
-	ValCursorOuter.Parent = ValCursor
-
-	local ValCursorOuterCorner = Instance.new("UICorner")
-	ValCursorOuterCorner.CornerRadius = UDim.new(0, 2)
-	ValCursorOuterCorner.Parent = ValCursorOuter
-
-	local ValCursorOuterStroke = Instance.new("UIStroke")
-	ValCursorOuterStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	ValCursorOuterStroke.Color = Color3.fromRGB(0, 0, 5)
-	ValCursorOuterStroke.LineJoinMode = Enum.LineJoinMode.Round
-	ValCursorOuterStroke.Thickness = 1
-	ValCursorOuterStroke.Parent = ValCursorOuter
-
-	local ChromaBtn = Instance.new("TextButton")
-	ChromaBtn.Active = true
-	ChromaBtn.AnchorPoint = Vector2.new(0, 1)
-	ChromaBtn.AutoButtonColor = false
-	ChromaBtn.BackgroundColor3 = T.Button1
-	ChromaBtn.Position = UDim2.new(0, 8, 1, -4)
-	ChromaBtn.Size = UDim2.fromOffset(16, 16)
-	ChromaBtn.Text = ""
-	ChromaBtn.ZIndex = 503
-	ChromaBtn.Parent = PickerRegion
-
-	local ChromaBtnCorner = Instance.new("UICorner")
-	ChromaBtnCorner.CornerRadius = UDim.new(0, 2)
-	ChromaBtnCorner.Parent = ChromaBtn
-
-	local ChromaBtnStroke = Instance.new("UIStroke")
-	ChromaBtnStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	ChromaBtnStroke.Color = T.Stroke
-	ChromaBtnStroke.LineJoinMode = Enum.LineJoinMode.Round
-	ChromaBtnStroke.Thickness = 1
-	ChromaBtnStroke.Parent = ChromaBtn
-
-	local ChromaBtnIcon = Instance.new("ImageLabel")
-	ChromaBtnIcon.BackgroundTransparency = 1
-	ChromaBtnIcon.BorderSizePixel = 0
-	ChromaBtnIcon.Image = "rbxassetid://9841673199"
-	ChromaBtnIcon.ImageColor3 = Color3.fromRGB(255, 255, 255)
-	ChromaBtnIcon.Rotation = 0
-	ChromaBtnIcon.Size = UDim2.fromScale(1, 1)
-	ChromaBtnIcon.ZIndex = 503
-	ChromaBtnIcon.Parent = ChromaBtn
-
-	local InputRegion = Instance.new("Frame")
-	InputRegion.BackgroundColor3 = T.Window2
-	InputRegion.BorderSizePixel = 0
-	InputRegion.ClipsDescendants = true
-	InputRegion.Position = UDim2.new(0, 2, 0.75, 2)
-	InputRegion.Size = UDim2.new(1, -4, 0.25, -4)
-	InputRegion.ZIndex = 502
-	InputRegion.Parent = Region
-
-	local InputRegionStroke = Instance.new("UIStroke")
-	InputRegionStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	InputRegionStroke.Color = T.Stroke
-	InputRegionStroke.LineJoinMode = Enum.LineJoinMode.Round
-	InputRegionStroke.Thickness = 1
-	InputRegionStroke.Parent = InputRegion
-
-	local function makeRGBSliderInner(yOffset, labelText, initVal)
-		local SliderFrame = Instance.new("Frame")
-		SliderFrame.BackgroundTransparency = 1
-		SliderFrame.Position = UDim2.fromOffset(0, yOffset)
-		SliderFrame.Size = UDim2.new(1, 0, 0, 24)
-		SliderFrame.ZIndex = 503
-		SliderFrame.Parent = InputRegion
-
-		local Container = Instance.new("Frame")
-		Container.BackgroundColor3 = T.Button1
-		Container.Position = UDim2.fromOffset(3, 6)
-		Container.Size = UDim2.new(1, -6, 0, 12)
-		Container.ZIndex = 503
-		Container.Parent = SliderFrame
-
-		local ContainerCorner = Instance.new("UICorner")
-		ContainerCorner.CornerRadius = UDim.new(0, 2)
-		ContainerCorner.Parent = Container
-
-		local ContainerStroke = Instance.new("UIStroke")
-		ContainerStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-		ContainerStroke.Color = T.Stroke
-		ContainerStroke.LineJoinMode = Enum.LineJoinMode.Round
-		ContainerStroke.Thickness = 1
-		ContainerStroke.Parent = Container
-
-		local Fill = Instance.new("Frame")
-		Fill.BackgroundColor3 = T.Primary
-		Fill.BackgroundTransparency = 0.6
-		Fill.BorderSizePixel = 0
-		Fill.Size = UDim2.fromScale(initVal / 255, 1)
-		Fill.ZIndex = 504
-		Fill.Parent = Container
-
-		local FillCorner = Instance.new("UICorner")
-		FillCorner.CornerRadius = UDim.new(0, 2)
-		FillCorner.Parent = Fill
-
-		local FillGrad = Instance.new("UIGradient")
-		FillGrad.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(200, 200, 200))
-		FillGrad.Rotation = 90
-		FillGrad.Parent = Fill
-
-		local TitleLabel = Instance.new("TextLabel")
-		TitleLabel.BackgroundTransparency = 1
-		TitleLabel.Font = Enum.Font.SourceSans
-		TitleLabel.Size = UDim2.new(1, 0, 1, -1)
-		TitleLabel.Text = labelText
-		TitleLabel.TextColor3 = T.TextPrimary
-		TitleLabel.TextSize = 14
-		TitleLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-		TitleLabel.TextStrokeTransparency = 0.8
-		TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
-		TitleLabel.TextYAlignment = Enum.TextYAlignment.Center
-		TitleLabel.ZIndex = 504
-		TitleLabel.Parent = SliderFrame
-
-		local TitlePad = Instance.new("UIPadding")
-		TitlePad.PaddingLeft = UDim.new(0, 6)
-		TitlePad.Parent = TitleLabel
-
-		local ValLabel = Instance.new("TextLabel")
-		ValLabel.BackgroundTransparency = 1
-		ValLabel.Font = Enum.Font.SourceSans
-		ValLabel.Size = UDim2.new(1, 0, 1, -1)
-		ValLabel.Text = tostring(math.floor(initVal))
-		ValLabel.TextColor3 = T.TextPrimary
-		ValLabel.TextSize = 14
-		ValLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
-		ValLabel.TextStrokeTransparency = 0.8
-		ValLabel.TextXAlignment = Enum.TextXAlignment.Right
-		ValLabel.TextYAlignment = Enum.TextYAlignment.Center
-		ValLabel.ZIndex = 504
-		ValLabel.Parent = SliderFrame
-
-		local ValPad = Instance.new("UIPadding")
-		ValPad.PaddingRight = UDim.new(0, 6)
-		ValPad.Parent = ValLabel
-
-		return Container, Fill, ValLabel
-	end
-
-	local redContainer, redFill, redValL = makeRGBSliderInner(-1, "red", red)
-	local greenContainer, greenFill, greenValL = makeRGBSliderInner(19, "green", green)
-	local blueContainer, blueFill, blueValL = makeRGBSliderInner(39, "blue", blue)
-
-	local function displayHSV2(moveCursor)
-		local color = Color3.fromHSV(hue, sat, val)
-		red = color.R * 255
-		green = color.G * 255
-		blue = color.B * 255
-
-		ValSliderContainer.BackgroundColor3 = Color3.fromHSV(hue, sat, 1)
-		Tween(redFill, { Size = UDim2.fromScale(red / 255, 1) }, 0.3, 1)
-		Tween(greenFill, { Size = UDim2.fromScale(green / 255, 1) }, 0.3, 1)
-		Tween(blueFill, { Size = UDim2.fromScale(blue / 255, 1) }, 0.3, 1)
-
-		redValL.Text = tostring(math.floor(red))
-		greenValL.Text = tostring(math.floor(green))
-		blueValL.Text = tostring(math.floor(blue))
-
-		if moveCursor then
-			local radius = sat / 2
-			local theta = (hue * (math.pi * 2)) - (math.pi * 2)
-			local cx, cy = radius * math.cos(theta), radius * math.sin(theta)
-			Tween(ValCursor, { Position = UDim2.fromScale(val, 0) }, 0.3, 1)
-			Tween(PickerCursor, { Position = UDim2.fromScale(cx + 0.5, cy + 0.5) }, 0.3, 1)
-		end
-
-		if _onChanged then _onChanged(color) end
-	end
-
-	local function displayRGB2()
-		local color = Color3.fromRGB(red, green, blue)
-		hue, sat, val = color:ToHSV()
-		local radius = sat / 2
-		local theta = (hue * (math.pi * 2)) - (math.pi * 2)
-		local cx, cy = radius * math.cos(theta), radius * math.sin(theta)
-		ValSliderContainer.BackgroundColor3 = Color3.fromHSV(hue, sat, 1)
-		Tween(ValCursor, { Position = UDim2.fromScale(val, 0) }, 0.3, 1)
-		Tween(PickerCursor, { Position = UDim2.fromScale(cx + 0.5, cy + 0.5) }, 0.3, 1)
-		if _onChanged then _onChanged(color) end
-	end
-
-	local function setupRGBSliderInner(container, fill, valLabel, getChannel, setChannel)
-		local dcon, acon, targetSize
-
-		container.InputBegan:Connect(function(io)
-			if io.UserInputType == Enum.UserInputType.MouseButton1 then
-				local containerPos = container.AbsolutePosition
-				local containerWidth = container.AbsoluteSize.X
-				local rawValue = math.clamp((io.Position.X - containerPos.X) / containerWidth, 0, 1)
-				local newVal = math.floor(rawValue * 255)
-				targetSize = UDim2.fromScale(rawValue, 1)
-				valLabel.Text = tostring(newVal)
-				setChannel(newVal)
-				displayRGB2()
-
-				acon = RunService.RenderStepped:Connect(function(dt)
-					fill.Size = fill.Size:lerp(targetSize, 1 - 1e-12 ^ dt)
-				end)
-				dcon = UserInputService.InputChanged:Connect(function(io2)
-					if io2.UserInputType == Enum.UserInputType.MouseMovement then
-						local rv = math.clamp((io2.Position.X - containerPos.X) / containerWidth, 0, 1)
-						local nv = math.floor(rv * 255)
-						targetSize = UDim2.fromScale(rv, 1)
-						valLabel.Text = tostring(nv)
-						setChannel(nv)
-						displayRGB2()
-					end
-				end)
-			end
-		end)
-
-		container.InputEnded:Connect(function(io)
-			if io.UserInputType == Enum.UserInputType.MouseButton1 then
-				if dcon then dcon:Disconnect() end
-				if acon then acon:Disconnect() end
-				Tween(fill, { Size = targetSize }, 0.2, 1)
-			end
-		end)
-
-		container.MouseEnter:Connect(function()
-			Tween(container, { BackgroundColor3 = T.Button2 }, 0.2, 1)
-			Tween(container:FindFirstChildOfClass("UIStroke"), { Color = T.StrokeHover }, 0.2, 1)
-		end)
-		container.MouseLeave:Connect(function()
-			Tween(container, { BackgroundColor3 = T.Button1 }, 0.2, 1)
-			Tween(container:FindFirstChildOfClass("UIStroke"), { Color = T.Stroke }, 0.2, 1)
-		end)
-	end
-
-	setupRGBSliderInner(redContainer, redFill, redValL, function() return red end, function(v) red = v end)
-	setupRGBSliderInner(greenContainer, greenFill, greenValL, function() return green end, function(v) green = v end)
-	setupRGBSliderInner(blueContainer, blueFill, blueValL, function() return blue end, function(v) blue = v end)
-
-	do
-		local dcon, acon, targetPos
-
-		ValSliderContainer.InputBegan:Connect(function(io)
-			if io.UserInputType == Enum.UserInputType.MouseButton1 then
-				local containerPos = ValSliderContainer.AbsolutePosition
-				local containerWidth = ValSliderContainer.AbsoluteSize.X
-				local rawValue = math.clamp((io.Position.X - containerPos.X) / containerWidth, 0, 1)
-				targetPos = UDim2.fromScale(rawValue, 0)
-				val = rawValue
-				displayHSV2(false)
-
-				acon = RunService.RenderStepped:Connect(function(dt)
-					ValCursor.Position = ValCursor.Position:lerp(targetPos, 1 - 1e-12 ^ dt)
-				end)
-				dcon = UserInputService.InputChanged:Connect(function(io2)
-					if io2.UserInputType == Enum.UserInputType.MouseMovement then
-						local rv = math.clamp((io2.Position.X - containerPos.X) / containerWidth, 0, 1)
-						targetPos = UDim2.fromScale(rv, 0)
-						val = rv
-						displayHSV2(false)
-					end
-				end)
-			end
-		end)
-
-		ValSliderContainer.InputEnded:Connect(function(io)
-			if io.UserInputType == Enum.UserInputType.MouseButton1 then
-				if dcon then dcon:Disconnect() end
-				if acon then acon:Disconnect() end
-				Tween(ValCursor, { Position = targetPos }, 0.2, 1)
-			end
-		end)
-
-		ValSliderContainer.MouseEnter:Connect(function()
-			Tween(ValSliderContainerStroke, { Color = T.StrokeHover }, 0.2, 1)
-			Tween(ValCursorStroke, { Color = T.Primary }, 0.2, 1)
-		end)
-		ValSliderContainer.MouseLeave:Connect(function()
-			Tween(ValSliderContainerStroke, { Color = T.Stroke }, 0.2, 1)
-			Tween(ValCursorStroke, { Color = Color3.fromRGB(255, 255, 255) }, 0.2, 1)
-		end)
-	end
-
-	do
-		local dcon, acon, targetPos
-		local center = Vector2.new(0.5, 0.5)
-
-		ColorWheel.InputBegan:Connect(function(io)
-			if io.UserInputType == Enum.UserInputType.MouseButton1 then
-				pickerMoving = true
-				local pickerPos = ColorWheel.AbsolutePosition
-				local pickerWidth = ColorWheel.AbsoluteSize.X
-
-				local function computePos(position)
-					local x = (position.X - pickerPos.X) / pickerWidth
-					local y = (position.Y - pickerPos.Y) / pickerWidth
-					local radius, theta = cartToPolar(x - 0.5, y - 0.5)
-					local centerMag = (Vector2.new(x, y) - center).Magnitude
-					if centerMag > 0.5 then
-						x, y = polarToCart(radius - (centerMag - 0.5), theta)
-						x += 0.5
-						y += 0.5
-						centerMag = (Vector2.new(x, y) - center).Magnitude
-					end
-					return x, y, ((theta / math.pi + 2) / 2) % 1, math.clamp(centerMag * 2, 0, 1)
-				end
-
-				local x, y, h, s = computePos(io.Position)
-				targetPos = UDim2.fromScale(x, y)
-				hue = h
-				sat = s
-				displayHSV2(false)
-
-				if acon then acon:Disconnect() end
-				acon = RunService.RenderStepped:Connect(function(dt)
-					PickerCursor.Position = PickerCursor.Position:lerp(targetPos, 1 - 1e-12 ^ dt)
-				end)
-
-				if dcon then dcon:Disconnect() end
-				dcon = UserInputService.InputChanged:Connect(function(io2)
-					if io2.UserInputType == Enum.UserInputType.MouseMovement then
-						local x2, y2, h2, s2 = computePos(io2.Position)
-						targetPos = UDim2.fromScale(x2, y2)
-						hue = h2
-						sat = s2
-						displayHSV2(false)
-					end
-				end)
-			end
-		end)
-
-		ColorWheel.InputEnded:Connect(function(io)
-			if io.UserInputType == Enum.UserInputType.MouseButton1 then
-				pickerMoving = false
-				if dcon then dcon:Disconnect() end
-				if acon then acon:Disconnect() end
-				Tween(PickerCursor, { Position = targetPos }, 0.2, 1)
-			end
-		end)
-	end
-
-	ChromaBtn.MouseButton1Click:Connect(function()
-		chromaEnabled = not chromaEnabled
-		if chromaEnabled then
-			Tween(ChromaBtn, { BackgroundColor3 = T.Button2 }, 0.2, 1)
-			Tween(ChromaBtnIcon, { Rotation = 360 }, 0.5, 1)
-			ChromaBtnIcon.Image = "rbxassetid://9840988620"
-			if chromaCon then chromaCon:Disconnect() end
-			chromaCon = RunService.RenderStepped:Connect(function(dt)
-				if pickerMoving then return end
-				dt = dt * chromaSpeed
-				hue = (hue + dt) % 1
-				displayHSV2(true)
-			end)
-		else
-			Tween(ChromaBtn, { BackgroundColor3 = T.Button1 }, 0.2, 1)
-			Tween(ChromaBtnIcon, { Rotation = 0 }, 0.5, 1)
-			ChromaBtnIcon.Image = "rbxassetid://9841673199"
-			if chromaCon then chromaCon:Disconnect() end
-			chromaCon = nil
-		end
-	end)
-
-	ChromaBtn.MouseEnter:Connect(function()
-		if chromaEnabled then
-			Tween(ChromaBtn, { BackgroundColor3 = T.Button3 }, 0.2, 1)
-		else
-			Tween(ChromaBtn, { BackgroundColor3 = T.Button2 }, 0.2, 1)
-		end
-		Tween(ChromaBtnStroke, { Color = T.StrokeHover }, 0.2, 1)
-	end)
-	ChromaBtn.MouseLeave:Connect(function()
-		if chromaEnabled then
-			Tween(ChromaBtn, { BackgroundColor3 = T.Button2 }, 0.2, 1)
-		else
-			Tween(ChromaBtn, { BackgroundColor3 = T.Button1 }, 0.2, 1)
-		end
-		Tween(ChromaBtnStroke, { Color = T.Stroke }, 0.2, 1)
-	end)
-
-	CloseBtn.MouseEnter:Connect(function()
-		Tween(CloseBtn, { BackgroundColor3 = T.Button2 }, 0.2, 1)
-		Tween(CloseBtnStroke, { Color = T.StrokeHover }, 0.2, 1)
-	end)
-	CloseBtn.MouseLeave:Connect(function()
-		Tween(CloseBtn, { BackgroundColor3 = T.Button1 }, 0.2, 1)
-		Tween(CloseBtnStroke, { Color = T.Stroke }, 0.2, 1)
-	end)
-
-	SimpleKavo:DraggingEnabled(PickerHeader, PickerGui)
-
-	local pickerObj2 = {}
-	pickerObj2.guiRef = PickerGui
-
-	pickerObj2.destroy = function()
-		if chromaCon then chromaCon:Disconnect() end
-		local animCon
-		task.spawn(function()
-			local backgroundTransparency = {}
-			local imageTransparency = {}
-			local textTransparency = {}
-			local transparency = {}
-			local s = {
-				Frame = { backgroundTransparency },
-				ImageLabel = { backgroundTransparency, imageTransparency },
-				ImageButton = { backgroundTransparency, imageTransparency },
-				TextLabel = { backgroundTransparency, textTransparency },
-				TextButton = { backgroundTransparency, textTransparency },
-				UIStroke = { transparency },
-			}
-			local d = PickerGui:GetDescendants()
-			table.insert(d, PickerGui)
-			for _, v in ipairs(d) do
-				local a = s[v.ClassName]
-				if a then for i = 1, #a do table.insert(a[i], v) end end
-			end
-			for _, v in ipairs(transparency) do v.Transparency = 1 end
-			animCon = RunService.RenderStepped:Connect(function(dt)
-				dt = dt * 8
-				for _, v in ipairs(backgroundTransparency) do v.BackgroundTransparency += dt end
-				for _, v in ipairs(imageTransparency) do v.ImageTransparency += dt end
-				for _, v in ipairs(textTransparency) do v.TextTransparency += dt end
-			end)
-		end)
-		Tween(PickerScale, { Scale = 0.6 }, 0.5, 1).Completed:Wait()
-		if animCon then animCon:Disconnect() end
-		PickerGui:Destroy()
-	end
-
-	CloseBtn.MouseButton1Click:Connect(function()
-		pickerObj2.destroy()
-	end)
-
-	pickerObj2.getColor = function()
-		return Color3.fromHSV(hue, sat, val)
-	end
-
-	pickerObj2.setColor = function(color)
-		hue, sat, val = color:ToHSV()
-		displayHSV2(true)
-	end
-
-	task.spawn(function()
-		PickerGui.Size = UDim2.fromOffset(300, 30)
-		Tween(PickerGui, { Size = UDim2.fromOffset(300, 300) }, 0.5, 1)
-	end)
-
-	return pickerObj2
 end
 
 return SimpleKavo
