@@ -2411,10 +2411,12 @@ function SimpleKavo.CreateLib(title, themeName)
 							ColorInner.BackgroundColor3 = color
 							if callback then callback(color) end
 						end)
-						pickerWindowObj.guiRef.Position = UDim2.fromOffset(
-							math.clamp(mouseLoc.X, 50, 1200),
-							math.clamp(mouseLoc.Y, 50, 700)
-						)
+						if pickerWindowObj and pickerWindowObj.guiRef then
+							pickerWindowObj.guiRef.Position = UDim2.fromOffset(
+								math.clamp(mouseLoc.X, 50, 1200),
+								math.clamp(mouseLoc.Y, 50, 700)
+							)
+						end
 					end
 				end)
 
@@ -2701,10 +2703,12 @@ function SimpleKavo.CreateLib(title, themeName)
 										callback(opt.name, nil, nil, allStates)
 									end
 								end)
-								cpWindowObj.guiRef.Position = UDim2.fromOffset(
-									math.clamp(mouseLoc.X, 50, 1200),
-									math.clamp(mouseLoc.Y, 50, 700)
-								)
+								if cpWindowObj and cpWindowObj.guiRef then
+									cpWindowObj.guiRef.Position = UDim2.fromOffset(
+										math.clamp(mouseLoc.X, 50, 1200),
+										math.clamp(mouseLoc.Y, 50, 700)
+									)
+								end
 								colorPickerWindows[opt.name] = cpWindowObj
 							end
 						end)
@@ -3053,7 +3057,21 @@ function SimpleKavo.CreateLib(title, themeName)
 						local pos = input.Position
 						local fp = DropFrame.AbsolutePosition
 						local fs = DropFrame.AbsoluteSize
-						if not (pos.X >= fp.X and pos.X <= fp.X + fs.X and
+						local shouldClose = true
+						
+						for _, cpw in pairs(colorPickerWindows) do
+							if cpw and cpw.guiRef and cpw.guiRef.Parent then
+								local cpPos = cpw.guiRef.AbsolutePosition
+								local cpSize = cpw.guiRef.AbsoluteSize
+								if pos.X >= cpPos.X and pos.X <= cpPos.X + cpSize.X and
+								   pos.Y >= cpPos.Y and pos.Y <= cpPos.Y + cpSize.Y then
+									shouldClose = false
+									break
+								end
+							end
+						end
+						
+						if shouldClose and not (pos.X >= fp.X and pos.X <= fp.X + fs.X and
 								pos.Y >= fp.Y and pos.Y <= fp.Y + fs.Y) then
 							toggleOpen()
 						end
