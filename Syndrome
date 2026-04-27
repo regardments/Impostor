@@ -832,6 +832,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	end
 
 	local chromaLastHue = hue
+	local currentAngle = 0
 	ChromaBtn.MouseButton1Click:Connect(function()
 		chromaEnabled = not chromaEnabled
 		if chromaEnabled then
@@ -839,15 +840,12 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 			Tween(ChromaBtnIcon, { Rotation = 360 }, 0.5, 1)
 			ChromaBtnIcon.Image = "rbxassetid://9840988620"
 			if chromaCon then chromaCon:Disconnect() end
-			local accum = 0
-			chromaCon = RunService.Heartbeat:Connect(function(dt)
+			chromaCon = RunService.RenderStepped:Connect(function(dt)
 				if pickerMoving then return end
-				accum = accum + dt * chromaSpeed
-				if accum >= 0.033 then
-					hue = (hue + accum) % 1
-					accum = 0
-					displayHSV(true)
-				end
+				currentAngle = currentAngle + (dt * 360)
+				local newHue = (hue + dt * chromaSpeed) % 1
+				hue = newHue
+				displayHSV(true)
 			end)
 		else
 			Tween(ChromaBtn, { BackgroundColor3 = T.Button1 }, 0.2, 1)
@@ -855,6 +853,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 			ChromaBtnIcon.Image = "rbxassetid://9841673199"
 			if chromaCon then chromaCon:Disconnect() end
 			chromaCon = nil
+			currentAngle = 0
 		end
 	end)
 
