@@ -892,36 +892,6 @@ function SimpleKavo.CreateLib(title, themeName)
 	local MainStroke = AddStroke(Main, T.Stroke)
 	MainStroke.Name = "Stroke"
 
-	local MainShadow = Instance.new("ImageLabel")
-	MainShadow.AnchorPoint = Vector2.new(0.5, 0.5)
-	MainShadow.BackgroundTransparency = 1
-	MainShadow.BorderSizePixel = 0
-	MainShadow.Image = "rbxassetid://7331400934"
-	MainShadow.ImageColor3 = Color3.fromRGB(0, 0, 5)
-	MainShadow.Name = "Shadow"
-	MainShadow.Position = UDim2.fromScale(0.5, 0.5)
-	MainShadow.ScaleType = Enum.ScaleType.Slice
-	MainShadow.Size = UDim2.new(1, 80, 1, 80)
-	MainShadow.SliceCenter = Rect.new(40, 40, 260, 260)
-	MainShadow.ZIndex = 4
-	MainShadow.Parent = Main
-
-	local TrimLine = Instance.new("Frame")
-	TrimLine.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	TrimLine.BackgroundTransparency = 0
-	TrimLine.BorderSizePixel = 0
-	TrimLine.Name = "Trim"
-	TrimLine.Position = UDim2.fromOffset(0, 0)
-	TrimLine.Size = UDim2.new(1, 0, 0, 2)
-	TrimLine.ZIndex = 64
-	TrimLine.Parent = Main
-
-	local TrimGradient = Instance.new("UIGradient")
-	TrimGradient.Color = ColorSequence.new(T.Primary, T.Secondary)
-	TrimGradient.Enabled = true
-	TrimGradient.Rotation = 0
-	TrimGradient.Parent = TrimLine
-
 	local Header = Instance.new("Frame")
 	Header.Name = "Header"
 	Header.Parent = Main
