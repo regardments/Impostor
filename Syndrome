@@ -85,7 +85,6 @@ local Themes = {
 	},
 }
 
--- Raio padrão de arredondamento
 local CORNER_RADIUS   = UDim.new(0, 10)
 local CORNER_SM       = UDim.new(0, 6)
 local CORNER_XS       = UDim.new(0, 4)
@@ -118,7 +117,6 @@ local function cartToPolar(x, y)
 	return math.sqrt((x^2) + (y^2)), math.atan2(y, x)
 end
 
--- Função auxiliar para adicionar UICorner
 local function AddCorner(parent, radius)
 	local c = Instance.new("UICorner")
 	c.CornerRadius = radius or CORNER_XS
@@ -126,7 +124,6 @@ local function AddCorner(parent, radius)
 	return c
 end
 
--- Função auxiliar para adicionar UIStroke
 local function AddStroke(parent, color, thickness)
 	local s = Instance.new("UIStroke")
 	s.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
@@ -196,6 +193,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	local PickerGui = Instance.new("Frame")
 	PickerGui.Name = "ColorPickerWindow"
 	PickerGui.BackgroundColor3 = T.Window2
+	PickerGui.BackgroundTransparency = 0.15
 	PickerGui.BorderSizePixel = 0
 	PickerGui.Size = UDim2.fromOffset(300, 300)
 	PickerGui.Position = UDim2.fromOffset(200, 150)
@@ -237,6 +235,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	local PickerHeader = Instance.new("Frame")
 	PickerHeader.Name = "Header"
 	PickerHeader.BackgroundColor3 = T.Window1
+	PickerHeader.BackgroundTransparency = 0.15
 	PickerHeader.BorderSizePixel = 0
 	PickerHeader.Size = UDim2.new(1, 0, 0, 32)
 	PickerHeader.ZIndex = 501
@@ -244,9 +243,9 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	PickerHeader.Parent = PickerGui
 	AddCorner(PickerHeader, CORNER_RADIUS)
 
-	-- Painel interno para cobrir cantos inferiores do header
 	local PickerHeaderBot = Instance.new("Frame")
 	PickerHeaderBot.BackgroundColor3 = T.Window1
+	PickerHeaderBot.BackgroundTransparency = 0.15
 	PickerHeaderBot.BorderSizePixel = 0
 	PickerHeaderBot.Position = UDim2.new(0, 0, 1, -10)
 	PickerHeaderBot.Size = UDim2.new(1, 0, 0, 10)
@@ -282,6 +281,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	CloseBtn.AnchorPoint = Vector2.new(1, 0.5)
 	CloseBtn.AutoButtonColor = false
 	CloseBtn.BackgroundColor3 = T.Button1
+	CloseBtn.BackgroundTransparency = 0.15
 	CloseBtn.BorderSizePixel = 0
 	CloseBtn.Position = UDim2.new(1, -6, 0.5, 0)
 	CloseBtn.Size = UDim2.fromOffset(22, 22)
@@ -303,6 +303,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local Region = Instance.new("Frame")
 	Region.BackgroundColor3 = T.Window2
+	Region.BackgroundTransparency = 0.15
 	Region.BorderSizePixel = 0
 	Region.ClipsDescendants = true
 	Region.Position = UDim2.fromOffset(0, 34)
@@ -313,6 +314,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local PickerRegion = Instance.new("Frame")
 	PickerRegion.BackgroundColor3 = T.Window2
+	PickerRegion.BackgroundTransparency = 0.15
 	PickerRegion.BorderSizePixel = 0
 	PickerRegion.ClipsDescendants = true
 	PickerRegion.Position = UDim2.fromOffset(6, 6)
@@ -335,6 +337,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local WheelOutline = Instance.new("Frame")
 	WheelOutline.BackgroundColor3 = T.Stroke
+	WheelOutline.BackgroundTransparency = 0.15
 	WheelOutline.BorderSizePixel = 0
 	WheelOutline.Position = UDim2.fromOffset(1, 1)
 	WheelOutline.Size = UDim2.new(1, -2, 1, -2)
@@ -381,6 +384,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local ValSliderContainer = Instance.new("Frame")
 	ValSliderContainer.BackgroundColor3 = Color3.fromHSV(hue, sat, 1)
+	ValSliderContainer.BackgroundTransparency = 0.15
 	ValSliderContainer.Position = UDim2.fromOffset(0, 7)
 	ValSliderContainer.Size = UDim2.new(1, 0, 0, 12)
 	ValSliderContainer.ZIndex = 503
@@ -432,6 +436,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	ChromaBtn.AnchorPoint = Vector2.new(0, 1)
 	ChromaBtn.AutoButtonColor = false
 	ChromaBtn.BackgroundColor3 = T.Button1
+	ChromaBtn.BackgroundTransparency = 0.15
 	ChromaBtn.Position = UDim2.new(0, 6, 1, -5)
 	ChromaBtn.Size = UDim2.fromOffset(18, 18)
 	ChromaBtn.Text = ""
@@ -453,6 +458,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local InputRegion = Instance.new("Frame")
 	InputRegion.BackgroundColor3 = T.Window3
+	InputRegion.BackgroundTransparency = 0.15
 	InputRegion.BorderSizePixel = 0
 	InputRegion.ClipsDescendants = true
 	InputRegion.Position = UDim2.new(0, 6, 0.75, 4)
@@ -473,6 +479,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 		local Container = Instance.new("Frame")
 		Container.BackgroundColor3 = T.Button1
+		Container.BackgroundTransparency = 0.15
 		Container.Position = UDim2.fromOffset(6, 6)
 		Container.Size = UDim2.new(1, -12, 0, 12)
 		Container.ZIndex = 503
@@ -698,8 +705,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 				local function computePos(position)
 					local x = (position.X - pickerPos.X) / pickerWidth
-					local y = (position.Y - pickerPos.Y) / pickerWidth
-					local radius, theta = cartToPolar(x - 0.5, y - 0.5)
+					local y = (position.Y - pickerPos.Y) / pickerWidth					local radius, theta = cartToPolar(x - 0.5, y - 0.5)
 					local centerMag = (Vector2.new(x, y) - center).Magnitude
 					if centerMag > 0.5 then
 						x, y = polarToCart(radius - (centerMag - 0.5), theta)
@@ -903,7 +909,6 @@ function SimpleKavo.CreateLib(title, themeName)
 	Header.ClipsDescendants = false
 	AddCorner(Header, CORNER_RADIUS)
 
-	-- Faixa para cobrir cantos inferiores arredondados do header
 	local HeaderBot = Instance.new("Frame")
 	HeaderBot.BackgroundColor3 = T.Window1
 	HeaderBot.BorderSizePixel = 0
@@ -1076,7 +1081,6 @@ function SimpleKavo.CreateLib(title, themeName)
 	SideBar.ZIndex = 50
 	AddCorner(SideBar, CORNER_RADIUS)
 
-	-- Cobrir cantos superiores arredondados da sidebar
 	local SideBarTop = Instance.new("Frame")
 	SideBarTop.BackgroundColor3 = T.Window3
 	SideBarTop.BorderSizePixel = 0
@@ -1085,7 +1089,6 @@ function SimpleKavo.CreateLib(title, themeName)
 	SideBarTop.ZIndex = 50
 	SideBarTop.Parent = SideBar
 
-	-- Cobrir canto direito da sidebar
 	local SideBarRight = Instance.new("Frame")
 	SideBarRight.BackgroundColor3 = T.Window3
 	SideBarRight.BorderSizePixel = 0
@@ -1138,7 +1141,6 @@ function SimpleKavo.CreateLib(title, themeName)
 	Content.ClipsDescendants = true
 	AddCorner(Content, CORNER_RADIUS)
 
-	-- Cobrir cantos esquerdos e superiores do content
 	local ContentLeft = Instance.new("Frame")
 	ContentLeft.BackgroundColor3 = T.Window2
 	ContentLeft.BorderSizePixel = 0
@@ -1334,6 +1336,7 @@ function SimpleKavo.CreateLib(title, themeName)
 			SectionFrame.Name = sectionName .. "_Section"
 			SectionFrame.Parent = TabContent
 			SectionFrame.BackgroundColor3 = T.Window3
+			SectionFrame.BackgroundTransparency = 0
 			SectionFrame.BorderSizePixel = 0
 			SectionFrame.Size = UDim2.new(0.95, 0, 0, 0)
 			SectionFrame.AutomaticSize = Enum.AutomaticSize.Y
@@ -1346,12 +1349,12 @@ function SimpleKavo.CreateLib(title, themeName)
 			SectionTitleBar.Name = "TitleBar"
 			SectionTitleBar.Parent = SectionFrame
 			SectionTitleBar.BackgroundColor3 = T.Window1
+			SectionTitleBar.BackgroundTransparency = 0
 			SectionTitleBar.BorderSizePixel = 0
 			SectionTitleBar.Size = UDim2.new(1, 0, 0, 20)
 			SectionTitleBar.ZIndex = 33
 			AddCorner(SectionTitleBar, CORNER_SM)
 
-			-- Cobrir cantos inferiores
 			local STBot = Instance.new("Frame")
 			STBot.BackgroundColor3 = T.Window1
 			STBot.BorderSizePixel = 0
@@ -2468,8 +2471,8 @@ function SimpleKavo.CreateLib(title, themeName)
 								local libSize = Main.AbsoluteSize
 								local centerX = libPos.X + (libSize.X / 2) - 150
 								local centerY = libPos.Y + (libSize.Y / 2) - 150
-								cpWindowObj = CreatePickerWindow(T, optName, allStates[optName].colorValue, ScreenGui, function(color)
-									allStates[optName].colorValue = color
+								cpWindowObj = CreatePickerWindow(T, optName, allStates[opt.name].colorValue, ScreenGui, function(color)
+									allStates[opt.name].colorValue = color
 									CPInner.BackgroundColor3 = color
 									if callback then
 										callback(optName, nil, nil, allStates)
