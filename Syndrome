@@ -886,6 +886,33 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	SimpleKavo:DraggingEnabled(PickerHeader, PickerGui)
 
+	local function updateCursorInputState(inputState)
+		if inputState == Enum.UserInputState.Begin then
+			pickerMoving = true
+		elseif inputState == Enum.UserInputState.End then
+			pickerMoving = false
+		end
+	end
+
+	local function preventDragPropagation(input)
+		if pickerMoving then
+			return
+		end
+	end
+
+	PickerCursor.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			updateCursorInputState(Enum.UserInputState.Begin)
+			preventDragPropagation(input)
+		end
+	end)
+
+	PickerCursor.InputEnded:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			updateCursorInputState(Enum.UserInputState.End)
+		end
+	end)
+
 	local pickerObj = {}
 	pickerObj.guiRef = PickerGui
 
@@ -1259,7 +1286,6 @@ function SimpleKavo.CreateLib(title, themeName)
 		ContentTop.BackgroundColor3 = newT.Window2
 		Title.TextColor3 = newT.TextPrimary
 		WindowIcon.ImageColor3 = newT.Primary
-		TrimGradient.Color = ColorSequence.new(newT.Primary, newT.Secondary)
 		KeybindBtn.TextColor3 = newT.TextDim
 		KeybindBtn.BackgroundColor3 = newT.Button1
 		MainStroke.Color = newT.Stroke
@@ -2288,6 +2314,7 @@ function SimpleKavo.CreateLib(title, themeName)
 								math.clamp(centerX, 50, 1200),
 								math.clamp(centerY, 50, 700)
 							)
+							SimpleKavo:DraggingEnabled(pickerWindowObj.guiRef:FindFirstChild("Header"), pickerWindowObj.guiRef)
 						end
 						task.delay(0.1, function()
 							pickerOpening = false
@@ -2562,6 +2589,7 @@ function SimpleKavo.CreateLib(title, themeName)
 										math.clamp(centerX, 50, 1200),
 										math.clamp(centerY, 50, 700)
 									)
+									SimpleKavo:DraggingEnabled(cpWindowObj.guiRef:FindFirstChild("Header"), cpWindowObj.guiRef)
 								end
 								colorPickerWindows[optName] = cpWindowObj
 								task.delay(0.1, function()
