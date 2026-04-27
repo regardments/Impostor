@@ -137,8 +137,8 @@ end
 function SimpleKavo:DraggingEnabled(frame, parent)
 	parent = parent or frame
 	local dragging = false
-	local dragInput, mousePos, framePos, targetPos
-	local connection
+	local dragInput, mousePos, framePos
+	local targetPos
 
 	frame.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
@@ -148,24 +148,20 @@ function SimpleKavo:DraggingEnabled(frame, parent)
 			targetPos = parent.Position
 		end
 	end)
-
 	frame.InputChanged:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 			dragInput = input
 		end
 	end)
-
 	UserInputService.InputChanged:Connect(function(input)
-		if input == dragInput and dragging then
+		if input == dragInput and dragging and
+			(input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
 			local delta = input.Position - mousePos
-			targetPos = UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)
+			targetPos = UDim2.new(
+				framePos.X.Scale, framePos.X.Offset + delta.X,
+				framePos.Y.Scale, framePos.Y.Offset + delta.Y
+			)
 			parent.Position = targetPos
-		end
-	end)
-
-	UserInputService.InputEnded:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-			dragging = false
 		end
 	end)
 end
@@ -181,7 +177,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	local PickerGui = Instance.new("Frame")
 	PickerGui.Name = "ColorPickerWindow"
 	PickerGui.BackgroundColor3 = T.Window2
-	PickerGui.BackgroundTransparency = 0.85
 	PickerGui.BorderSizePixel = 0
 	PickerGui.Size = UDim2.fromOffset(300, 300)
 	PickerGui.Position = UDim2.fromOffset(200, 150)
@@ -223,7 +218,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	local PickerHeader = Instance.new("Frame")
 	PickerHeader.Name = "Header"
 	PickerHeader.BackgroundColor3 = T.Window1
-	PickerHeader.BackgroundTransparency = 0.85
 	PickerHeader.BorderSizePixel = 0
 	PickerHeader.Size = UDim2.new(1, 0, 0, 32)
 	PickerHeader.ZIndex = 501
@@ -233,7 +227,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local PickerHeaderBot = Instance.new("Frame")
 	PickerHeaderBot.BackgroundColor3 = T.Window1
-	PickerHeaderBot.BackgroundTransparency = 0.85
 	PickerHeaderBot.BorderSizePixel = 0
 	PickerHeaderBot.Position = UDim2.new(0, 0, 1, -10)
 	PickerHeaderBot.Size = UDim2.new(1, 0, 0, 10)
@@ -269,7 +262,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	CloseBtn.AnchorPoint = Vector2.new(1, 0.5)
 	CloseBtn.AutoButtonColor = false
 	CloseBtn.BackgroundColor3 = T.Button1
-	CloseBtn.BackgroundTransparency = 0.85
 	CloseBtn.BorderSizePixel = 0
 	CloseBtn.Position = UDim2.new(1, -6, 0.5, 0)
 	CloseBtn.Size = UDim2.fromOffset(22, 22)
@@ -291,7 +283,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local Region = Instance.new("Frame")
 	Region.BackgroundColor3 = T.Window2
-	Region.BackgroundTransparency = 0.85
 	Region.BorderSizePixel = 0
 	Region.ClipsDescendants = true
 	Region.Position = UDim2.fromOffset(0, 34)
@@ -302,7 +293,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local PickerRegion = Instance.new("Frame")
 	PickerRegion.BackgroundColor3 = T.Window2
-	PickerRegion.BackgroundTransparency = 0.85
 	PickerRegion.BorderSizePixel = 0
 	PickerRegion.ClipsDescendants = true
 	PickerRegion.Position = UDim2.fromOffset(6, 6)
@@ -325,7 +315,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local WheelOutline = Instance.new("Frame")
 	WheelOutline.BackgroundColor3 = T.Stroke
-	WheelOutline.BackgroundTransparency = 0.85
 	WheelOutline.BorderSizePixel = 0
 	WheelOutline.Position = UDim2.fromOffset(1, 1)
 	WheelOutline.Size = UDim2.new(1, -2, 1, -2)
@@ -372,7 +361,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local ValSliderContainer = Instance.new("Frame")
 	ValSliderContainer.BackgroundColor3 = Color3.fromHSV(hue, sat, 1)
-	ValSliderContainer.BackgroundTransparency = 0.85
 	ValSliderContainer.Position = UDim2.fromOffset(0, 7)
 	ValSliderContainer.Size = UDim2.new(1, 0, 0, 12)
 	ValSliderContainer.ZIndex = 503
@@ -424,7 +412,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	ChromaBtn.AnchorPoint = Vector2.new(0, 1)
 	ChromaBtn.AutoButtonColor = false
 	ChromaBtn.BackgroundColor3 = T.Button1
-	ChromaBtn.BackgroundTransparency = 0.85
 	ChromaBtn.Position = UDim2.new(0, 6, 1, -5)
 	ChromaBtn.Size = UDim2.fromOffset(18, 18)
 	ChromaBtn.Text = ""
@@ -446,7 +433,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local InputRegion = Instance.new("Frame")
 	InputRegion.BackgroundColor3 = T.Window3
-	InputRegion.BackgroundTransparency = 0.85
 	InputRegion.BorderSizePixel = 0
 	InputRegion.ClipsDescendants = true
 	InputRegion.Position = UDim2.new(0, 6, 0.75, 4)
@@ -467,7 +453,6 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 		local Container = Instance.new("Frame")
 		Container.BackgroundColor3 = T.Button1
-		Container.BackgroundTransparency = 0.85
 		Container.Position = UDim2.fromOffset(6, 6)
 		Container.Size = UDim2.new(1, -12, 0, 12)
 		Container.ZIndex = 503
@@ -478,7 +463,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 		local Fill = Instance.new("Frame")
 		Fill.BackgroundColor3 = T.Primary
-		Fill.BackgroundTransparency = 0.65
+		Fill.BackgroundTransparency = 0.5
 		Fill.BorderSizePixel = 0
 		Fill.Size = UDim2.fromScale(initVal / 255, 1)
 		Fill.ZIndex = 504
@@ -529,60 +514,64 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	local greenContainer, greenFill, greenVal = makeRGBSlider(19, "green", green)
 	local blueContainer, blueFill, blueVal = makeRGBSlider(39, "blue", blue)
 
-	local function updateColorDisplay()
+	local function displayHSV(moveCursor)
 		local color = Color3.fromHSV(hue, sat, val)
-		red, green, blue = color.R * 255, color.G * 255, color.B * 255
+		red = color.R * 255
+		green = color.G * 255
+		blue = color.B * 255
+
 		ValSliderContainer.BackgroundColor3 = Color3.fromHSV(hue, sat, 1)
 		redFill.Size = UDim2.fromScale(red / 255, 1)
 		greenFill.Size = UDim2.fromScale(green / 255, 1)
 		blueFill.Size = UDim2.fromScale(blue / 255, 1)
+
 		redVal.Text = tostring(math.floor(red))
 		greenVal.Text = tostring(math.floor(green))
 		blueVal.Text = tostring(math.floor(blue))
+
+		if moveCursor then
+			local radius = sat / 2
+			local theta = (hue * (math.pi * 2)) - (math.pi * 2)
+			local cx, cy = radius * math.cos(theta), radius * math.sin(theta)
+			ValCursor.Position = UDim2.fromScale(val, 0)
+			PickerCursor.Position = UDim2.fromScale(cx + 0.5, cy + 0.5)
+		end
+
+		if onColorChanged then
+			onColorChanged(color)
+		end
+	end
+
+	local function displayRGB()
+		local color = Color3.fromRGB(red, green, blue)
+		hue, sat, val = color:ToHSV()
+
 		local radius = sat / 2
 		local theta = (hue * (math.pi * 2)) - (math.pi * 2)
 		local cx, cy = radius * math.cos(theta), radius * math.sin(theta)
+
+		ValSliderContainer.BackgroundColor3 = Color3.fromHSV(hue, sat, 1)
 		ValCursor.Position = UDim2.fromScale(val, 0)
 		PickerCursor.Position = UDim2.fromScale(cx + 0.5, cy + 0.5)
-		if onColorChanged then onColorChanged(color) end
-	end
 
-	local function updateFromRGB()
-		local color = Color3.fromRGB(red, green, blue)
-		hue, sat, val = color:ToHSV()
-		updateColorDisplay()
+		if onColorChanged then
+			onColorChanged(color)
+		end
 	end
 
 	local function setupRGBSlider(container, fill, valLabel, getChannel, setChannel)
-		local dragging = false
-		local connection
+		local dcon, acon
 
 		container.InputBegan:Connect(function(io)
 			if io.UserInputType == Enum.UserInputType.MouseButton1 then
-				dragging = true
 				local containerPos = container.AbsolutePosition
 				local containerWidth = container.AbsoluteSize.X
 				local rawValue = math.clamp((io.Position.X - containerPos.X) / containerWidth, 0, 1)
 				local newVal = math.floor(rawValue * 255)
+				fill.Size = UDim2.fromScale(rawValue, 1)
 				valLabel.Text = tostring(newVal)
 				setChannel(newVal)
-				updateFromRGB()
-				connection = UserInputService.InputChanged:Connect(function(io2)
-					if dragging and io2.UserInputType == Enum.UserInputType.MouseMovement then
-						local rv = math.clamp((io2.Position.X - containerPos.X) / containerWidth, 0, 1)
-						local nv = math.floor(rv * 255)
-						valLabel.Text = tostring(nv)
-						setChannel(nv)
-						updateFromRGB()
-					end
-				end)
-			end
-		end)
-
-		container.InputEnded:Connect(function(io)
-			if io.UserInputType == Enum.UserInputType.MouseButton1 then
-				dragging = false
-				if connection then connection:Disconnect() end
+				displayRGB()
 			end
 		end)
 
@@ -596,36 +585,27 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 		end)
 	end
 
-	setupRGBSlider(redContainer, redFill, redVal, function() return red end, function(v) red = v end)
-	setupRGBSlider(greenContainer, greenFill, greenVal, function() return green end, function(v) green = v end)
-	setupRGBSlider(blueContainer, blueFill, blueVal, function() return blue end, function(v) blue = v end)
+	setupRGBSlider(redContainer, redFill, redVal,
+		function() return red end,
+		function(v) red = v end)
+	setupRGBSlider(greenContainer, greenFill, greenVal,
+		function() return green end,
+		function(v) green = v end)
+	setupRGBSlider(blueContainer, blueFill, blueVal,
+		function() return blue end,
+		function(v) blue = v end)
 
 	do
-		local dragging = false
-		local connection
+		local dcon, acon
 
 		ValSliderContainer.InputBegan:Connect(function(io)
 			if io.UserInputType == Enum.UserInputType.MouseButton1 then
-				dragging = true
 				local containerPos = ValSliderContainer.AbsolutePosition
 				local containerWidth = ValSliderContainer.AbsoluteSize.X
 				local rawValue = math.clamp((io.Position.X - containerPos.X) / containerWidth, 0, 1)
+				ValCursor.Position = UDim2.fromScale(rawValue, 0)
 				val = rawValue
-				updateColorDisplay()
-				connection = UserInputService.InputChanged:Connect(function(io2)
-					if dragging and io2.UserInputType == Enum.UserInputType.MouseMovement then
-						local rv = math.clamp((io2.Position.X - containerPos.X) / containerWidth, 0, 1)
-						val = rv
-						updateColorDisplay()
-					end
-				end)
-			end
-		end)
-
-		ValSliderContainer.InputEnded:Connect(function(io)
-			if io.UserInputType == Enum.UserInputType.MouseButton1 then
-				dragging = false
-				if connection then connection:Disconnect() end
+				displayHSV(false)
 			end
 		end)
 
@@ -640,13 +620,11 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	end
 
 	do
-		local dragging = false
-		local connection
+		local dcon, acon
 		local center = Vector2.new(0.5, 0.5)
 
 		ColorWheel.InputBegan:Connect(function(io)
 			if io.UserInputType == Enum.UserInputType.MouseButton1 then
-				dragging = true
 				pickerMoving = true
 				local pickerPos = ColorWheel.AbsolutePosition
 				local pickerWidth = ColorWheel.AbsoluteSize.X
@@ -658,34 +636,18 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 					local centerMag = (Vector2.new(x, y) - center).Magnitude
 					if centerMag > 0.5 then
 						x, y = polarToCart(radius - (centerMag - 0.5), theta)
-						x = x + 0.5
-						y = y + 0.5
+						x += 0.5
+						y += 0.5
 						centerMag = (Vector2.new(x, y) - center).Magnitude
 					end
 					return x, y, ((theta / math.pi + 2) / 2) % 1, math.clamp(centerMag * 2, 0, 1)
 				end
 
 				local x, y, h, s = computePos(io.Position)
+				PickerCursor.Position = UDim2.fromScale(x, y)
 				hue = h
 				sat = s
-				updateColorDisplay()
-
-				connection = UserInputService.InputChanged:Connect(function(io2)
-					if dragging and io2.UserInputType == Enum.UserInputType.MouseMovement then
-						local x2, y2, h2, s2 = computePos(io2.Position)
-						hue = h2
-						sat = s2
-						updateColorDisplay()
-					end
-				end)
-			end
-		end)
-
-		ColorWheel.InputEnded:Connect(function(io)
-			if io.UserInputType == Enum.UserInputType.MouseButton1 then
-				dragging = false
-				pickerMoving = false
-				if connection then connection:Disconnect() end
+				displayHSV(false)
 			end
 		end)
 	end
@@ -699,8 +661,9 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 			if chromaCon then chromaCon:Disconnect() end
 			chromaCon = RunService.RenderStepped:Connect(function(dt)
 				if pickerMoving then return end
-				hue = (hue + dt * chromaSpeed) % 1
-				updateColorDisplay()
+				dt = dt * chromaSpeed
+				hue = (hue + dt) % 1
+				displayHSV(true)
 			end)
 		else
 			Tween(ChromaBtn, { BackgroundColor3 = T.Button1 }, 0.2, 1)
@@ -744,6 +707,36 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	pickerObj.destroy = function()
 		if chromaCon then chromaCon:Disconnect() end
+		local animCon
+		task.spawn(function()
+			local backgroundTransparency = {}
+			local imageTransparency = {}
+			local textTransparency = {}
+			local transparency = {}
+			local s = {
+				Frame = { backgroundTransparency },
+				ImageLabel = { backgroundTransparency, imageTransparency },
+				ImageButton = { backgroundTransparency, imageTransparency },
+				TextLabel = { backgroundTransparency, textTransparency },
+				TextButton = { backgroundTransparency, textTransparency },
+				UIStroke = { transparency },
+			}
+			local d = PickerGui:GetDescendants()
+			table.insert(d, PickerGui)
+			for _, v in ipairs(d) do
+				local a = s[v.ClassName]
+				if a then for i = 1, #a do table.insert(a[i], v) end end
+			end
+			for _, v in ipairs(transparency) do v.Transparency = 1 end
+			animCon = RunService.RenderStepped:Connect(function(dt)
+				dt = dt * 8
+				for _, v in ipairs(backgroundTransparency) do v.BackgroundTransparency += dt end
+				for _, v in ipairs(imageTransparency) do v.ImageTransparency += dt end
+				for _, v in ipairs(textTransparency) do v.TextTransparency += dt end
+			end)
+		end)
+		Tween(PickerScale, { Scale = 0.7 }, 0.4, 1).Completed:Wait()
+		if animCon then animCon:Disconnect() end
 		PickerGui:Destroy()
 	end
 
@@ -762,7 +755,7 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	pickerObj.setColor = function(color)
 		hue, sat, val = color:ToHSV()
-		updateColorDisplay()
+		displayHSV(true)
 	end
 
 	return pickerObj
@@ -779,15 +772,19 @@ function SimpleKavo.CreateLib(title, themeName)
 	ScreenGui.ResetOnSpawn = false
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 	ScreenGui.DisplayOrder = 1000
-	pcall(function()
+	local ok, err = pcall(function()
 		ScreenGui.Parent = game.Players.LocalPlayer.PlayerGui
 	end)
+	if not ok then
+		warn("Failed to parent ScreenGui: " .. tostring(err))
+		return
+	end
 
 	local Main = Instance.new("Frame")
 	Main.Name = "Main"
 	Main.Parent = ScreenGui
 	Main.BackgroundColor3 = T.Window2
-	Main.BackgroundTransparency = 0.75
+	Main.BackgroundTransparency = 0.25
 	Main.Position = UDim2.new(0.3, 0, 0.3, 0)
 	Main.Size = UDim2.new(0, 520, 0, 380)
 	Main.BorderSizePixel = 0
@@ -807,7 +804,7 @@ function SimpleKavo.CreateLib(title, themeName)
 	Header.Name = "Header"
 	Header.Parent = Main
 	Header.BackgroundColor3 = T.Window1
-	Header.BackgroundTransparency = 0.75
+	Header.BackgroundTransparency = 0.25
 	Header.BorderSizePixel = 0
 	Header.Size = UDim2.new(1, 0, 0, 36)
 	Header.ZIndex = 50
@@ -816,7 +813,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 	local HeaderBot = Instance.new("Frame")
 	HeaderBot.BackgroundColor3 = T.Window1
-	HeaderBot.BackgroundTransparency = 0.75
+	HeaderBot.BackgroundTransparency = 0.25
 	HeaderBot.BorderSizePixel = 0
 	HeaderBot.Position = UDim2.new(0, 0, 1, -12)
 	HeaderBot.Size = UDim2.new(1, 0, 0, 12)
@@ -868,7 +865,7 @@ function SimpleKavo.CreateLib(title, themeName)
 	KeybindBtn.Name = "KeybindBtn"
 	KeybindBtn.Parent = Header
 	KeybindBtn.BackgroundColor3 = T.Button1
-	KeybindBtn.BackgroundTransparency = 0.75
+	KeybindBtn.BackgroundTransparency = 0.25
 	KeybindBtn.AnchorPoint = Vector2.new(1, 0.5)
 	KeybindBtn.Position = UDim2.new(1, -36, 0.5, 0)
 	KeybindBtn.Size = UDim2.new(0, 70, 0, 20)
@@ -885,7 +882,7 @@ function SimpleKavo.CreateLib(title, themeName)
 	local Close = Instance.new("TextButton")
 	Close.Parent = Header
 	Close.BackgroundColor3 = T.Button1
-	Close.BackgroundTransparency = 0.75
+	Close.BackgroundTransparency = 0.25
 	Close.AnchorPoint = Vector2.new(1, 0.5)
 	Close.Position = UDim2.new(1, -6, 0.5, 0)
 	Close.Size = UDim2.fromOffset(22, 22)
@@ -921,7 +918,36 @@ function SimpleKavo.CreateLib(title, themeName)
 		Tween(CloseStroke, { Color = T.Stroke }, 0.2, 2)
 	end)
 	Close.MouseButton1Click:Connect(function()
+		local animCon
+		task.spawn(function()
+			local backgroundTransparency = {}
+			local imageTransparency = {}
+			local textTransparency = {}
+			local transparency = {}
+			local s = {
+				Frame = { backgroundTransparency },
+				ImageLabel = { backgroundTransparency, imageTransparency },
+				ImageButton = { backgroundTransparency, imageTransparency },
+				TextLabel = { backgroundTransparency, textTransparency },
+				TextButton = { backgroundTransparency, textTransparency },
+				UIStroke = { transparency },
+			}
+			local d = Main:GetDescendants()
+			table.insert(d, Main)
+			for _, v in ipairs(d) do
+				local a = s[v.ClassName]
+				if a then for i = 1, #a do table.insert(a[i], v) end end
+			end
+			for _, v in ipairs(transparency) do v.Transparency = 1 end
+			animCon = RunService.RenderStepped:Connect(function(dt)
+				dt = dt * 8
+				for _, v in ipairs(backgroundTransparency) do v.BackgroundTransparency = v.BackgroundTransparency + dt end
+				for _, v in ipairs(imageTransparency) do v.ImageTransparency = v.ImageTransparency + dt end
+				for _, v in ipairs(textTransparency) do v.TextTransparency = v.TextTransparency + dt end
+			end)
+		end)
 		Tween(MainScale, { Scale = 0.7 }, 0.4, 2).Completed:Wait()
+		if animCon then animCon:Disconnect() end
 		ScreenGui:Destroy()
 	end)
 
@@ -951,7 +977,7 @@ function SimpleKavo.CreateLib(title, themeName)
 	SideBar.Name = "SideBar"
 	SideBar.Parent = Main
 	SideBar.BackgroundColor3 = T.Window3
-	SideBar.BackgroundTransparency = 0.75
+	SideBar.BackgroundTransparency = 0.25
 	SideBar.BorderSizePixel = 0
 	SideBar.Position = UDim2.fromOffset(0, 36)
 	SideBar.Size = UDim2.new(0, 130, 1, -36)
@@ -960,7 +986,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 	local SideBarTop = Instance.new("Frame")
 	SideBarTop.BackgroundColor3 = T.Window3
-	SideBarTop.BackgroundTransparency = 0.75
+	SideBarTop.BackgroundTransparency = 0.25
 	SideBarTop.BorderSizePixel = 0
 	SideBarTop.Position = UDim2.fromOffset(0, 0)
 	SideBarTop.Size = UDim2.new(1, 0, 0, 12)
@@ -969,7 +995,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 	local SideBarRight = Instance.new("Frame")
 	SideBarRight.BackgroundColor3 = T.Window3
-	SideBarRight.BackgroundTransparency = 0.75
+	SideBarRight.BackgroundTransparency = 0.25
 	SideBarRight.BorderSizePixel = 0
 	SideBarRight.Position = UDim2.new(1, -12, 0, 0)
 	SideBarRight.Size = UDim2.new(0, 12, 1, 0)
@@ -1012,7 +1038,7 @@ function SimpleKavo.CreateLib(title, themeName)
 	Content.Name = "Content"
 	Content.Parent = Main
 	Content.BackgroundColor3 = T.Window2
-	Content.BackgroundTransparency = 0.75
+	Content.BackgroundTransparency = 0.25
 	Content.BorderSizePixel = 0
 	Content.Position = UDim2.fromOffset(132, 36)
 	Content.Size = UDim2.new(1, -132, 1, -36)
@@ -1022,7 +1048,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 	local ContentLeft = Instance.new("Frame")
 	ContentLeft.BackgroundColor3 = T.Window2
-	ContentLeft.BackgroundTransparency = 0.75
+	ContentLeft.BackgroundTransparency = 0.25
 	ContentLeft.BorderSizePixel = 0
 	ContentLeft.Position = UDim2.fromOffset(0, 0)
 	ContentLeft.Size = UDim2.new(0, 12, 1, 0)
@@ -1031,7 +1057,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 	local ContentTop = Instance.new("Frame")
 	ContentTop.BackgroundColor3 = T.Window2
-	ContentTop.BackgroundTransparency = 0.75
+	ContentTop.BackgroundTransparency = 0.25
 	ContentTop.BorderSizePixel = 0
 	ContentTop.Position = UDim2.fromOffset(0, 0)
 	ContentTop.Size = UDim2.new(1, 0, 0, 12)
@@ -1052,9 +1078,11 @@ function SimpleKavo.CreateLib(title, themeName)
 				Enum.KeyCode.Unknown,
 			}
 			local keyCode = input.KeyCode
+			local isIgnored = false
 			for _, k in ipairs(ignored) do
-				if keyCode == k then return end
+				if keyCode == k then isIgnored = true break end
 			end
+			if isIgnored then return end
 			toggleKey = keyCode
 			listeningForKey = false
 			KeybindBtn.Text = "[" .. keyCode.Name .. "]"
@@ -1068,7 +1096,11 @@ function SimpleKavo.CreateLib(title, themeName)
 		if gameProcessed then return end
 		if input.KeyCode == toggleKey then
 			Minimized = not Minimized
-			Main.Visible = not Minimized
+			if Minimized then
+				Main.Visible = false
+			else
+				Main.Visible = true
+			end
 		end
 	end)
 
@@ -1087,7 +1119,10 @@ function SimpleKavo.CreateLib(title, themeName)
 	local currentTab = nil
 
 	local function updateTheme(newThemeName)
-		if not Themes[newThemeName] then return end
+		if not Themes[newThemeName] then
+			warn("[SimpleKavo] Tema '" .. tostring(newThemeName) .. "' não encontrado!")
+			return
+		end
 		local newT = Themes[newThemeName]
 		Main.BackgroundColor3 = newT.Window2
 		Header.BackgroundColor3 = newT.Window1
@@ -1117,6 +1152,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				if tabData.stroke then tabData.stroke.Color = newT.StrokeHover end
 			end
 		end
+
 		T = newT
 	end
 
@@ -1125,7 +1161,7 @@ function SimpleKavo.CreateLib(title, themeName)
 		TabButton.Name = name
 		TabButton.Parent = TabMenu
 		TabButton.BackgroundColor3 = T.Button1
-		TabButton.BackgroundTransparency = 0.75
+		TabButton.BackgroundTransparency = 0.25
 		TabButton.BorderSizePixel = 0
 		TabButton.Size = UDim2.new(1, -10, 0, 22)
 		TabButton.Font = Enum.Font.Gotham
@@ -1174,25 +1210,27 @@ function SimpleKavo.CreateLib(title, themeName)
 		local function activateTab()
 			for _, tab in ipairs(tabsOrder) do
 				tab.content.Visible = false
-				Tween(tab.button, { BackgroundColor3 = T.Button1, TextColor3 = T.TextPrimary }, 0.2, 2)
-				if tab.stroke then Tween(tab.stroke, { Color = T.Stroke }, 0.2, 2) end
+				tab.button.BackgroundColor3 = T.Button1
+				tab.button.TextColor3 = T.TextPrimary
+				if tab.stroke then tab.stroke.Color = T.Stroke end
 			end
 			TabContent.Visible = true
-			Tween(TabButton, { BackgroundColor3 = T.Button3, TextColor3 = T.Primary }, 0.2, 2)
-			Tween(TabButtonStroke, { Color = T.StrokeHover }, 0.2, 2)
+			TabButton.BackgroundColor3 = T.Button3
+			TabButton.TextColor3 = T.Primary
+			TabButtonStroke.Color = T.StrokeHover
 			currentTab = TabButton
 		end
 
 		TabButton.MouseEnter:Connect(function()
 			if currentTab ~= TabButton then
-				Tween(TabButton, { BackgroundColor3 = T.Button2 }, 0.2, 2)
-				Tween(TabButtonStroke, { Color = T.StrokeHover }, 0.2, 2)
+				TabButton.BackgroundColor3 = T.Button2
+				TabButtonStroke.Color = T.StrokeHover
 			end
 		end)
 		TabButton.MouseLeave:Connect(function()
 			if currentTab ~= TabButton then
-				Tween(TabButton, { BackgroundColor3 = T.Button1 }, 0.2, 2)
-				Tween(TabButtonStroke, { Color = T.Stroke }, 0.2, 2)
+				TabButton.BackgroundColor3 = T.Button1
+				TabButtonStroke.Color = T.Stroke
 			end
 		end)
 		TabButton.MouseButton1Click:Connect(activateTab)
@@ -1206,7 +1244,7 @@ function SimpleKavo.CreateLib(title, themeName)
 			SectionFrame.Name = sectionName .. "_Section"
 			SectionFrame.Parent = TabContent
 			SectionFrame.BackgroundColor3 = T.Window3
-			SectionFrame.BackgroundTransparency = 0.85
+			SectionFrame.BackgroundTransparency = 0.15
 			SectionFrame.BorderSizePixel = 0
 			SectionFrame.Size = UDim2.new(0.95, 0, 0, 0)
 			SectionFrame.AutomaticSize = Enum.AutomaticSize.Y
@@ -1219,7 +1257,7 @@ function SimpleKavo.CreateLib(title, themeName)
 			SectionTitleBar.Name = "TitleBar"
 			SectionTitleBar.Parent = SectionFrame
 			SectionTitleBar.BackgroundColor3 = T.Window1
-			SectionTitleBar.BackgroundTransparency = 0.85
+			SectionTitleBar.BackgroundTransparency = 0.15
 			SectionTitleBar.BorderSizePixel = 0
 			SectionTitleBar.Size = UDim2.new(1, 0, 0, 20)
 			SectionTitleBar.ZIndex = 33
@@ -1227,7 +1265,7 @@ function SimpleKavo.CreateLib(title, themeName)
 
 			local STBot = Instance.new("Frame")
 			STBot.BackgroundColor3 = T.Window1
-			STBot.BackgroundTransparency = 0.85
+			STBot.BackgroundTransparency = 0.15
 			STBot.BorderSizePixel = 0
 			STBot.Position = UDim2.new(0, 0, 1, -8)
 			STBot.Size = UDim2.new(1, 0, 0, 8)
@@ -1245,10 +1283,6 @@ function SimpleKavo.CreateLib(title, themeName)
 			SectionTrim.Size = UDim2.new(1, 0, 0, 2)
 			SectionTrim.ZIndex = 34
 			SectionTrim.Parent = SectionTitleBar
-
-			local SectionTrimGrad = Instance.new("UIGradient")
-			SectionTrimGrad.Color = ColorSequence.new(T.Primary, T.Secondary)
-			SectionTrimGrad.Parent = SectionTrim
 
 			local SectionLabel = Instance.new("TextLabel")
 			SectionLabel.Name = "Label"
@@ -1295,12 +1329,15 @@ function SimpleKavo.CreateLib(title, themeName)
 			local SectionFunctions = {}
 
 			function SectionFunctions:NewButton(btnName, description, callback)
+				local elementOrder = #SectionContent:GetChildren()
+
 				local ControlFrame = Instance.new("Frame")
 				ControlFrame.BackgroundColor3 = T.Button1
-				ControlFrame.BackgroundTransparency = 0.85
+				ControlFrame.BackgroundTransparency = 0.15
 				ControlFrame.Name = btnName .. "_Control"
 				ControlFrame.Size = UDim2.new(1, -4, 0, description and 36 or 22)
 				ControlFrame.ZIndex = 34
+				ControlFrame.LayoutOrder = elementOrder
 				ControlFrame.Parent = SectionContent
 				AddCorner(ControlFrame, CORNER_XS)
 				AddStroke(ControlFrame, T.Stroke)
@@ -1332,7 +1369,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				local BtnFrame = Instance.new("Frame")
 				BtnFrame.AnchorPoint = Vector2.new(1, 0.5)
 				BtnFrame.BackgroundColor3 = T.Button2
-				BtnFrame.BackgroundTransparency = 0.85
+				BtnFrame.BackgroundTransparency = 0.15
 				BtnFrame.Name = "Button"
 				BtnFrame.Position = UDim2.new(1, -5, 0.5, 0)
 				BtnFrame.Size = UDim2.fromOffset(18, 18)
@@ -1369,14 +1406,14 @@ function SimpleKavo.CreateLib(title, themeName)
 				end
 
 				ClickSensor.MouseEnter:Connect(function()
-					Tween(ControlFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
-					Tween(BtnFrame, { BackgroundColor3 = T.Button3 }, 0.2, 2)
-					Tween(BtnStroke, { Color = T.StrokeHover }, 0.2, 2)
+					ControlFrame.BackgroundColor3 = T.Button2
+					BtnFrame.BackgroundColor3 = T.Button3
+					BtnStroke.Color = T.StrokeHover
 				end)
 				ClickSensor.MouseLeave:Connect(function()
-					Tween(ControlFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
-					Tween(BtnFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
-					Tween(BtnStroke, { Color = T.Stroke }, 0.2, 2)
+					ControlFrame.BackgroundColor3 = T.Button1
+					BtnFrame.BackgroundColor3 = T.Button2
+					BtnStroke.Color = T.Stroke
 				end)
 				ClickSensor.MouseButton1Click:Connect(function()
 					BtnIcon.ImageColor3 = T.Primary
@@ -1388,12 +1425,15 @@ function SimpleKavo.CreateLib(title, themeName)
 			end
 
 			function SectionFunctions:NewToggle(toggleName, description, callback, defaultState)
+				local elementOrder = #SectionContent:GetChildren()
+
 				local ControlFrame = Instance.new("Frame")
 				ControlFrame.BackgroundColor3 = T.Button1
-				ControlFrame.BackgroundTransparency = 0.85
+				ControlFrame.BackgroundTransparency = 0.15
 				ControlFrame.Name = toggleName .. "_Control"
 				ControlFrame.Size = UDim2.new(1, -4, 0, description and 36 or 22)
 				ControlFrame.ZIndex = 34
+				ControlFrame.LayoutOrder = elementOrder
 				ControlFrame.Parent = SectionContent
 				AddCorner(ControlFrame, CORNER_XS)
 				AddStroke(ControlFrame, T.Stroke)
@@ -1425,7 +1465,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				local TogFrame = Instance.new("Frame")
 				TogFrame.AnchorPoint = Vector2.new(1, 0.5)
 				TogFrame.BackgroundColor3 = T.Button2
-				TogFrame.BackgroundTransparency = 0.85
+				TogFrame.BackgroundTransparency = 0.15
 				TogFrame.Name = "Toggle"
 				TogFrame.Position = UDim2.new(1, -5, 0.5, 0)
 				TogFrame.Size = UDim2.fromOffset(18, 18)
@@ -1466,32 +1506,34 @@ function SimpleKavo.CreateLib(title, themeName)
 				local function UpdateToggleVisual(state)
 					if state then
 						TogIcon.Image = "rbxassetid://9801457539"
-						Tween(TogIcon, { Rotation = 0, ImageColor3 = T.Primary }, 0.3, 2)
-						Tween(TogFrame, { BackgroundColor3 = T.Button3 }, 0.2, 2)
+						TogIcon.Rotation = 0
+						TogIcon.ImageColor3 = T.Primary
+						TogFrame.BackgroundColor3 = T.Button2
 					else
 						TogIcon.Image = "rbxassetid://9801456486"
-						Tween(TogIcon, { Rotation = 360, ImageColor3 = T.Secondary }, 0.3, 2)
-						Tween(TogFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+						TogIcon.Rotation = 360
+						TogIcon.ImageColor3 = T.Secondary
+						TogFrame.BackgroundColor3 = T.Button1
 					end
 				end
 				UpdateToggleVisual(State)
 
 				BackToggle.MouseEnter:Connect(function()
-					Tween(ControlFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
-					Tween(TogStroke, { Color = T.StrokeHover }, 0.2, 2)
+					ControlFrame.BackgroundColor3 = T.Button2
+					TogStroke.Color = T.StrokeHover
 					if State then
-						Tween(TogFrame, { BackgroundColor3 = T.Button3 }, 0.2, 2)
+						TogFrame.BackgroundColor3 = T.Button3
 					else
-						Tween(TogFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+						TogFrame.BackgroundColor3 = T.Button2
 					end
 				end)
 				BackToggle.MouseLeave:Connect(function()
-					Tween(ControlFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
-					Tween(TogStroke, { Color = T.Stroke }, 0.2, 2)
+					ControlFrame.BackgroundColor3 = T.Button1
+					TogStroke.Color = T.Stroke
 					if State then
-						Tween(TogFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+						TogFrame.BackgroundColor3 = T.Button2
 					else
-						Tween(TogFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
+						TogFrame.BackgroundColor3 = T.Button1
 					end
 				end)
 				BackToggle.MouseButton1Click:Connect(function()
@@ -1507,24 +1549,29 @@ function SimpleKavo.CreateLib(title, themeName)
 					UpdateToggleVisual(State)
 					if callback then callback(State) end
 				end
-				function toggleObj:Get() return State end
+				function toggleObj:Get()
+					return State
+				end
 				return toggleObj
 			end
 
 			function SectionFunctions:NewSlider(sliderName, min, max, default, callback)
+				local elementOrder = #SectionContent:GetChildren()
+
 				local ControlFrame = Instance.new("Frame")
 				ControlFrame.BackgroundColor3 = T.Button1
-				ControlFrame.BackgroundTransparency = 0.85
+				ControlFrame.BackgroundTransparency = 0.15
 				ControlFrame.Name = sliderName .. "_Control"
 				ControlFrame.Size = UDim2.new(1, -4, 0, 22)
 				ControlFrame.ZIndex = 34
+				ControlFrame.LayoutOrder = elementOrder
 				ControlFrame.Parent = SectionContent
 				AddCorner(ControlFrame, CORNER_XS)
 				AddStroke(ControlFrame, T.Stroke)
 
 				local SliderContainer = Instance.new("Frame")
 				SliderContainer.BackgroundColor3 = T.Button2
-				SliderContainer.BackgroundTransparency = 0.85
+				SliderContainer.BackgroundTransparency = 0.15
 				SliderContainer.Name = "SliderContainer"
 				SliderContainer.Position = UDim2.fromOffset(5, 5)
 				SliderContainer.Size = UDim2.new(1, -10, 0, 12)
@@ -1537,7 +1584,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				local SliderFill = Instance.new("Frame")
 				SliderFill.Active = false
 				SliderFill.BackgroundColor3 = T.Primary
-				SliderFill.BackgroundTransparency = 0.65
+				SliderFill.BackgroundTransparency = 0.5
 				SliderFill.BorderSizePixel = 0
 				SliderFill.Name = "Fill"
 				SliderFill.Size = UDim2.fromScale(math.clamp((default - min) / (max - min), 0, 1), 1)
@@ -1585,13 +1632,12 @@ function SimpleKavo.CreateLib(title, themeName)
 				if callback then callback(default) end
 
 				local dragging = false
-				local connection
 
 				SliderContainer.MouseEnter:Connect(function()
-					Tween(SliderContainerStroke, { Color = T.StrokeHover }, 0.2, 2)
+					SliderContainerStroke.Color = T.StrokeHover
 				end)
 				SliderContainer.MouseLeave:Connect(function()
-					Tween(SliderContainerStroke, { Color = T.Stroke }, 0.2, 2)
+					SliderContainerStroke.Color = T.Stroke
 				end)
 
 				local function UpdateSlider(value)
@@ -1607,31 +1653,36 @@ function SimpleKavo.CreateLib(title, themeName)
 						local sliderPos = SliderContainer.AbsolutePosition
 						local sliderWidth = SliderContainer.AbsoluteSize.X
 						local rawValue = math.clamp((input.Position.X - sliderPos.X) / sliderWidth, 0, 1)
-						UpdateSlider(min + (max - min) * rawValue)
-						connection = UserInputService.InputChanged:Connect(function(input2)
-							if dragging and (input2.UserInputType == Enum.UserInputType.MouseMovement or input2.UserInputType == Enum.UserInputType.Touch) then
-								local rv = math.clamp((input2.Position.X - sliderPos.X) / sliderWidth, 0, 1)
-								UpdateSlider(min + (max - min) * rv)
-							end
-						end)
+						local value = min + (max - min) * rawValue
+						UpdateSlider(value)
 					end
 				end)
 				SliderContainer.InputEnded:Connect(function(input)
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						dragging = false
-						if connection then connection:Disconnect() end
+					end
+				end)
+				UserInputService.InputChanged:Connect(function(input)
+					if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+						local sliderPos = SliderContainer.AbsolutePosition
+						local sliderWidth = SliderContainer.AbsoluteSize.X
+						local rawValue = math.clamp((input.Position.X - sliderPos.X) / sliderWidth, 0, 1)
+						local value = min + (max - min) * rawValue
+						UpdateSlider(value)
 					end
 				end)
 
 				local sliderObj = { Frame = ControlFrame }
 				function sliderObj:Set(value)
 					value = math.clamp(value, min, max)
-					SliderFill.Size = UDim2.fromScale((value - min) / (max - min), 1)
+					local percent = (value - min) / (max - min)
+					SliderFill.Size = UDim2.fromScale(percent, 1)
 					SliderVal.Text = tostring(math.floor(value))
 					if callback then callback(value) end
 				end
 				function sliderObj:Get()
-					return min + (max - min) * SliderFill.Size.X.Scale
+					local pct = SliderFill.Size.X.Scale
+					return min + (max - min) * pct
 				end
 				return sliderObj
 			end
@@ -1643,20 +1694,22 @@ function SimpleKavo.CreateLib(title, themeName)
 				end
 				decimals = decimals or 2
 				local fmt = "%." .. tostring(math.clamp(math.floor(decimals), 0, 10)) .. "f"
+				local elementOrder = #SectionContent:GetChildren()
 
 				local ControlFrame = Instance.new("Frame")
 				ControlFrame.BackgroundColor3 = T.Button1
-				ControlFrame.BackgroundTransparency = 0.85
+				ControlFrame.BackgroundTransparency = 0.15
 				ControlFrame.Name = sliderName .. "_Control"
 				ControlFrame.Size = UDim2.new(1, -4, 0, 22)
 				ControlFrame.ZIndex = 34
+				ControlFrame.LayoutOrder = elementOrder
 				ControlFrame.Parent = SectionContent
 				AddCorner(ControlFrame, CORNER_XS)
 				AddStroke(ControlFrame, T.Stroke)
 
 				local SliderContainer = Instance.new("Frame")
 				SliderContainer.BackgroundColor3 = T.Button2
-				SliderContainer.BackgroundTransparency = 0.85
+				SliderContainer.BackgroundTransparency = 0.15
 				SliderContainer.Name = "SliderContainer"
 				SliderContainer.Position = UDim2.fromOffset(5, 5)
 				SliderContainer.Size = UDim2.new(1, -10, 0, 12)
@@ -1669,7 +1722,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				local SliderFill = Instance.new("Frame")
 				SliderFill.Active = false
 				SliderFill.BackgroundColor3 = T.Primary
-				SliderFill.BackgroundTransparency = 0.65
+				SliderFill.BackgroundTransparency = 0.5
 				SliderFill.BorderSizePixel = 0
 				SliderFill.Name = "Fill"
 				SliderFill.Size = UDim2.fromScale(math.clamp((default - min) / (max - min), 0, 1), 1)
@@ -1717,13 +1770,12 @@ function SimpleKavo.CreateLib(title, themeName)
 				if callback then callback(default) end
 
 				local dragging = false
-				local connection
 
 				SliderContainer.MouseEnter:Connect(function()
-					Tween(SliderContainerStroke, { Color = T.StrokeHover }, 0.2, 2)
+					SliderContainerStroke.Color = T.StrokeHover
 				end)
 				SliderContainer.MouseLeave:Connect(function()
-					Tween(SliderContainerStroke, { Color = T.Stroke }, 0.2, 2)
+					SliderContainerStroke.Color = T.Stroke
 				end)
 
 				local function UpdateSlider(value)
@@ -1736,22 +1788,21 @@ function SimpleKavo.CreateLib(title, themeName)
 				SliderContainer.InputBegan:Connect(function(input)
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						dragging = true
-						local sliderPos = SliderContainer.AbsolutePosition
-						local sliderWidth = SliderContainer.AbsoluteSize.X
-						local rawValue = math.clamp((input.Position.X - sliderPos.X) / sliderWidth, 0, 1)
+						local pos = input.Position.X - SliderContainer.AbsolutePosition.X
+						local rawValue = math.clamp(pos / SliderContainer.AbsoluteSize.X, 0, 1)
 						UpdateSlider(min + (max - min) * rawValue)
-						connection = UserInputService.InputChanged:Connect(function(input2)
-							if dragging and (input2.UserInputType == Enum.UserInputType.MouseMovement or input2.UserInputType == Enum.UserInputType.Touch) then
-								local rv = math.clamp((input2.Position.X - sliderPos.X) / sliderWidth, 0, 1)
-								UpdateSlider(min + (max - min) * rv)
-							end
-						end)
 					end
 				end)
 				SliderContainer.InputEnded:Connect(function(input)
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						dragging = false
-						if connection then connection:Disconnect() end
+					end
+				end)
+				UserInputService.InputChanged:Connect(function(input)
+					if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+						local pos = input.Position.X - SliderContainer.AbsolutePosition.X
+						local rawValue = math.clamp(pos / SliderContainer.AbsoluteSize.X, 0, 1)
+						UpdateSlider(min + (max - min) * rawValue)
 					end
 				end)
 
@@ -1769,6 +1820,7 @@ function SimpleKavo.CreateLib(title, themeName)
 			end
 
 			function SectionFunctions:NewDropdown(dropName, options, defaultOption, callback)
+				local elementOrder = #SectionContent:GetChildren()
 				local isOpen = false
 				local selectedOption = defaultOption or (options and options[1]) or "Select"
 
@@ -1777,13 +1829,15 @@ function SimpleKavo.CreateLib(title, themeName)
 				DropFrame.BackgroundTransparency = 1
 				DropFrame.Size = UDim2.new(1, -4, 0, 22)
 				DropFrame.ClipsDescendants = true
+				DropFrame.LayoutOrder = elementOrder
+				DropFrame.ZIndex = 34
 				DropFrame.Parent = SectionContent
 
 				local MainButton = Instance.new("TextButton")
 				MainButton.Name = "MainButton"
 				MainButton.Parent = DropFrame
 				MainButton.BackgroundColor3 = T.Button1
-				MainButton.BackgroundTransparency = 0.85
+				MainButton.BackgroundTransparency = 0.15
 				MainButton.Size = UDim2.fromScale(1, 1)
 				MainButton.Position = UDim2.fromOffset(0, 0)
 				MainButton.Font = Enum.Font.Gotham
@@ -1826,7 +1880,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				OptionsFrame.Name = "OptionsFrame"
 				OptionsFrame.Parent = DropFrame
 				OptionsFrame.BackgroundColor3 = T.Window3
-				OptionsFrame.BackgroundTransparency = 0.85
+				OptionsFrame.BackgroundTransparency = 0.15
 				OptionsFrame.BorderSizePixel = 0
 				OptionsFrame.Position = UDim2.fromOffset(0, 26)
 				OptionsFrame.Size = UDim2.new(1, 0, 0, 0)
@@ -1852,12 +1906,13 @@ function SimpleKavo.CreateLib(title, themeName)
 					for _, child in ipairs(OptionsFrame:GetChildren()) do
 						if child:IsA("TextButton") then child:Destroy() end
 					end
+					if not options or #options == 0 then return end
 					for i, option in ipairs(options) do
 						local OptButton = Instance.new("TextButton")
 						OptButton.Name = tostring(option)
 						OptButton.Parent = OptionsFrame
 						OptButton.BackgroundColor3 = T.Button1
-						OptButton.BackgroundTransparency = 0.85
+						OptButton.BackgroundTransparency = 0.15
 						OptButton.Size = UDim2.new(1, -8, 0, 18)
 						OptButton.Font = Enum.Font.Gotham
 						OptButton.Text = tostring(option)
@@ -1870,20 +1925,21 @@ function SimpleKavo.CreateLib(title, themeName)
 						local OptStroke = AddStroke(OptButton, T.Stroke)
 
 						OptButton.MouseEnter:Connect(function()
-							Tween(OptButton, { BackgroundColor3 = T.Button2 }, 0.2, 2)
-							Tween(OptStroke, { Color = T.StrokeHover }, 0.2, 2)
+							OptButton.BackgroundColor3 = T.Button2
+							OptStroke.Color = T.StrokeHover
 						end)
 						OptButton.MouseLeave:Connect(function()
-							Tween(OptButton, { BackgroundColor3 = T.Button1 }, 0.2, 2)
-							Tween(OptStroke, { Color = T.Stroke }, 0.2, 2)
+							OptButton.BackgroundColor3 = T.Button1
+							OptStroke.Color = T.Stroke
 						end)
 						OptButton.MouseButton1Click:Connect(function()
 							selectedOption = option
 							MainBtnLabel.Text = dropName .. ": " .. tostring(selectedOption)
 							isOpen = false
-							Tween(ArrowIcon, { Rotation = 0, ImageColor3 = T.Secondary }, 0.2, 2)
-							Tween(OptionsFrame, { Size = UDim2.new(1, 0, 0, 0) }, 0.2, 2)
-							Tween(DropFrame, { Size = UDim2.new(1, -4, 0, 22) }, 0.2, 2)
+							ArrowIcon.Rotation = 0
+							ArrowIcon.ImageColor3 = T.Secondary
+							OptionsFrame.Size = UDim2.new(1, 0, 0, 0)
+							DropFrame.Size = UDim2.new(1, -4, 0, 22)
 							task.delay(0.21, function()
 								if not isOpen then OptionsFrame.Visible = false end
 							end)
@@ -1895,16 +1951,17 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local function toggleDropdown()
 					isOpen = not isOpen
-					Tween(ArrowIcon, { Rotation = isOpen and 180 or 0, ImageColor3 = isOpen and T.Primary or T.Secondary }, 0.2, 2)
+					ArrowIcon.Rotation = isOpen and 180 or 0
+					ArrowIcon.ImageColor3 = isOpen and T.Primary or T.Secondary
 					if isOpen then
-						local optionCount = #options
+						local optionCount = #options > 0 and #options or 1
 						local totalHeight = optionCount * 21 + (optionCount - 1) * 3 + 8
 						OptionsFrame.Visible = true
-						Tween(DropFrame, { Size = UDim2.new(1, -4, 0, 22 + totalHeight + 8) }, 0.2, 2)
-						Tween(OptionsFrame, { Size = UDim2.new(1, 0, 0, totalHeight) }, 0.2, 2)
+						DropFrame.Size = UDim2.new(1, -4, 0, 22 + totalHeight + 8)
+						OptionsFrame.Size = UDim2.new(1, 0, 0, totalHeight)
 					else
-						Tween(DropFrame, { Size = UDim2.new(1, -4, 0, 22) }, 0.2, 2)
-						Tween(OptionsFrame, { Size = UDim2.new(1, 0, 0, 0) }, 0.2, 2)
+						DropFrame.Size = UDim2.new(1, -4, 0, 22)
+						OptionsFrame.Size = UDim2.new(1, 0, 0, 0)
 						task.delay(0.21, function()
 							if not isOpen then OptionsFrame.Visible = false end
 						end)
@@ -1913,14 +1970,14 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				MainButton.MouseEnter:Connect(function()
 					if not isOpen then
-						Tween(MainButton, { BackgroundColor3 = T.Button2 }, 0.2, 2)
-						Tween(MainBtnStroke, { Color = T.StrokeHover }, 0.2, 2)
+						MainButton.BackgroundColor3 = T.Button2
+						MainBtnStroke.Color = T.StrokeHover
 					end
 				end)
 				MainButton.MouseLeave:Connect(function()
 					if not isOpen then
-						Tween(MainButton, { BackgroundColor3 = T.Button1 }, 0.2, 2)
-						Tween(MainBtnStroke, { Color = T.Stroke }, 0.2, 2)
+						MainButton.BackgroundColor3 = T.Button1
+						MainBtnStroke.Color = T.Stroke
 					end
 				end)
 				MainButton.MouseButton1Click:Connect(toggleDropdown)
@@ -1931,12 +1988,15 @@ function SimpleKavo.CreateLib(title, themeName)
 						local pos = input.Position
 						local framePos = DropFrame.AbsolutePosition
 						local frameSize = DropFrame.AbsoluteSize
-						if not (pos.X >= framePos.X and pos.X <= framePos.X + frameSize.X and pos.Y >= framePos.Y and pos.Y <= framePos.Y + frameSize.Y) then
-							toggleDropdown()
+						if not (pos.X >= framePos.X and pos.X <= framePos.X + frameSize.X and
+								pos.Y >= framePos.Y and pos.Y <= framePos.Y + frameSize.Y) then
+							if isOpen then toggleDropdown() end
 						end
 					end
 				end)
-				DropFrame.Destroying:Connect(function() dropdownConnection:Disconnect() end)
+				DropFrame.Destroying:Connect(function()
+					dropdownConnection:Disconnect()
+				end)
 
 				local dropdownMethods = {}
 				function dropdownMethods:Set(newOption)
@@ -1945,7 +2005,9 @@ function SimpleKavo.CreateLib(title, themeName)
 						MainBtnLabel.Text = dropName .. ": " .. tostring(selectedOption)
 					end
 				end
-				function dropdownMethods:Get() return selectedOption end
+				function dropdownMethods:Get()
+					return selectedOption
+				end
 				function dropdownMethods:Update(newOptions, newDefault)
 					options = newOptions or options
 					selectedOption = newDefault or selectedOption or (options and options[1]) or "Select"
@@ -1958,15 +2020,18 @@ function SimpleKavo.CreateLib(title, themeName)
 			end
 
 			function SectionFunctions:NewColorPicker(pickerName, defaultColor, callback)
+				local elementOrder = #SectionContent:GetChildren()
 				local currentColor = defaultColor or Color3.fromRGB(255, 255, 255)
 				local pickerWindowObj = nil
+				local pickerOpening = false
 
 				local ControlFrame = Instance.new("Frame")
 				ControlFrame.BackgroundColor3 = T.Button1
-				ControlFrame.BackgroundTransparency = 0.85
+				ControlFrame.BackgroundTransparency = 0.15
 				ControlFrame.Name = pickerName .. "_Control"
 				ControlFrame.Size = UDim2.new(1, -4, 0, 22)
 				ControlFrame.ZIndex = 34
+				ControlFrame.LayoutOrder = elementOrder
 				ControlFrame.Parent = SectionContent
 				AddCorner(ControlFrame, CORNER_XS)
 				AddStroke(ControlFrame, T.Stroke)
@@ -1998,7 +2063,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				local ColorDisplay = Instance.new("Frame")
 				ColorDisplay.AnchorPoint = Vector2.new(1, 0.5)
 				ColorDisplay.BackgroundColor3 = T.Button2
-				ColorDisplay.BackgroundTransparency = 0.85
+				ColorDisplay.BackgroundTransparency = 0.15
 				ColorDisplay.Name = "ColorDisplay"
 				ColorDisplay.Position = UDim2.new(1, -5, 0.5, 0)
 				ColorDisplay.Size = UDim2.fromOffset(18, 18)
@@ -2019,19 +2084,25 @@ function SimpleKavo.CreateLib(title, themeName)
 				AddCorner(ColorInner, UDim.new(1, 0))
 
 				ClickSensor.MouseEnter:Connect(function()
-					Tween(ControlFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
-					Tween(ColorDisplayStroke, { Color = T.StrokeHover }, 0.2, 2)
+					ControlFrame.BackgroundColor3 = T.Button2
+					ColorDisplayStroke.Color = T.StrokeHover
 				end)
 				ClickSensor.MouseLeave:Connect(function()
-					Tween(ControlFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
-					Tween(ColorDisplayStroke, { Color = T.Stroke }, 0.2, 2)
+					ControlFrame.BackgroundColor3 = T.Button1
+					ColorDisplayStroke.Color = T.Stroke
 				end)
 
 				ClickSensor.MouseButton1Click:Connect(function()
+					if pickerOpening then return end
 					if pickerWindowObj then
+						pickerOpening = true
 						pickerWindowObj.destroy()
 						pickerWindowObj = nil
+						task.delay(0.1, function()
+							pickerOpening = false
+						end)
 					else
+						pickerOpening = true
 						local libPos = Main.AbsolutePosition
 						local libSize = Main.AbsoluteSize
 						local centerX = libPos.X + (libSize.X / 2) - 150
@@ -2042,8 +2113,14 @@ function SimpleKavo.CreateLib(title, themeName)
 							if callback then callback(color) end
 						end)
 						if pickerWindowObj and pickerWindowObj.guiRef then
-							pickerWindowObj.guiRef.Position = UDim2.fromOffset(math.clamp(centerX, 50, 1200), math.clamp(centerY, 50, 700))
+							pickerWindowObj.guiRef.Position = UDim2.fromOffset(
+								math.clamp(centerX, 50, 1200),
+								math.clamp(centerY, 50, 700)
+							)
 						end
+						task.delay(0.1, function()
+							pickerOpening = false
+						end)
 					end
 				end)
 
@@ -2052,26 +2129,704 @@ function SimpleKavo.CreateLib(title, themeName)
 					if typeof(color) ~= "Color3" then return end
 					currentColor = color
 					ColorInner.BackgroundColor3 = color
-					if pickerWindowObj then pickerWindowObj.setColor(color) end
+					if pickerWindowObj then
+						pickerWindowObj.setColor(color)
+					end
 					if callback then callback(color) end
 				end
-				function pickerObj:Get() return currentColor end
+				function pickerObj:Get()
+					return currentColor
+				end
 				return pickerObj
 			end
 
+			function SectionFunctions:NewToggleDropdown(tdName, options, defaultStates, callback)
+				local elementOrder = #SectionContent:GetChildren()
+				local isOpen = false
+
+				local normOptions = {}
+				for _, opt in ipairs(options) do
+					if type(opt) == "string" then
+						table.insert(normOptions, { name = opt, type = "toggle" })
+					elseif type(opt) == "table" and type(opt.name) == "string" then
+						table.insert(normOptions, {
+							name = opt.name,
+							type = opt.type or "toggle",
+							min = opt.min,
+							max = opt.max,
+							default = opt.default,
+							decimals = (type(opt.decimals) == "number") and opt.decimals or 2,
+							defaultColor = opt.defaultColor,
+						})
+					end
+				end
+
+				local allStates = {}
+				for _, opt in ipairs(normOptions) do
+					local t = opt.type
+					local hasToggle = (t == "toggle" or t == "toggleslider" or t == "togglesliderf")
+					local hasSlider = (t == "slider" or t == "sliderf" or t == "toggleslider" or t == "togglesliderf")
+					local isKeybind = (t == "keybind")
+					local isColorPicker = (t == "colorpicker")
+					local initKey = nil
+					if isKeybind then
+						local defRaw = opt.default
+						initKey = defRaw ~= nil and StringToKeyCode(defRaw) or Enum.KeyCode.Unknown
+					end
+					allStates[opt.name] = {
+						toggleValue = hasToggle and ((defaultStates and defaultStates[opt.name] == true) or false) or nil,
+						sliderValue = hasSlider and (opt.default or opt.min or 0) or nil,
+						keybindValue = isKeybind and initKey or nil,
+						colorValue = isColorPicker and (opt.defaultColor or Color3.fromRGB(255, 255, 255)) or nil,
+					}
+				end
+
+				local DropFrame = Instance.new("Frame")
+				DropFrame.Name = tdName .. "_ToggleDropdown"
+				DropFrame.BackgroundTransparency = 1
+				DropFrame.Size = UDim2.new(1, -4, 0, 22)
+				DropFrame.ClipsDescendants = true
+				DropFrame.LayoutOrder = elementOrder
+				DropFrame.ZIndex = 34
+				DropFrame.Parent = SectionContent
+
+				local MainButton = Instance.new("TextButton")
+				MainButton.Name = "MainButton"
+				MainButton.Parent = DropFrame
+				MainButton.BackgroundColor3 = T.Button1
+				MainButton.BackgroundTransparency = 0.15
+				MainButton.Size = UDim2.fromScale(1, 1)
+				MainButton.Position = UDim2.fromOffset(0, 0)
+				MainButton.Font = Enum.Font.Gotham
+				MainButton.Text = ""
+				MainButton.AutoButtonColor = false
+				MainButton.ZIndex = 35
+				AddCorner(MainButton, CORNER_XS)
+
+				local MainBtnStroke = AddStroke(MainButton, T.Stroke)
+
+				local MainBtnLabel = Instance.new("TextLabel")
+				MainBtnLabel.BackgroundTransparency = 1
+				MainBtnLabel.Font = Enum.Font.Gotham
+				MainBtnLabel.Name = "Label"
+				MainBtnLabel.Size = UDim2.fromScale(1, 1)
+				MainBtnLabel.Text = tdName
+				MainBtnLabel.TextColor3 = T.TextPrimary
+				MainBtnLabel.TextSize = 13
+				MainBtnLabel.TextXAlignment = Enum.TextXAlignment.Left
+				MainBtnLabel.ZIndex = 36
+				MainBtnLabel.Parent = MainButton
+
+				local MainBtnLabelPad = Instance.new("UIPadding")
+				MainBtnLabelPad.PaddingLeft = UDim.new(0, 8)
+				MainBtnLabelPad.Parent = MainBtnLabel
+
+				local ArrowIcon = Instance.new("ImageLabel")
+				ArrowIcon.AnchorPoint = Vector2.new(1, 0.5)
+				ArrowIcon.BackgroundTransparency = 1
+				ArrowIcon.Image = "rbxassetid://9801473013"
+				ArrowIcon.ImageColor3 = T.Secondary
+				ArrowIcon.Name = "Arrow"
+				ArrowIcon.Position = UDim2.fromScale(1, 0.5)
+				ArrowIcon.Rotation = 0
+				ArrowIcon.Size = UDim2.fromOffset(16, 16)
+				ArrowIcon.ZIndex = 36
+				ArrowIcon.Parent = MainButton
+
+				local OptionsFrame = Instance.new("Frame")
+				OptionsFrame.Name = "OptionsFrame"
+				OptionsFrame.Parent = DropFrame
+				OptionsFrame.BackgroundColor3 = T.Window3
+				OptionsFrame.BackgroundTransparency = 0.15
+				OptionsFrame.BorderSizePixel = 0
+				OptionsFrame.Position = UDim2.fromOffset(0, 26)
+				OptionsFrame.Size = UDim2.new(1, 0, 0, 0)
+				OptionsFrame.Visible = false
+				OptionsFrame.ClipsDescendants = true
+				OptionsFrame.ZIndex = 36
+				AddCorner(OptionsFrame, CORNER_XS)
+
+				local OptionsFrameStroke = AddStroke(OptionsFrame, T.Stroke)
+
+				local OptionsList = Instance.new("UIListLayout")
+				OptionsList.Parent = OptionsFrame
+				OptionsList.Padding = UDim.new(0, 0)
+				OptionsList.HorizontalAlignment = Enum.HorizontalAlignment.Left
+				OptionsList.SortOrder = Enum.SortOrder.LayoutOrder
+
+				local TOGGLE_ROW_H   = 26
+				local SLIDER_ONLY_H  = 40
+				local SLIDER_EXTRA_H = 26
+				local KEYBIND_ROW_H  = 28
+				local COLOR_ROW_H    = 26
+
+				local rows = {}
+				local totalOptionsHeight = 0
+				local keybindInputConns = {}
+				local colorPickerWindows = {}
+				local colorPickerOpening = {}
+
+				for i, opt in ipairs(normOptions) do
+					local t = opt.type
+					local hasToggle = (t == "toggle" or t == "toggleslider" or t == "togglesliderf")
+					local hasSlider = (t == "slider" or t == "sliderf" or t == "toggleslider" or t == "togglesliderf")
+					local isKeybind = (t == "keybind")
+					local isColorPicker = (t == "colorpicker")
+					local isFloat   = (t == "sliderf" or t == "togglesliderf")
+					local decimals  = math.clamp(math.floor(opt.decimals or 0), 0, 10)
+					local fmt       = "%." .. tostring(decimals) .. "f"
+
+					local rowH
+					if isColorPicker then
+						rowH = COLOR_ROW_H
+					elseif isKeybind then
+						rowH = KEYBIND_ROW_H
+					elseif hasToggle and hasSlider then
+						rowH = TOGGLE_ROW_H + SLIDER_EXTRA_H
+					elseif hasSlider then
+						rowH = SLIDER_ONLY_H
+					else
+						rowH = TOGGLE_ROW_H
+					end
+					totalOptionsHeight = totalOptionsHeight + rowH
+
+					local Row = Instance.new("Frame")
+					Row.Name = opt.name .. "_Row"
+					Row.Parent = OptionsFrame
+					Row.BackgroundTransparency = 1
+					Row.Size = UDim2.new(1, 0, 0, rowH)
+					Row.LayoutOrder = i
+					Row.ZIndex = 37
+
+					if i > 1 then
+						local Sep = Instance.new("Frame")
+						Sep.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+						Sep.BackgroundTransparency = 0.88
+						Sep.BorderSizePixel = 0
+						Sep.Size = UDim2.new(1, -16, 0, 1)
+						Sep.Position = UDim2.fromOffset(8, 0)
+						Sep.ZIndex = 37
+						Sep.Parent = Row
+					end
+
+					if isColorPicker then
+						local initColor = allStates[opt.name].colorValue
+						local cpWindowObj = nil
+						colorPickerOpening[opt.name] = false
+
+						local CPLabel = Instance.new("TextLabel")
+						CPLabel.BackgroundTransparency = 1
+						CPLabel.Font = Enum.Font.Gotham
+						CPLabel.Name = "Label"
+						CPLabel.Position = UDim2.fromOffset(10, 0)
+						CPLabel.Size = UDim2.new(1, -50, 1, 0)
+						CPLabel.Text = opt.name
+						CPLabel.TextColor3 = T.TextPrimary
+						CPLabel.TextSize = 13
+						CPLabel.TextXAlignment = Enum.TextXAlignment.Left
+						CPLabel.ZIndex = 38
+						CPLabel.Parent = Row
+
+						local CPDisplay = Instance.new("TextButton")
+						CPDisplay.AnchorPoint = Vector2.new(1, 0.5)
+						CPDisplay.BackgroundColor3 = T.Button2
+						CPDisplay.BackgroundTransparency = 0.15
+						CPDisplay.Name = "ColorDisplay"
+						CPDisplay.Position = UDim2.new(1, -8, 0.5, 0)
+						CPDisplay.Size = UDim2.fromOffset(18, 18)
+						CPDisplay.Text = ""
+						CPDisplay.AutoButtonColor = false
+						CPDisplay.ZIndex = 38
+						CPDisplay.Parent = Row
+						AddCorner(CPDisplay, UDim.new(1, 0))
+
+						local CPDisplayStroke = AddStroke(CPDisplay, T.Stroke)
+
+						local CPInner = Instance.new("Frame")
+						CPInner.BorderSizePixel = 0
+						CPInner.BackgroundColor3 = initColor
+						CPInner.Position = UDim2.fromOffset(3, 3)
+						CPInner.Size = UDim2.fromOffset(12, 12)
+						CPInner.ZIndex = 38
+						CPInner.Parent = CPDisplay
+						AddCorner(CPInner, UDim.new(1, 0))
+
+						CPDisplay.MouseEnter:Connect(function()
+							CPDisplay.BackgroundColor3 = T.Button3
+							CPDisplayStroke.Color = T.StrokeHover
+						end)
+						CPDisplay.MouseLeave:Connect(function()
+							CPDisplay.BackgroundColor3 = T.Button2
+							CPDisplayStroke.Color = T.Stroke
+						end)
+
+						local optName = opt.name
+						CPDisplay.MouseButton1Click:Connect(function()
+							if colorPickerOpening[optName] then return end
+							if cpWindowObj then
+								colorPickerOpening[optName] = true
+								cpWindowObj.destroy()
+								cpWindowObj = nil
+								colorPickerWindows[optName] = nil
+								task.delay(0.1, function()
+									colorPickerOpening[optName] = false
+								end)
+							else
+								colorPickerOpening[optName] = true
+								local libPos = Main.AbsolutePosition
+								local libSize = Main.AbsoluteSize
+								local centerX = libPos.X + (libSize.X / 2) - 150
+								local centerY = libPos.Y + (libSize.Y / 2) - 150
+								cpWindowObj = CreatePickerWindow(T, optName, allStates[opt.name].colorValue, ScreenGui, function(color)
+									allStates[opt.name].colorValue = color
+									CPInner.BackgroundColor3 = color
+									if callback then
+										callback(optName, nil, nil, allStates)
+									end
+								end)
+								if cpWindowObj and cpWindowObj.guiRef then
+									cpWindowObj.guiRef.Position = UDim2.fromOffset(
+										math.clamp(centerX, 50, 1200),
+										math.clamp(centerY, 50, 700)
+									)
+								end
+								colorPickerWindows[optName] = cpWindowObj
+								task.delay(0.1, function()
+									colorPickerOpening[optName] = false
+								end)
+							end
+						end)
+
+						rows[opt.name] = rows[opt.name] or {}
+						rows[opt.name].cpInner = CPInner
+						rows[opt.name].getCPWindow = function() return cpWindowObj end
+						rows[opt.name].row = Row
+
+					elseif hasToggle then
+						local RowLabel = Instance.new("TextLabel")
+						RowLabel.BackgroundTransparency = 1
+						RowLabel.Font = Enum.Font.Gotham
+						RowLabel.Name = "Label"
+						RowLabel.Position = UDim2.fromOffset(10, 0)
+						RowLabel.Size = UDim2.new(1, -50, 0, TOGGLE_ROW_H)
+						RowLabel.Text = opt.name
+						RowLabel.TextColor3 = T.TextPrimary
+						RowLabel.TextSize = 13
+						RowLabel.TextXAlignment = Enum.TextXAlignment.Left
+						RowLabel.ZIndex = 38
+						RowLabel.Parent = Row
+
+						local TogBtn = Instance.new("TextButton")
+						TogBtn.AnchorPoint = Vector2.new(1, 0)
+						TogBtn.BackgroundColor3 = T.Button2
+						TogBtn.BackgroundTransparency = 0.15
+						TogBtn.Name = "Toggle"
+						TogBtn.Position = UDim2.new(1, -8, 0, 5)
+						TogBtn.Size = UDim2.fromOffset(18, 18)
+						TogBtn.Text = ""
+						TogBtn.AutoButtonColor = false
+						TogBtn.ZIndex = 38
+						TogBtn.Parent = Row
+						AddCorner(TogBtn, CORNER_SM)
+
+						local TBStroke = AddStroke(TogBtn, T.Stroke)
+
+						local TBIcon = Instance.new("ImageLabel")
+						TBIcon.Active = false
+						TBIcon.BackgroundTransparency = 1
+						TBIcon.BorderSizePixel = 0
+						TBIcon.Image = "rbxassetid://9801456486"
+						TBIcon.ImageColor3 = T.Secondary
+						TBIcon.Name = "Icon"
+						TBIcon.Rotation = 360
+						TBIcon.Size = UDim2.fromScale(1, 1)
+						TBIcon.ZIndex = 38
+						TBIcon.Parent = TogBtn
+
+						local function updateToggleVisual(state)
+							if state then
+								TBIcon.Image = "rbxassetid://9801457539"
+								TBIcon.Rotation = 0
+								TBIcon.ImageColor3 = T.Primary
+								TogBtn.BackgroundColor3 = T.Button3
+							else
+								TBIcon.Image = "rbxassetid://9801456486"
+								TBIcon.Rotation = 360
+								TBIcon.ImageColor3 = T.Secondary
+								TogBtn.BackgroundColor3 = T.Button2
+							end
+						end
+						updateToggleVisual(allStates[opt.name].toggleValue)
+
+						TogBtn.MouseButton1Click:Connect(function()
+							allStates[opt.name].toggleValue = not allStates[opt.name].toggleValue
+							updateToggleVisual(allStates[opt.name].toggleValue)
+							if callback then
+								callback(opt.name, allStates[opt.name].toggleValue, allStates[opt.name].sliderValue, allStates)
+							end
+						end)
+
+						rows[opt.name] = rows[opt.name] or {}
+						rows[opt.name].toggleBtn = TogBtn
+						rows[opt.name].updateToggleVisual = updateToggleVisual
+					end
+
+					if hasSlider then
+						local sliderMin     = opt.min or 0
+						local sliderMax     = opt.max or 100
+						local sliderDefault = allStates[opt.name].sliderValue
+						local sliderDragging = false
+						local sliderYOffset  = hasToggle and TOGGLE_ROW_H or 6
+
+						local SliderText = Instance.new("TextLabel")
+						SliderText.BackgroundTransparency = 1
+						SliderText.Font = Enum.Font.Gotham
+						SliderText.TextColor3 = T.TextDim
+						SliderText.TextSize = 12
+						SliderText.ZIndex = 38
+						SliderText.Parent = Row
+
+						if hasToggle then
+							SliderText.Text = isFloat and string.format(fmt, sliderDefault) or tostring(math.floor(sliderDefault))
+							SliderText.TextXAlignment = Enum.TextXAlignment.Right
+							SliderText.Position = UDim2.new(0, 10, 0, sliderYOffset)
+							SliderText.Size = UDim2.new(1, -18, 0, 12)
+						else
+							SliderText.Text = opt.name .. ": " .. (isFloat and string.format(fmt, sliderDefault) or tostring(math.floor(sliderDefault)))
+							SliderText.TextXAlignment = Enum.TextXAlignment.Left
+							SliderText.Position = UDim2.new(0, 10, 0, sliderYOffset)
+							SliderText.Size = UDim2.new(1, -18, 0, 14)
+						end
+
+						local barYOffset = sliderYOffset + (hasToggle and 12 or 16)
+
+						local SliderBar = Instance.new("Frame")
+						SliderBar.BackgroundColor3 = T.Button2
+						SliderBar.BackgroundTransparency = 0.15
+						SliderBar.Name = "Bar"
+						SliderBar.Position = UDim2.new(0, 10, 0, barYOffset)
+						SliderBar.Size = UDim2.new(1, -20, 0, 6)
+						SliderBar.ZIndex = 38
+						SliderBar.Parent = Row
+						AddCorner(SliderBar, UDim.new(1, 0))
+
+						local SliderBarStroke = AddStroke(SliderBar, T.Stroke)
+
+						local initPercent = math.clamp((sliderDefault - sliderMin) / (sliderMax - sliderMin), 0, 1)
+						local SliderFill = Instance.new("Frame")
+						SliderFill.BackgroundColor3 = T.Primary
+						SliderFill.BackgroundTransparency = 0.5
+						SliderFill.Name = "Fill"
+						SliderFill.Size = UDim2.fromScale(initPercent, 1)
+						SliderFill.ZIndex = 39
+						SliderFill.Parent = SliderBar
+						AddCorner(SliderFill, UDim.new(1, 0))
+
+						local SliderFillGrad = Instance.new("UIGradient")
+						SliderFillGrad.Color = ColorSequence.new(Color3.fromRGB(255, 255, 255), Color3.fromRGB(200, 200, 200))
+						SliderFillGrad.Rotation = 90
+						SliderFillGrad.Parent = SliderFill
+
+						local function updateSliderVisual(value)
+							local pct = math.clamp((value - sliderMin) / (sliderMax - sliderMin), 0, 1)
+							SliderFill.Size = UDim2.fromScale(pct, 1)
+							if hasToggle then
+								SliderText.Text = isFloat and string.format(fmt, value) or tostring(math.floor(value))
+							else
+								SliderText.Text = opt.name .. ": " .. (isFloat and string.format(fmt, value) or tostring(math.floor(value)))
+							end
+							allStates[opt.name].sliderValue = value
+							if callback then
+								callback(opt.name, allStates[opt.name].toggleValue, value, allStates)
+							end
+						end
+
+						SliderBar.InputBegan:Connect(function(input)
+							if input.UserInputType == Enum.UserInputType.MouseButton1 then
+								sliderDragging = true
+								local pos = input.Position.X - SliderBar.AbsolutePosition.X
+								local pct = math.clamp(pos / SliderBar.AbsoluteSize.X, 0, 1)
+								updateSliderVisual(sliderMin + (sliderMax - sliderMin) * pct)
+							end
+						end)
+						SliderBar.InputEnded:Connect(function(input)
+							if input.UserInputType == Enum.UserInputType.MouseButton1 then
+								sliderDragging = false
+							end
+						end)
+						UserInputService.InputChanged:Connect(function(input)
+							if sliderDragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+								local pos = input.Position.X - SliderBar.AbsolutePosition.X
+								local pct = math.clamp(pos / SliderBar.AbsoluteSize.X, 0, 1)
+								updateSliderVisual(sliderMin + (sliderMax - sliderMin) * pct)
+							end
+						end)
+
+						rows[opt.name] = rows[opt.name] or {}
+						rows[opt.name].sliderFill = SliderFill
+						rows[opt.name].sliderText = SliderText
+						rows[opt.name].updateSliderVisual = updateSliderVisual
+						rows[opt.name].sliderMin = sliderMin
+						rows[opt.name].sliderMax = sliderMax
+					end
+
+					if isKeybind then
+						local currentKey = allStates[opt.name].keybindValue
+						local listeningKB = false
+
+						local KBLabel = Instance.new("TextLabel")
+						KBLabel.BackgroundTransparency = 1
+						KBLabel.Font = Enum.Font.Gotham
+						KBLabel.Name = "Label"
+						KBLabel.Position = UDim2.fromOffset(10, 0)
+						KBLabel.Size = UDim2.new(0.55, 0, 1, 0)
+						KBLabel.Text = opt.name
+						KBLabel.TextColor3 = T.TextPrimary
+						KBLabel.TextSize = 13
+						KBLabel.TextXAlignment = Enum.TextXAlignment.Left
+						KBLabel.ZIndex = 38
+						KBLabel.Parent = Row
+
+						local KBButton = Instance.new("TextButton")
+						KBButton.AnchorPoint = Vector2.new(1, 0.5)
+						KBButton.BackgroundColor3 = T.Button2
+						KBButton.BackgroundTransparency = 0.15
+						KBButton.Name = "KeybindButton"
+						KBButton.Position = UDim2.new(1, -8, 0.5, 0)
+						KBButton.Size = UDim2.new(0, 72, 0, 18)
+						KBButton.Font = Enum.Font.Gotham
+						KBButton.Text = (currentKey and currentKey ~= Enum.KeyCode.Unknown) and currentKey.Name or "[None]"
+						KBButton.TextColor3 = T.TextDim
+						KBButton.TextSize = 12
+						KBButton.AutoButtonColor = false
+						KBButton.ZIndex = 38
+						KBButton.Parent = Row
+						AddCorner(KBButton, CORNER_SM)
+
+						local KBStroke = AddStroke(KBButton, T.Stroke)
+
+						KBButton.MouseEnter:Connect(function()
+							if not listeningKB then
+								KBButton.BackgroundColor3 = T.Button3
+								KBStroke.Color = T.StrokeHover
+							end
+						end)
+						KBButton.MouseLeave:Connect(function()
+							if not listeningKB then
+								KBButton.BackgroundColor3 = T.Button2
+								KBStroke.Color = T.Stroke
+							end
+						end)
+						KBButton.MouseButton1Click:Connect(function()
+							if listeningKB then return end
+							listeningKB = true
+							KBButton.Text = "..."
+							KBButton.BackgroundColor3 = T.Button3
+							KBButton.TextColor3 = T.Primary
+						end)
+
+						local kbConn
+						kbConn = UserInputService.InputBegan:Connect(function(input)
+							if not listeningKB then return end
+							if input.UserInputType ~= Enum.UserInputType.Keyboard then return end
+							local ignoredKB = {
+								Enum.KeyCode.LeftShift, Enum.KeyCode.RightShift,
+								Enum.KeyCode.LeftControl, Enum.KeyCode.RightControl,
+								Enum.KeyCode.LeftAlt, Enum.KeyCode.RightAlt,
+								Enum.KeyCode.Unknown,
+							}
+							local skip = false
+							for _, k in ipairs(ignoredKB) do
+								if input.KeyCode == k then skip = true break end
+							end
+							if skip then return end
+							currentKey = input.KeyCode
+							allStates[opt.name].keybindValue = currentKey
+							listeningKB = false
+							KBButton.Text = currentKey.Name
+							KBButton.BackgroundColor3 = T.Button2
+							KBButton.TextColor3 = T.TextDim
+							if callback then
+								callback(opt.name, currentKey, nil, allStates)
+							end
+						end)
+						table.insert(keybindInputConns, kbConn)
+
+						rows[opt.name] = rows[opt.name] or {}
+						rows[opt.name].kbButton = KBButton
+						rows[opt.name].getCurrentKey = function() return currentKey end
+						rows[opt.name].setKey = function(newKey)
+							currentKey = newKey
+							allStates[opt.name].keybindValue = newKey
+							KBButton.Text = (newKey and newKey ~= Enum.KeyCode.Unknown) and newKey.Name or "[None]"
+						end
+					end
+
+					rows[opt.name] = rows[opt.name] or {}
+					rows[opt.name].row = Row
+				end
+
+				local function toggleOpen()
+					isOpen = not isOpen
+					ArrowIcon.Rotation = isOpen and 180 or 0
+					ArrowIcon.ImageColor3 = isOpen and T.Primary or T.Secondary
+					if isOpen then
+						OptionsFrame.Visible = true
+						DropFrame.Size = UDim2.new(1, -4, 0, 22 + 8 + totalOptionsHeight)
+						OptionsFrame.Size = UDim2.new(1, 0, 0, totalOptionsHeight)
+					else
+						DropFrame.Size = UDim2.new(1, -4, 0, 22)
+						OptionsFrame.Size = UDim2.new(1, 0, 0, 0)
+						task.delay(0.21, function()
+							if not isOpen then OptionsFrame.Visible = false end
+						end)
+					end
+				end
+
+				MainButton.MouseEnter:Connect(function()
+					if not isOpen then
+						MainButton.BackgroundColor3 = T.Button2
+						MainBtnStroke.Color = T.StrokeHover
+					end
+				end)
+				MainButton.MouseLeave:Connect(function()
+					if not isOpen then
+						MainButton.BackgroundColor3 = T.Button1
+						MainBtnStroke.Color = T.Stroke
+					end
+				end)
+				MainButton.MouseButton1Click:Connect(toggleOpen)
+
+				local outsideConn
+				outsideConn = UserInputService.InputBegan:Connect(function(input)
+					if input.UserInputType == Enum.UserInputType.MouseButton1 and isOpen then
+						local pos = input.Position
+						local fp = DropFrame.AbsolutePosition
+						local fs = DropFrame.AbsoluteSize
+						local shouldClose = true
+
+						for _, cpw in pairs(colorPickerWindows) do
+							if cpw and cpw.guiRef and cpw.guiRef.Parent then
+								local cpPos = cpw.guiRef.AbsolutePosition
+								local cpSize = cpw.guiRef.AbsoluteSize
+								if pos.X >= cpPos.X and pos.X <= cpPos.X + cpSize.X and
+								   pos.Y >= cpPos.Y and pos.Y <= cpPos.Y + cpSize.Y then
+									shouldClose = false
+									break
+								end
+							end
+						end
+
+						if shouldClose and not (pos.X >= fp.X and pos.X <= fp.X + fs.X and
+								pos.Y >= fp.Y and pos.Y <= fp.Y + fs.Y) then
+							toggleOpen()
+						end
+					end
+				end)
+
+				DropFrame.Destroying:Connect(function()
+					outsideConn:Disconnect()
+					for _, c in ipairs(keybindInputConns) do c:Disconnect() end
+					for _, cpw in pairs(colorPickerWindows) do
+						if cpw then pcall(cpw.destroy) end
+					end
+				end)
+
+				local methods = {}
+				methods.Frame = DropFrame
+
+				function methods:SetToggle(optName, value)
+					if allStates[optName] == nil or allStates[optName].toggleValue == nil then return end
+					allStates[optName].toggleValue = value
+					if rows[optName] and rows[optName].updateToggleVisual then
+						rows[optName].updateToggleVisual(value)
+					end
+					if callback then
+						callback(optName, value, allStates[optName].sliderValue, allStates)
+					end
+				end
+
+				function methods:SetSlider(optName, value)
+					if allStates[optName] == nil or allStates[optName].sliderValue == nil then return end
+					local r = rows[optName]
+					if not r then return end
+					value = math.clamp(value, r.sliderMin, r.sliderMax)
+					if r.updateSliderVisual then r.updateSliderVisual(value) end
+				end
+
+				function methods:SetKeybind(optName, keyValue)
+					if allStates[optName] == nil or allStates[optName].keybindValue == nil then return end
+					local newKey = StringToKeyCode(keyValue)
+					local r = rows[optName]
+					if r and r.setKey then r.setKey(newKey) end
+					if callback then callback(optName, newKey, nil, allStates) end
+				end
+
+				function methods:SetColor(optName, color)
+					if allStates[optName] == nil or allStates[optName].colorValue == nil then return end
+					if typeof(color) ~= "Color3" then return end
+					allStates[optName].colorValue = color
+					local r = rows[optName]
+					if r and r.cpInner then r.cpInner.BackgroundColor3 = color end
+					local cpw = colorPickerWindows[optName]
+					if cpw then cpw.setColor(color) end
+					if callback then callback(optName, nil, nil, allStates) end
+				end
+
+				function methods:GetToggle(optName)
+					if allStates[optName] then return allStates[optName].toggleValue end
+				end
+				function methods:GetSlider(optName)
+					if allStates[optName] then return allStates[optName].sliderValue end
+				end
+				function methods:GetKeybind(optName)
+					if allStates[optName] then return allStates[optName].keybindValue end
+				end
+				function methods:GetColor(optName)
+					if allStates[optName] then return allStates[optName].colorValue end
+				end
+				function methods:GetAll()
+					local copy = {}
+					for k, v in pairs(allStates) do
+						copy[k] = {
+							toggleValue = v.toggleValue,
+							sliderValue = v.sliderValue,
+							keybindValue = v.keybindValue,
+							colorValue = v.colorValue,
+						}
+					end
+					return copy
+				end
+
+				function methods:Set(optName, value)
+					self:SetToggle(optName, value)
+				end
+				function methods:Get(optName)
+					if optName then return allStates[optName] and allStates[optName].toggleValue end
+					local copy = {}
+					for k, v in pairs(allStates) do copy[k] = v.toggleValue end
+					return copy
+				end
+
+				return methods
+			end
+
 			function SectionFunctions:NewTextBox(tbName, placeholder, callback)
+				local elementOrder = #SectionContent:GetChildren()
+
 				local ControlFrame = Instance.new("Frame")
 				ControlFrame.BackgroundTransparency = 1
 				ControlFrame.Name = tbName .. "_Control"
 				ControlFrame.Size = UDim2.new(1, -4, 0, 22)
 				ControlFrame.ZIndex = 34
+				ControlFrame.LayoutOrder = elementOrder
 				ControlFrame.Parent = SectionContent
 
 				local TextBox = Instance.new("TextBox")
 				TextBox.Name = "Input"
 				TextBox.Parent = ControlFrame
 				TextBox.BackgroundColor3 = T.Button1
-				TextBox.BackgroundTransparency = 0.85
+				TextBox.BackgroundTransparency = 0.15
 				TextBox.Position = UDim2.fromOffset(0, 0)
 				TextBox.Size = UDim2.fromScale(1, 1)
 				TextBox.Font = Enum.Font.Gotham
@@ -2093,12 +2848,14 @@ function SimpleKavo.CreateLib(title, themeName)
 				TBPad.Parent = TextBox
 
 				TextBox.Focused:Connect(function()
-					Tween(TextBox, { BackgroundColor3 = T.Button3, TextColor3 = T.Primary }, 0.2, 2)
-					Tween(TBStroke, { Color = T.StrokeHover }, 0.2, 2)
+					TextBox.BackgroundColor3 = T.Button3
+					TextBox.TextColor3 = T.Primary
+					TBStroke.Color = T.StrokeHover
 				end)
 				TextBox.FocusLost:Connect(function(enterPressed)
-					Tween(TextBox, { BackgroundColor3 = T.Button1, TextColor3 = T.TextPrimary }, 0.2, 2)
-					Tween(TBStroke, { Color = T.Stroke }, 0.2, 2)
+					TextBox.BackgroundColor3 = T.Button1
+					TextBox.TextColor3 = T.TextPrimary
+					TBStroke.Color = T.Stroke
 					if enterPressed then
 						TextBox.Text = tbName
 					end
@@ -2110,21 +2867,26 @@ function SimpleKavo.CreateLib(title, themeName)
 					TextBox.Text = tostring(newText)
 					if callback then callback(TextBox.Text) end
 				end
-				function methods:Get() return TextBox.Text end
+				function methods:Get()
+					return TextBox.Text
+				end
 				methods.Frame = ControlFrame
 				return methods
 			end
 
 			function SectionFunctions:NewKeybind(kbName, defaultKey, callback)
+				local elementOrder = #SectionContent:GetChildren()
 				local currentKey = StringToKeyCode(defaultKey)
 				local listening = false
+				local focused = false
 
 				local ControlFrame = Instance.new("Frame")
 				ControlFrame.BackgroundColor3 = T.Button1
-				ControlFrame.BackgroundTransparency = 0.85
+				ControlFrame.BackgroundTransparency = 0.15
 				ControlFrame.Name = kbName .. "_Control"
 				ControlFrame.Size = UDim2.new(1, -4, 0, 22)
 				ControlFrame.ZIndex = 34
+				ControlFrame.LayoutOrder = elementOrder
 				ControlFrame.Parent = SectionContent
 				AddCorner(ControlFrame, CORNER_XS)
 				AddStroke(ControlFrame, T.Stroke)
@@ -2168,26 +2930,35 @@ function SimpleKavo.CreateLib(title, themeName)
 				KBDisplay.Parent = BackButton
 
 				BackButton.MouseEnter:Connect(function()
-					Tween(ControlFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
-					Tween(KBDisplay, { TextColor3 = T.TextPrimary }, 0.2, 2)
+					focused = true
+					ControlFrame.BackgroundColor3 = T.Button2
+					if listening then
+						KBDisplay.TextColor3 = T.Primary
+					else
+						KBDisplay.TextColor3 = T.TextPrimary
+					end
 				end)
 				BackButton.MouseLeave:Connect(function()
-					Tween(ControlFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
-					if not listening then Tween(KBDisplay, { TextColor3 = T.TextDim }, 0.2, 2) end
+					focused = false
+					ControlFrame.BackgroundColor3 = T.Button1
+					if not listening then
+						KBDisplay.TextColor3 = T.TextDim
+					end
 				end)
 				BackButton.MouseButton1Click:Connect(function()
 					listening = true
 					KBDisplay.Text = "..."
-					Tween(KBDisplay, { TextColor3 = T.Primary }, 0.2, 2)
+					KBDisplay.TextColor3 = T.Primary
 				end)
 
 				local inputConnection = UserInputService.InputBegan:Connect(function(input, gameProcessed)
-					if listening and not gameProcessed and input.UserInputType == Enum.UserInputType.Keyboard then
+					if listening and not gameProcessed then
+						if input.UserInputType ~= Enum.UserInputType.Keyboard then return end
 						local newKey = input.KeyCode
 						if newKey == Enum.KeyCode.Unknown then return end
 						currentKey = newKey
 						KBDisplay.Text = ("[%s]"):format(newKey.Name)
-						Tween(KBDisplay, { TextColor3 = T.TextDim }, 0.2, 2)
+						KBDisplay.TextColor3 = focused and T.TextPrimary or T.TextDim
 						listening = false
 						if callback then callback(currentKey) end
 					elseif not gameProcessed and input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == currentKey then
@@ -2196,7 +2967,9 @@ function SimpleKavo.CreateLib(title, themeName)
 				end)
 
 				ControlFrame.AncestryChanged:Connect(function(_, parent)
-					if not parent and inputConnection then inputConnection:Disconnect() end
+					if not parent and inputConnection then
+						inputConnection:Disconnect()
+					end
 				end)
 
 				local keybindObject = {}
@@ -2206,7 +2979,9 @@ function SimpleKavo.CreateLib(title, themeName)
 					KBDisplay.Text = ("[%s]"):format(currentKey.Name ~= "Unknown" and currentKey.Name or "None")
 					if callback then callback(currentKey) end
 				end
-				function keybindObject:Get() return currentKey end
+				function keybindObject:Get()
+					return currentKey
+				end
 				return keybindObject
 			end
 
@@ -2218,11 +2993,19 @@ function SimpleKavo.CreateLib(title, themeName)
 
 	return {
 		AddTab = SimpleKavo.AddTab,
-		ToggleUI = function() ScreenGui.Enabled = not ScreenGui.Enabled end,
-		Destroy = function() ScreenGui:Destroy() end,
+		ToggleUI = function()
+			ScreenGui.Enabled = not ScreenGui.Enabled
+		end,
+		Destroy = function()
+			ScreenGui:Destroy()
+		end,
 		Minimize = function()
 			Minimized = not Minimized
-			Main.Visible = not Minimized
+			if Minimized then
+				Main.Visible = false
+			else
+				Main.Visible = true
+			end
 		end,
 		ChangeTheme = updateTheme,
 	}
