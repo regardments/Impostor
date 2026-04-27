@@ -2401,25 +2401,27 @@ function SimpleKavo.CreateLib(title, themeName)
 				end)
 
 				ClickSensor.MouseButton1Click:Connect(function()
-					if pickerWindowObj then
-						pickerWindowObj.destroy()
-						pickerWindowObj = nil
-					else
-						local mouseLoc = UserInputService:GetMouseLocation()
-						pickerWindowObj = CreatePickerWindow(T, pickerName, currentColor, ScreenGui, function(color)
-							currentColor = color
-							ColorInner.BackgroundColor3 = color
-							if callback then callback(color) end
-						end)
-						if pickerWindowObj and pickerWindowObj.guiRef then
-							pickerWindowObj.guiRef.Position = UDim2.fromOffset(
-								math.clamp(mouseLoc.X, 50, 1200),
-								math.clamp(mouseLoc.Y, 50, 700)
-							)
-						end
-					end
+				    if pickerWindowObj then
+				        pickerWindowObj.destroy()
+				        pickerWindowObj = nil
+				    else
+				        local libPos = Main.AbsolutePosition
+				        local libSize = Main.AbsoluteSize
+				        local centerX = libPos.X + (libSize.X / 2) - 150
+				        local centerY = libPos.Y + (libSize.Y / 2) - 150
+				        pickerWindowObj = CreatePickerWindow(T, pickerName, currentColor, ScreenGui, function(color)
+				            currentColor = color
+				            ColorInner.BackgroundColor3 = color
+				            if callback then callback(color) end
+				        end)
+				        if pickerWindowObj and pickerWindowObj.guiRef then
+				            pickerWindowObj.guiRef.Position = UDim2.fromOffset(
+				                math.clamp(centerX, 50, 1200),
+				                math.clamp(centerY, 50, 700)
+				            )
+				        end
+				    end
 				end)
-
 				local pickerObj = { Frame = ControlFrame }
 				function pickerObj:Set(color)
 					if typeof(color) ~= "Color3" then return end
@@ -2690,27 +2692,30 @@ function SimpleKavo.CreateLib(title, themeName)
 						end)
 
 						CPDisplay.MouseButton1Click:Connect(function()
-							if cpWindowObj then
-								cpWindowObj.destroy()
-								cpWindowObj = nil
-								colorPickerWindows[opt.name] = nil
-							else
-								local mouseLoc = UserInputService:GetMouseLocation()
-								cpWindowObj = CreatePickerWindow(T, opt.name, allStates[opt.name].colorValue, ScreenGui, function(color)
-									allStates[opt.name].colorValue = color
-									CPInner.BackgroundColor3 = color
-									if callback then
-										callback(opt.name, nil, nil, allStates)
-									end
-								end)
-								if cpWindowObj and cpWindowObj.guiRef then
-									cpWindowObj.guiRef.Position = UDim2.fromOffset(
-										math.clamp(mouseLoc.X, 50, 1200),
-										math.clamp(mouseLoc.Y, 50, 700)
-									)
-								end
-								colorPickerWindows[opt.name] = cpWindowObj
-							end
+						    if cpWindowObj then
+						        cpWindowObj.destroy()
+						        cpWindowObj = nil
+						        colorPickerWindows[opt.name] = nil
+						    else
+						        local libPos = Main.AbsolutePosition
+						        local libSize = Main.AbsoluteSize
+						        local centerX = libPos.X + (libSize.X / 2) - 150
+						        local centerY = libPos.Y + (libSize.Y / 2) - 150
+						        cpWindowObj = CreatePickerWindow(T, opt.name, allStates[opt.name].colorValue, ScreenGui, function(color)
+						            allStates[opt.name].colorValue = color
+						            CPInner.BackgroundColor3 = color
+						            if callback then
+						                callback(opt.name, nil, nil, allStates)
+						            end
+						        end)
+						        if cpWindowObj and cpWindowObj.guiRef then
+						            cpWindowObj.guiRef.Position = UDim2.fromOffset(
+						                math.clamp(centerX, 50, 1200),
+						                math.clamp(centerY, 50, 700)
+						            )
+						        end
+						        colorPickerWindows[opt.name] = cpWindowObj
+						    end
 						end)
 
 						rows[opt.name] = rows[opt.name] or {}
