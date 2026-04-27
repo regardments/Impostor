@@ -860,7 +860,6 @@ function SimpleKavo.CreateLib(title, themeName)
 	ScreenGui.ResetOnSpawn = false
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 	ScreenGui.DisplayOrder = 1000
-	ScreenGui.BackgroundTransparency = 1
 	local ok, err = pcall(function()
 		ScreenGui.Parent = game.Players.LocalPlayer.PlayerGui
 	end)
