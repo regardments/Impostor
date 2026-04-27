@@ -85,14 +85,22 @@ local Themes = {
 	},
 }
 
-local CORNER_RADIUS   = UDim.new(0, 10)
-local CORNER_SM       = UDim.new(0, 6)
-local CORNER_XS       = UDim.new(0, 4)
+local CORNER_RADIUS = UDim.new(0, 10)
+local CORNER_SM     = UDim.new(0, 6)
+local CORNER_XS     = UDim.new(0, 4)
+
+local tweenInfoCache = {}
+local function getTweenInfo(duration, style)
+	local key = tostring(duration) .. tostring(style)
+	if not tweenInfoCache[key] then
+		local easingStyle = style == 2 and Enum.EasingStyle.Linear or Enum.EasingStyle.Exponential
+		tweenInfoCache[key] = TweenInfo.new(duration or 0.2, easingStyle, Enum.EasingDirection.Out)
+	end
+	return tweenInfoCache[key]
+end
 
 local function Tween(object, properties, duration, style)
-	local easingStyle = style == 2 and Enum.EasingStyle.Linear or Enum.EasingStyle.Exponential
-	local tweenInfo = TweenInfo.new(duration or 0.2, easingStyle, Enum.EasingDirection.Out)
-	local t = TweenService:Create(object, tweenInfo, properties)
+	local t = TweenService:Create(object, getTweenInfo(duration, style), properties)
 	t:Play()
 	return t
 end
@@ -114,7 +122,7 @@ local function polarToCart(r, theta)
 end
 
 local function cartToPolar(x, y)
-	return math.sqrt((x^2) + (y^2)), math.atan2(y, x)
+	return math.sqrt((x ^ 2) + (y ^ 2)), math.atan2(y, x)
 end
 
 local function AddCorner(parent, radius)
@@ -134,18 +142,42 @@ local function AddStroke(parent, color, thickness)
 	return s
 end
 
+local LERP_SPEED = 12
+
 function SimpleKavo:DraggingEnabled(frame, parent)
 	parent = parent or frame
 	local dragging = false
 	local dragInput, mousePos, framePos
 	local targetPos
+	local aCon
+
+	local function startDrag(input)
+		dragging = true
+		mousePos = input.Position
+		framePos = parent.Position
+		targetPos = parent.Position
+
+		if aCon then aCon:Disconnect() end
+		aCon = RunService.Heartbeat:Connect(function(dt)
+			if not dragging then
+				aCon:Disconnect()
+				aCon = nil
+				return
+			end
+			local alpha = math.min(dt * LERP_SPEED, 1)
+			parent.Position = parent.Position:lerp(targetPos, alpha)
+		end)
+
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
 
 	frame.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-			dragging = true
-			mousePos = input.Position
-			framePos = parent.Position
-			targetPos = parent.Position
+			startDrag(input)
 		end
 	end)
 	frame.InputChanged:Connect(function(input)
@@ -161,9 +193,65 @@ function SimpleKavo:DraggingEnabled(frame, parent)
 				framePos.X.Scale, framePos.X.Offset + delta.X,
 				framePos.Y.Scale, framePos.Y.Offset + delta.Y
 			)
-			parent.Position = targetPos
 		end
 	end)
+end
+
+local function fadeOutAndDestroy(target, scalePart, tweenDuration, tweenStyle)
+	local descendants = target:GetDescendants()
+	table.insert(descendants, target)
+
+	local bgList, imgList, txtList, strokeList = {}, {}, {}, {}
+	local classMap = {
+		Frame       = { bgList },
+		ImageLabel  = { bgList, imgList },
+		ImageButton = { bgList, imgList },
+		TextLabel   = { bgList, txtList },
+		TextButton  = { bgList, txtList },
+		UIStroke    = { strokeList },
+	}
+
+	for _, v in ipairs(descendants) do
+		local lists = classMap[v.ClassName]
+		if lists then
+			for _, lst in ipairs(lists) do
+				table.insert(lst, v)
+			end
+		end
+	end
+
+	for _, v in ipairs(strokeList) do
+		v.Transparency = 1
+	end
+
+	local stepSize = 8
+	local animCon
+	animCon = RunService.Heartbeat:Connect(function(dt)
+		local delta = dt * stepSize
+		local allDone = true
+		for _, v in ipairs(bgList) do
+			local nv = v.BackgroundTransparency + delta
+			v.BackgroundTransparency = nv
+			if nv < 1 then allDone = false end
+		end
+		for _, v in ipairs(imgList) do
+			local nv = v.ImageTransparency + delta
+			v.ImageTransparency = nv
+			if nv < 1 then allDone = false end
+		end
+		for _, v in ipairs(txtList) do
+			local nv = v.TextTransparency + delta
+			v.TextTransparency = nv
+			if nv < 1 then allDone = false end
+		end
+		if allDone then
+			animCon:Disconnect()
+		end
+	end)
+
+	Tween(scalePart, { Scale = 0.7 }, tweenDuration or 0.4, tweenStyle or 2).Completed:Wait()
+	animCon:Disconnect()
+	target:Destroy()
 end
 
 local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColorChanged)
@@ -521,9 +609,9 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 		blue = color.B * 255
 
 		ValSliderContainer.BackgroundColor3 = Color3.fromHSV(hue, sat, 1)
-		redFill.Size = UDim2.fromScale(red / 255, 1)
-		greenFill.Size = UDim2.fromScale(green / 255, 1)
-		blueFill.Size = UDim2.fromScale(blue / 255, 1)
+		Tween(redFill, { Size = UDim2.fromScale(red / 255, 1) }, 0.3, 1)
+		Tween(greenFill, { Size = UDim2.fromScale(green / 255, 1) }, 0.3, 1)
+		Tween(blueFill, { Size = UDim2.fromScale(blue / 255, 1) }, 0.3, 1)
 
 		redVal.Text = tostring(math.floor(red))
 		greenVal.Text = tostring(math.floor(green))
@@ -533,8 +621,8 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 			local radius = sat / 2
 			local theta = (hue * (math.pi * 2)) - (math.pi * 2)
 			local cx, cy = radius * math.cos(theta), radius * math.sin(theta)
-			ValCursor.Position = UDim2.fromScale(val, 0)
-			PickerCursor.Position = UDim2.fromScale(cx + 0.5, cy + 0.5)
+			Tween(ValCursor, { Position = UDim2.fromScale(val, 0) }, 0.3, 1)
+			Tween(PickerCursor, { Position = UDim2.fromScale(cx + 0.5, cy + 0.5) }, 0.3, 1)
 		end
 
 		if onColorChanged then
@@ -551,8 +639,8 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 		local cx, cy = radius * math.cos(theta), radius * math.sin(theta)
 
 		ValSliderContainer.BackgroundColor3 = Color3.fromHSV(hue, sat, 1)
-		ValCursor.Position = UDim2.fromScale(val, 0)
-		PickerCursor.Position = UDim2.fromScale(cx + 0.5, cy + 0.5)
+		Tween(ValCursor, { Position = UDim2.fromScale(val, 0) }, 0.3, 1)
+		Tween(PickerCursor, { Position = UDim2.fromScale(cx + 0.5, cy + 0.5) }, 0.3, 1)
 
 		if onColorChanged then
 			onColorChanged(color)
@@ -561,17 +649,52 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	local function setupRGBSlider(container, fill, valLabel, getChannel, setChannel)
 		local dcon, acon
+		local targetSize = fill.Size
+		local isDragging = false
 
 		container.InputBegan:Connect(function(io)
 			if io.UserInputType == Enum.UserInputType.MouseButton1 then
+				isDragging = true
 				local containerPos = container.AbsolutePosition
 				local containerWidth = container.AbsoluteSize.X
 				local rawValue = math.clamp((io.Position.X - containerPos.X) / containerWidth, 0, 1)
 				local newVal = math.floor(rawValue * 255)
-				fill.Size = UDim2.fromScale(rawValue, 1)
+				targetSize = UDim2.fromScale(rawValue, 1)
 				valLabel.Text = tostring(newVal)
 				setChannel(newVal)
 				displayRGB()
+
+				if acon then acon:Disconnect() end
+				acon = RunService.Heartbeat:Connect(function(dt)
+					if not isDragging then
+						acon:Disconnect()
+						acon = nil
+						return
+					end
+					local alpha = math.min(dt * LERP_SPEED, 1)
+					fill.Size = fill.Size:lerp(targetSize, alpha)
+				end)
+
+				if dcon then dcon:Disconnect() end
+				dcon = UserInputService.InputChanged:Connect(function(io2)
+					if io2.UserInputType == Enum.UserInputType.MouseMovement then
+						local rv = math.clamp((io2.Position.X - containerPos.X) / containerWidth, 0, 1)
+						local nv = math.floor(rv * 255)
+						targetSize = UDim2.fromScale(rv, 1)
+						valLabel.Text = tostring(nv)
+						setChannel(nv)
+						displayRGB()
+					end
+				end)
+			end
+		end)
+
+		container.InputEnded:Connect(function(io)
+			if io.UserInputType == Enum.UserInputType.MouseButton1 then
+				isDragging = false
+				if dcon then dcon:Disconnect(); dcon = nil end
+				if acon then acon:Disconnect(); acon = nil end
+				Tween(fill, { Size = targetSize }, 0.2, 1)
 			end
 		end)
 
@@ -597,15 +720,48 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	do
 		local dcon, acon
+		local targetPos = ValCursor.Position
+		local isDragging = false
 
 		ValSliderContainer.InputBegan:Connect(function(io)
 			if io.UserInputType == Enum.UserInputType.MouseButton1 then
+				isDragging = true
 				local containerPos = ValSliderContainer.AbsolutePosition
 				local containerWidth = ValSliderContainer.AbsoluteSize.X
 				local rawValue = math.clamp((io.Position.X - containerPos.X) / containerWidth, 0, 1)
-				ValCursor.Position = UDim2.fromScale(rawValue, 0)
+				targetPos = UDim2.fromScale(rawValue, 0)
 				val = rawValue
 				displayHSV(false)
+
+				if acon then acon:Disconnect() end
+				acon = RunService.Heartbeat:Connect(function(dt)
+					if not isDragging then
+						acon:Disconnect()
+						acon = nil
+						return
+					end
+					local alpha = math.min(dt * LERP_SPEED, 1)
+					ValCursor.Position = ValCursor.Position:lerp(targetPos, alpha)
+				end)
+
+				if dcon then dcon:Disconnect() end
+				dcon = UserInputService.InputChanged:Connect(function(io2)
+					if io2.UserInputType == Enum.UserInputType.MouseMovement then
+						local rv = math.clamp((io2.Position.X - containerPos.X) / containerWidth, 0, 1)
+						targetPos = UDim2.fromScale(rv, 0)
+						val = rv
+						displayHSV(false)
+					end
+				end)
+			end
+		end)
+
+		ValSliderContainer.InputEnded:Connect(function(io)
+			if io.UserInputType == Enum.UserInputType.MouseButton1 then
+				isDragging = false
+				if dcon then dcon:Disconnect(); dcon = nil end
+				if acon then acon:Disconnect(); acon = nil end
+				Tween(ValCursor, { Position = targetPos }, 0.2, 1)
 			end
 		end)
 
@@ -621,11 +777,14 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 
 	do
 		local dcon, acon
+		local targetPos = PickerCursor.Position
+		local isDragging = false
 		local center = Vector2.new(0.5, 0.5)
 
 		ColorWheel.InputBegan:Connect(function(io)
 			if io.UserInputType == Enum.UserInputType.MouseButton1 then
 				pickerMoving = true
+				isDragging = true
 				local pickerPos = ColorWheel.AbsolutePosition
 				local pickerWidth = ColorWheel.AbsoluteSize.X
 
@@ -644,14 +803,47 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 				end
 
 				local x, y, h, s = computePos(io.Position)
-				PickerCursor.Position = UDim2.fromScale(x, y)
+				targetPos = UDim2.fromScale(x, y)
 				hue = h
 				sat = s
 				displayHSV(false)
+
+				if acon then acon:Disconnect() end
+				acon = RunService.Heartbeat:Connect(function(dt)
+					if not isDragging then
+						acon:Disconnect()
+						acon = nil
+						return
+					end
+					local alpha = math.min(dt * LERP_SPEED, 1)
+					PickerCursor.Position = PickerCursor.Position:lerp(targetPos, alpha)
+				end)
+
+				if dcon then dcon:Disconnect() end
+				dcon = UserInputService.InputChanged:Connect(function(io2)
+					if io2.UserInputType == Enum.UserInputType.MouseMovement then
+						local x2, y2, h2, s2 = computePos(io2.Position)
+						targetPos = UDim2.fromScale(x2, y2)
+						hue = h2
+						sat = s2
+						displayHSV(false)
+					end
+				end)
+			end
+		end)
+
+		ColorWheel.InputEnded:Connect(function(io)
+			if io.UserInputType == Enum.UserInputType.MouseButton1 then
+				pickerMoving = false
+				isDragging = false
+				if dcon then dcon:Disconnect(); dcon = nil end
+				if acon then acon:Disconnect(); acon = nil end
+				Tween(PickerCursor, { Position = targetPos }, 0.2, 1)
 			end
 		end)
 	end
 
+	local chromaLastHue = hue
 	ChromaBtn.MouseButton1Click:Connect(function()
 		chromaEnabled = not chromaEnabled
 		if chromaEnabled then
@@ -659,11 +851,15 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 			Tween(ChromaBtnIcon, { Rotation = 360 }, 0.5, 1)
 			ChromaBtnIcon.Image = "rbxassetid://9840988620"
 			if chromaCon then chromaCon:Disconnect() end
-			chromaCon = RunService.RenderStepped:Connect(function(dt)
+			local accum = 0
+			chromaCon = RunService.Heartbeat:Connect(function(dt)
 				if pickerMoving then return end
-				dt = dt * chromaSpeed
-				hue = (hue + dt) % 1
-				displayHSV(true)
+				accum = accum + dt * chromaSpeed
+				if accum >= 0.033 then
+					hue = (hue + accum) % 1
+					accum = 0
+					displayHSV(true)
+				end
 			end)
 		else
 			Tween(ChromaBtn, { BackgroundColor3 = T.Button1 }, 0.2, 1)
@@ -706,38 +902,8 @@ local function CreatePickerWindow(T, pickerName, initialColor, screenGui, onColo
 	pickerObj.guiRef = PickerGui
 
 	pickerObj.destroy = function()
-		if chromaCon then chromaCon:Disconnect() end
-		local animCon
-		task.spawn(function()
-			local backgroundTransparency = {}
-			local imageTransparency = {}
-			local textTransparency = {}
-			local transparency = {}
-			local s = {
-				Frame = { backgroundTransparency },
-				ImageLabel = { backgroundTransparency, imageTransparency },
-				ImageButton = { backgroundTransparency, imageTransparency },
-				TextLabel = { backgroundTransparency, textTransparency },
-				TextButton = { backgroundTransparency, textTransparency },
-				UIStroke = { transparency },
-			}
-			local d = PickerGui:GetDescendants()
-			table.insert(d, PickerGui)
-			for _, v in ipairs(d) do
-				local a = s[v.ClassName]
-				if a then for i = 1, #a do table.insert(a[i], v) end end
-			end
-			for _, v in ipairs(transparency) do v.Transparency = 1 end
-			animCon = RunService.RenderStepped:Connect(function(dt)
-				dt = dt * 8
-				for _, v in ipairs(backgroundTransparency) do v.BackgroundTransparency += dt end
-				for _, v in ipairs(imageTransparency) do v.ImageTransparency += dt end
-				for _, v in ipairs(textTransparency) do v.TextTransparency += dt end
-			end)
-		end)
-		Tween(PickerScale, { Scale = 0.7 }, 0.4, 1).Completed:Wait()
-		if animCon then animCon:Disconnect() end
-		PickerGui:Destroy()
+		if chromaCon then chromaCon:Disconnect(); chromaCon = nil end
+		fadeOutAndDestroy(PickerGui, PickerScale, 0.4, 1)
 	end
 
 	CloseBtn.MouseButton1Click:Connect(function()
@@ -861,6 +1027,19 @@ function SimpleKavo.CreateLib(title, themeName)
 	WindowIcon.ZIndex = 52
 	WindowIcon.Parent = Header
 
+	local TrimFrame = Instance.new("Frame")
+	TrimFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TrimFrame.BorderSizePixel = 0
+	TrimFrame.Name = "Trim"
+	TrimFrame.Position = UDim2.fromOffset(0, 0)
+	TrimFrame.Size = UDim2.new(1, 0, 0, 2)
+	TrimFrame.ZIndex = 55
+	TrimFrame.Parent = Header
+
+	local TrimGradient = Instance.new("UIGradient")
+	TrimGradient.Color = ColorSequence.new(T.Primary, T.Secondary)
+	TrimGradient.Parent = TrimFrame
+
 	local KeybindBtn = Instance.new("TextButton")
 	KeybindBtn.Name = "KeybindBtn"
 	KeybindBtn.Parent = Header
@@ -918,37 +1097,7 @@ function SimpleKavo.CreateLib(title, themeName)
 		Tween(CloseStroke, { Color = T.Stroke }, 0.2, 2)
 	end)
 	Close.MouseButton1Click:Connect(function()
-		local animCon
-		task.spawn(function()
-			local backgroundTransparency = {}
-			local imageTransparency = {}
-			local textTransparency = {}
-			local transparency = {}
-			local s = {
-				Frame = { backgroundTransparency },
-				ImageLabel = { backgroundTransparency, imageTransparency },
-				ImageButton = { backgroundTransparency, imageTransparency },
-				TextLabel = { backgroundTransparency, textTransparency },
-				TextButton = { backgroundTransparency, textTransparency },
-				UIStroke = { transparency },
-			}
-			local d = Main:GetDescendants()
-			table.insert(d, Main)
-			for _, v in ipairs(d) do
-				local a = s[v.ClassName]
-				if a then for i = 1, #a do table.insert(a[i], v) end end
-			end
-			for _, v in ipairs(transparency) do v.Transparency = 1 end
-			animCon = RunService.RenderStepped:Connect(function(dt)
-				dt = dt * 8
-				for _, v in ipairs(backgroundTransparency) do v.BackgroundTransparency = v.BackgroundTransparency + dt end
-				for _, v in ipairs(imageTransparency) do v.ImageTransparency = v.ImageTransparency + dt end
-				for _, v in ipairs(textTransparency) do v.TextTransparency = v.TextTransparency + dt end
-			end)
-		end)
-		Tween(MainScale, { Scale = 0.7 }, 0.4, 2).Completed:Wait()
-		if animCon then animCon:Disconnect() end
-		ScreenGui:Destroy()
+		fadeOutAndDestroy(ScreenGui, MainScale, 0.4, 2)
 	end)
 
 	KeybindBtn.MouseEnter:Connect(function()
@@ -1080,7 +1229,7 @@ function SimpleKavo.CreateLib(title, themeName)
 			local keyCode = input.KeyCode
 			local isIgnored = false
 			for _, k in ipairs(ignored) do
-				if keyCode == k then isIgnored = true break end
+				if keyCode == k then isIgnored = true; break end
 			end
 			if isIgnored then return end
 			toggleKey = keyCode
@@ -1135,6 +1284,7 @@ function SimpleKavo.CreateLib(title, themeName)
 		ContentTop.BackgroundColor3 = newT.Window2
 		Title.TextColor3 = newT.TextPrimary
 		WindowIcon.ImageColor3 = newT.Primary
+		TrimGradient.Color = ColorSequence.new(newT.Primary, newT.Secondary)
 		KeybindBtn.TextColor3 = newT.TextDim
 		KeybindBtn.BackgroundColor3 = newT.Button1
 		MainStroke.Color = newT.Stroke
@@ -1210,27 +1360,25 @@ function SimpleKavo.CreateLib(title, themeName)
 		local function activateTab()
 			for _, tab in ipairs(tabsOrder) do
 				tab.content.Visible = false
-				tab.button.BackgroundColor3 = T.Button1
-				tab.button.TextColor3 = T.TextPrimary
-				if tab.stroke then tab.stroke.Color = T.Stroke end
+				Tween(tab.button, { BackgroundColor3 = T.Button1, TextColor3 = T.TextPrimary }, 0.2, 2)
+				if tab.stroke then Tween(tab.stroke, { Color = T.Stroke }, 0.2, 2) end
 			end
 			TabContent.Visible = true
-			TabButton.BackgroundColor3 = T.Button3
-			TabButton.TextColor3 = T.Primary
-			TabButtonStroke.Color = T.StrokeHover
+			Tween(TabButton, { BackgroundColor3 = T.Button3, TextColor3 = T.Primary }, 0.2, 2)
+			Tween(TabButtonStroke, { Color = T.StrokeHover }, 0.2, 2)
 			currentTab = TabButton
 		end
 
 		TabButton.MouseEnter:Connect(function()
 			if currentTab ~= TabButton then
-				TabButton.BackgroundColor3 = T.Button2
-				TabButtonStroke.Color = T.StrokeHover
+				Tween(TabButton, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+				Tween(TabButtonStroke, { Color = T.StrokeHover }, 0.2, 2)
 			end
 		end)
 		TabButton.MouseLeave:Connect(function()
 			if currentTab ~= TabButton then
-				TabButton.BackgroundColor3 = T.Button1
-				TabButtonStroke.Color = T.Stroke
+				Tween(TabButton, { BackgroundColor3 = T.Button1 }, 0.2, 2)
+				Tween(TabButtonStroke, { Color = T.Stroke }, 0.2, 2)
 			end
 		end)
 		TabButton.MouseButton1Click:Connect(activateTab)
@@ -1283,6 +1431,10 @@ function SimpleKavo.CreateLib(title, themeName)
 			SectionTrim.Size = UDim2.new(1, 0, 0, 2)
 			SectionTrim.ZIndex = 34
 			SectionTrim.Parent = SectionTitleBar
+
+			local SectionTrimGrad = Instance.new("UIGradient")
+			SectionTrimGrad.Color = ColorSequence.new(T.Primary, T.Secondary)
+			SectionTrimGrad.Parent = SectionTrim
 
 			local SectionLabel = Instance.new("TextLabel")
 			SectionLabel.Name = "Label"
@@ -1406,14 +1558,14 @@ function SimpleKavo.CreateLib(title, themeName)
 				end
 
 				ClickSensor.MouseEnter:Connect(function()
-					ControlFrame.BackgroundColor3 = T.Button2
-					BtnFrame.BackgroundColor3 = T.Button3
-					BtnStroke.Color = T.StrokeHover
+					Tween(ControlFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+					Tween(BtnFrame, { BackgroundColor3 = T.Button3 }, 0.2, 2)
+					Tween(BtnStroke, { Color = T.StrokeHover }, 0.2, 2)
 				end)
 				ClickSensor.MouseLeave:Connect(function()
-					ControlFrame.BackgroundColor3 = T.Button1
-					BtnFrame.BackgroundColor3 = T.Button2
-					BtnStroke.Color = T.Stroke
+					Tween(ControlFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
+					Tween(BtnFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+					Tween(BtnStroke, { Color = T.Stroke }, 0.2, 2)
 				end)
 				ClickSensor.MouseButton1Click:Connect(function()
 					BtnIcon.ImageColor3 = T.Primary
@@ -1502,38 +1654,39 @@ function SimpleKavo.CreateLib(title, themeName)
 				end
 
 				local State = defaultState == true
+				local focused = false
 
 				local function UpdateToggleVisual(state)
 					if state then
 						TogIcon.Image = "rbxassetid://9801457539"
-						TogIcon.Rotation = 0
-						TogIcon.ImageColor3 = T.Primary
-						TogFrame.BackgroundColor3 = T.Button2
+						Tween(TogIcon, { Rotation = 0, ImageColor3 = T.Primary }, 0.3, 2)
+						Tween(TogFrame, { BackgroundColor3 = focused and T.Button3 or T.Button2 }, 0.2, 2)
 					else
 						TogIcon.Image = "rbxassetid://9801456486"
-						TogIcon.Rotation = 360
-						TogIcon.ImageColor3 = T.Secondary
-						TogFrame.BackgroundColor3 = T.Button1
+						Tween(TogIcon, { Rotation = 360, ImageColor3 = T.Secondary }, 0.3, 2)
+						Tween(TogFrame, { BackgroundColor3 = focused and T.Button2 or T.Button1 }, 0.2, 2)
 					end
 				end
 				UpdateToggleVisual(State)
 
 				BackToggle.MouseEnter:Connect(function()
-					ControlFrame.BackgroundColor3 = T.Button2
-					TogStroke.Color = T.StrokeHover
+					focused = true
+					Tween(ControlFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+					Tween(TogStroke, { Color = T.StrokeHover }, 0.2, 2)
 					if State then
-						TogFrame.BackgroundColor3 = T.Button3
+						Tween(TogFrame, { BackgroundColor3 = T.Button3 }, 0.2, 2)
 					else
-						TogFrame.BackgroundColor3 = T.Button2
+						Tween(TogFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
 					end
 				end)
 				BackToggle.MouseLeave:Connect(function()
-					ControlFrame.BackgroundColor3 = T.Button1
-					TogStroke.Color = T.Stroke
+					focused = false
+					Tween(ControlFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
+					Tween(TogStroke, { Color = T.Stroke }, 0.2, 2)
 					if State then
-						TogFrame.BackgroundColor3 = T.Button2
+						Tween(TogFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
 					else
-						TogFrame.BackgroundColor3 = T.Button1
+						Tween(TogFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
 					end
 				end)
 				BackToggle.MouseButton1Click:Connect(function()
@@ -1632,17 +1785,20 @@ function SimpleKavo.CreateLib(title, themeName)
 				if callback then callback(default) end
 
 				local dragging = false
+				local targetSize = SliderFill.Size
+				local aCon
+				local sliderDcon
 
 				SliderContainer.MouseEnter:Connect(function()
-					SliderContainerStroke.Color = T.StrokeHover
+					Tween(SliderContainerStroke, { Color = T.StrokeHover }, 0.2, 2)
 				end)
 				SliderContainer.MouseLeave:Connect(function()
-					SliderContainerStroke.Color = T.Stroke
+					Tween(SliderContainerStroke, { Color = T.Stroke }, 0.2, 2)
 				end)
 
 				local function UpdateSlider(value)
 					local percent = math.clamp((value - min) / (max - min), 0, 1)
-					SliderFill.Size = UDim2.fromScale(percent, 1)
+					targetSize = UDim2.fromScale(percent, 1)
 					SliderVal.Text = tostring(math.floor(value))
 					if callback then callback(value) end
 				end
@@ -1655,20 +1811,40 @@ function SimpleKavo.CreateLib(title, themeName)
 						local rawValue = math.clamp((input.Position.X - sliderPos.X) / sliderWidth, 0, 1)
 						local value = min + (max - min) * rawValue
 						UpdateSlider(value)
+						if aCon then aCon:Disconnect() end
+						aCon = RunService.Heartbeat:Connect(function(dt)
+							if not dragging then
+								aCon:Disconnect()
+								aCon = nil
+								return
+							end
+							local alpha = math.min(dt * LERP_SPEED, 1)
+							SliderFill.Size = SliderFill.Size:lerp(targetSize, alpha)
+						end)
 					end
 				end)
 				SliderContainer.InputEnded:Connect(function(input)
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						dragging = false
+						if aCon then aCon:Disconnect(); aCon = nil end
+						Tween(SliderFill, { Size = targetSize }, 0.2, 2)
 					end
 				end)
-				UserInputService.InputChanged:Connect(function(input)
+
+				local sliderInputConn = UserInputService.InputChanged:Connect(function(input)
 					if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
 						local sliderPos = SliderContainer.AbsolutePosition
 						local sliderWidth = SliderContainer.AbsoluteSize.X
 						local rawValue = math.clamp((input.Position.X - sliderPos.X) / sliderWidth, 0, 1)
 						local value = min + (max - min) * rawValue
 						UpdateSlider(value)
+					end
+				end)
+
+				ControlFrame.AncestryChanged:Connect(function(_, parent)
+					if not parent then
+						sliderInputConn:Disconnect()
+						if aCon then aCon:Disconnect() end
 					end
 				end)
 
@@ -1770,17 +1946,19 @@ function SimpleKavo.CreateLib(title, themeName)
 				if callback then callback(default) end
 
 				local dragging = false
+				local targetSize = SliderFill.Size
+				local aCon
 
 				SliderContainer.MouseEnter:Connect(function()
-					SliderContainerStroke.Color = T.StrokeHover
+					Tween(SliderContainerStroke, { Color = T.StrokeHover }, 0.2, 2)
 				end)
 				SliderContainer.MouseLeave:Connect(function()
-					SliderContainerStroke.Color = T.Stroke
+					Tween(SliderContainerStroke, { Color = T.Stroke }, 0.2, 2)
 				end)
 
 				local function UpdateSlider(value)
 					local percent = math.clamp((value - min) / (max - min), 0, 1)
-					SliderFill.Size = UDim2.fromScale(percent, 1)
+					targetSize = UDim2.fromScale(percent, 1)
 					SliderVal.Text = string.format(fmt, value)
 					if callback then callback(value) end
 				end
@@ -1791,18 +1969,38 @@ function SimpleKavo.CreateLib(title, themeName)
 						local pos = input.Position.X - SliderContainer.AbsolutePosition.X
 						local rawValue = math.clamp(pos / SliderContainer.AbsoluteSize.X, 0, 1)
 						UpdateSlider(min + (max - min) * rawValue)
+						if aCon then aCon:Disconnect() end
+						aCon = RunService.Heartbeat:Connect(function(dt)
+							if not dragging then
+								aCon:Disconnect()
+								aCon = nil
+								return
+							end
+							local alpha = math.min(dt * LERP_SPEED, 1)
+							SliderFill.Size = SliderFill.Size:lerp(targetSize, alpha)
+						end)
 					end
 				end)
 				SliderContainer.InputEnded:Connect(function(input)
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
 						dragging = false
+						if aCon then aCon:Disconnect(); aCon = nil end
+						Tween(SliderFill, { Size = targetSize }, 0.2, 2)
 					end
 				end)
-				UserInputService.InputChanged:Connect(function(input)
+
+				local floatInputConn = UserInputService.InputChanged:Connect(function(input)
 					if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
 						local pos = input.Position.X - SliderContainer.AbsolutePosition.X
 						local rawValue = math.clamp(pos / SliderContainer.AbsoluteSize.X, 0, 1)
 						UpdateSlider(min + (max - min) * rawValue)
+					end
+				end)
+
+				ControlFrame.AncestryChanged:Connect(function(_, parent)
+					if not parent then
+						floatInputConn:Disconnect()
+						if aCon then aCon:Disconnect() end
 					end
 				end)
 
@@ -1925,21 +2123,20 @@ function SimpleKavo.CreateLib(title, themeName)
 						local OptStroke = AddStroke(OptButton, T.Stroke)
 
 						OptButton.MouseEnter:Connect(function()
-							OptButton.BackgroundColor3 = T.Button2
-							OptStroke.Color = T.StrokeHover
+							Tween(OptButton, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+							Tween(OptStroke, { Color = T.StrokeHover }, 0.2, 2)
 						end)
 						OptButton.MouseLeave:Connect(function()
-							OptButton.BackgroundColor3 = T.Button1
-							OptStroke.Color = T.Stroke
+							Tween(OptButton, { BackgroundColor3 = T.Button1 }, 0.2, 2)
+							Tween(OptStroke, { Color = T.Stroke }, 0.2, 2)
 						end)
 						OptButton.MouseButton1Click:Connect(function()
 							selectedOption = option
 							MainBtnLabel.Text = dropName .. ": " .. tostring(selectedOption)
 							isOpen = false
-							ArrowIcon.Rotation = 0
-							ArrowIcon.ImageColor3 = T.Secondary
-							OptionsFrame.Size = UDim2.new(1, 0, 0, 0)
-							DropFrame.Size = UDim2.new(1, -4, 0, 22)
+							Tween(ArrowIcon, { Rotation = 0, ImageColor3 = T.Secondary }, 0.2, 2)
+							Tween(OptionsFrame, { Size = UDim2.new(1, 0, 0, 0) }, 0.2, 2)
+							Tween(DropFrame, { Size = UDim2.new(1, -4, 0, 22) }, 0.2, 2)
 							task.delay(0.21, function()
 								if not isOpen then OptionsFrame.Visible = false end
 							end)
@@ -1951,17 +2148,16 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local function toggleDropdown()
 					isOpen = not isOpen
-					ArrowIcon.Rotation = isOpen and 180 or 0
-					ArrowIcon.ImageColor3 = isOpen and T.Primary or T.Secondary
+					Tween(ArrowIcon, { Rotation = isOpen and 180 or 0, ImageColor3 = isOpen and T.Primary or T.Secondary }, 0.2, 2)
 					if isOpen then
 						local optionCount = #options > 0 and #options or 1
 						local totalHeight = optionCount * 21 + (optionCount - 1) * 3 + 8
 						OptionsFrame.Visible = true
-						DropFrame.Size = UDim2.new(1, -4, 0, 22 + totalHeight + 8)
-						OptionsFrame.Size = UDim2.new(1, 0, 0, totalHeight)
+						Tween(DropFrame, { Size = UDim2.new(1, -4, 0, 22 + totalHeight + 8) }, 0.2, 2)
+						Tween(OptionsFrame, { Size = UDim2.new(1, 0, 0, totalHeight) }, 0.2, 2)
 					else
-						DropFrame.Size = UDim2.new(1, -4, 0, 22)
-						OptionsFrame.Size = UDim2.new(1, 0, 0, 0)
+						Tween(DropFrame, { Size = UDim2.new(1, -4, 0, 22) }, 0.2, 2)
+						Tween(OptionsFrame, { Size = UDim2.new(1, 0, 0, 0) }, 0.2, 2)
 						task.delay(0.21, function()
 							if not isOpen then OptionsFrame.Visible = false end
 						end)
@@ -1970,14 +2166,14 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				MainButton.MouseEnter:Connect(function()
 					if not isOpen then
-						MainButton.BackgroundColor3 = T.Button2
-						MainBtnStroke.Color = T.StrokeHover
+						Tween(MainButton, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+						Tween(MainBtnStroke, { Color = T.StrokeHover }, 0.2, 2)
 					end
 				end)
 				MainButton.MouseLeave:Connect(function()
 					if not isOpen then
-						MainButton.BackgroundColor3 = T.Button1
-						MainBtnStroke.Color = T.Stroke
+						Tween(MainButton, { BackgroundColor3 = T.Button1 }, 0.2, 2)
+						Tween(MainBtnStroke, { Color = T.Stroke }, 0.2, 2)
 					end
 				end)
 				MainButton.MouseButton1Click:Connect(toggleDropdown)
@@ -2084,12 +2280,12 @@ function SimpleKavo.CreateLib(title, themeName)
 				AddCorner(ColorInner, UDim.new(1, 0))
 
 				ClickSensor.MouseEnter:Connect(function()
-					ControlFrame.BackgroundColor3 = T.Button2
-					ColorDisplayStroke.Color = T.StrokeHover
+					Tween(ControlFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+					Tween(ColorDisplayStroke, { Color = T.StrokeHover }, 0.2, 2)
 				end)
 				ClickSensor.MouseLeave:Connect(function()
-					ControlFrame.BackgroundColor3 = T.Button1
-					ColorDisplayStroke.Color = T.Stroke
+					Tween(ControlFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
+					Tween(ColorDisplayStroke, { Color = T.Stroke }, 0.2, 2)
 				end)
 
 				ClickSensor.MouseButton1Click:Connect(function()
@@ -2266,6 +2462,8 @@ function SimpleKavo.CreateLib(title, themeName)
 				local colorPickerWindows = {}
 				local colorPickerOpening = {}
 
+				local tdSliderInputConns = {}
+
 				for i, opt in ipairs(normOptions) do
 					local t = opt.type
 					local hasToggle = (t == "toggle" or t == "toggleslider" or t == "togglesliderf")
@@ -2352,12 +2550,12 @@ function SimpleKavo.CreateLib(title, themeName)
 						AddCorner(CPInner, UDim.new(1, 0))
 
 						CPDisplay.MouseEnter:Connect(function()
-							CPDisplay.BackgroundColor3 = T.Button3
-							CPDisplayStroke.Color = T.StrokeHover
+							Tween(CPDisplay, { BackgroundColor3 = T.Button3 }, 0.2, 2)
+							Tween(CPDisplayStroke, { Color = T.StrokeHover }, 0.2, 2)
 						end)
 						CPDisplay.MouseLeave:Connect(function()
-							CPDisplay.BackgroundColor3 = T.Button2
-							CPDisplayStroke.Color = T.Stroke
+							Tween(CPDisplay, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+							Tween(CPDisplayStroke, { Color = T.Stroke }, 0.2, 2)
 						end)
 
 						local optName = opt.name
@@ -2446,14 +2644,12 @@ function SimpleKavo.CreateLib(title, themeName)
 						local function updateToggleVisual(state)
 							if state then
 								TBIcon.Image = "rbxassetid://9801457539"
-								TBIcon.Rotation = 0
-								TBIcon.ImageColor3 = T.Primary
-								TogBtn.BackgroundColor3 = T.Button3
+								Tween(TBIcon, { Rotation = 0, ImageColor3 = T.Primary }, 0.3, 2)
+								Tween(TogBtn, { BackgroundColor3 = T.Button3 }, 0.2, 2)
 							else
 								TBIcon.Image = "rbxassetid://9801456486"
-								TBIcon.Rotation = 360
-								TBIcon.ImageColor3 = T.Secondary
-								TogBtn.BackgroundColor3 = T.Button2
+								Tween(TBIcon, { Rotation = 360, ImageColor3 = T.Secondary }, 0.3, 2)
+								Tween(TogBtn, { BackgroundColor3 = T.Button2 }, 0.2, 2)
 							end
 						end
 						updateToggleVisual(allStates[opt.name].toggleValue)
@@ -2527,9 +2723,12 @@ function SimpleKavo.CreateLib(title, themeName)
 						SliderFillGrad.Rotation = 90
 						SliderFillGrad.Parent = SliderFill
 
+						local sliderTarget = SliderFill.Size
+						local sliderACon
+
 						local function updateSliderVisual(value)
 							local pct = math.clamp((value - sliderMin) / (sliderMax - sliderMin), 0, 1)
-							SliderFill.Size = UDim2.fromScale(pct, 1)
+							sliderTarget = UDim2.fromScale(pct, 1)
 							if hasToggle then
 								SliderText.Text = isFloat and string.format(fmt, value) or tostring(math.floor(value))
 							else
@@ -2547,20 +2746,34 @@ function SimpleKavo.CreateLib(title, themeName)
 								local pos = input.Position.X - SliderBar.AbsolutePosition.X
 								local pct = math.clamp(pos / SliderBar.AbsoluteSize.X, 0, 1)
 								updateSliderVisual(sliderMin + (sliderMax - sliderMin) * pct)
+								if sliderACon then sliderACon:Disconnect() end
+								sliderACon = RunService.Heartbeat:Connect(function(dt)
+									if not sliderDragging then
+										sliderACon:Disconnect()
+										sliderACon = nil
+										return
+									end
+									local alpha = math.min(dt * LERP_SPEED, 1)
+									SliderFill.Size = SliderFill.Size:lerp(sliderTarget, alpha)
+								end)
 							end
 						end)
 						SliderBar.InputEnded:Connect(function(input)
 							if input.UserInputType == Enum.UserInputType.MouseButton1 then
 								sliderDragging = false
+								if sliderACon then sliderACon:Disconnect(); sliderACon = nil end
+								Tween(SliderFill, { Size = sliderTarget }, 0.2, 2)
 							end
 						end)
-						UserInputService.InputChanged:Connect(function(input)
+
+						local tdSliderInputConn = UserInputService.InputChanged:Connect(function(input)
 							if sliderDragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
 								local pos = input.Position.X - SliderBar.AbsolutePosition.X
 								local pct = math.clamp(pos / SliderBar.AbsoluteSize.X, 0, 1)
 								updateSliderVisual(sliderMin + (sliderMax - sliderMin) * pct)
 							end
 						end)
+						table.insert(tdSliderInputConns, tdSliderInputConn)
 
 						rows[opt.name] = rows[opt.name] or {}
 						rows[opt.name].sliderFill = SliderFill
@@ -2607,22 +2820,21 @@ function SimpleKavo.CreateLib(title, themeName)
 
 						KBButton.MouseEnter:Connect(function()
 							if not listeningKB then
-								KBButton.BackgroundColor3 = T.Button3
-								KBStroke.Color = T.StrokeHover
+								Tween(KBButton, { BackgroundColor3 = T.Button3 }, 0.2, 2)
+								Tween(KBStroke, { Color = T.StrokeHover }, 0.2, 2)
 							end
 						end)
 						KBButton.MouseLeave:Connect(function()
 							if not listeningKB then
-								KBButton.BackgroundColor3 = T.Button2
-								KBStroke.Color = T.Stroke
+								Tween(KBButton, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+								Tween(KBStroke, { Color = T.Stroke }, 0.2, 2)
 							end
 						end)
 						KBButton.MouseButton1Click:Connect(function()
 							if listeningKB then return end
 							listeningKB = true
 							KBButton.Text = "..."
-							KBButton.BackgroundColor3 = T.Button3
-							KBButton.TextColor3 = T.Primary
+							Tween(KBButton, { BackgroundColor3 = T.Button3, TextColor3 = T.Primary }, 0.15, 2)
 						end)
 
 						local kbConn
@@ -2637,15 +2849,14 @@ function SimpleKavo.CreateLib(title, themeName)
 							}
 							local skip = false
 							for _, k in ipairs(ignoredKB) do
-								if input.KeyCode == k then skip = true break end
+								if input.KeyCode == k then skip = true; break end
 							end
 							if skip then return end
 							currentKey = input.KeyCode
 							allStates[opt.name].keybindValue = currentKey
 							listeningKB = false
 							KBButton.Text = currentKey.Name
-							KBButton.BackgroundColor3 = T.Button2
-							KBButton.TextColor3 = T.TextDim
+							Tween(KBButton, { BackgroundColor3 = T.Button2, TextColor3 = T.TextDim }, 0.15, 2)
 							if callback then
 								callback(opt.name, currentKey, nil, allStates)
 							end
@@ -2668,15 +2879,14 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				local function toggleOpen()
 					isOpen = not isOpen
-					ArrowIcon.Rotation = isOpen and 180 or 0
-					ArrowIcon.ImageColor3 = isOpen and T.Primary or T.Secondary
+					Tween(ArrowIcon, { Rotation = isOpen and 180 or 0, ImageColor3 = isOpen and T.Primary or T.Secondary }, 0.2, 2)
 					if isOpen then
 						OptionsFrame.Visible = true
-						DropFrame.Size = UDim2.new(1, -4, 0, 22 + 8 + totalOptionsHeight)
-						OptionsFrame.Size = UDim2.new(1, 0, 0, totalOptionsHeight)
+						Tween(DropFrame, { Size = UDim2.new(1, -4, 0, 22 + 8 + totalOptionsHeight) }, 0.2, 2)
+						Tween(OptionsFrame, { Size = UDim2.new(1, 0, 0, totalOptionsHeight) }, 0.2, 2)
 					else
-						DropFrame.Size = UDim2.new(1, -4, 0, 22)
-						OptionsFrame.Size = UDim2.new(1, 0, 0, 0)
+						Tween(DropFrame, { Size = UDim2.new(1, -4, 0, 22) }, 0.2, 2)
+						Tween(OptionsFrame, { Size = UDim2.new(1, 0, 0, 0) }, 0.2, 2)
 						task.delay(0.21, function()
 							if not isOpen then OptionsFrame.Visible = false end
 						end)
@@ -2685,14 +2895,14 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				MainButton.MouseEnter:Connect(function()
 					if not isOpen then
-						MainButton.BackgroundColor3 = T.Button2
-						MainBtnStroke.Color = T.StrokeHover
+						Tween(MainButton, { BackgroundColor3 = T.Button2 }, 0.2, 2)
+						Tween(MainBtnStroke, { Color = T.StrokeHover }, 0.2, 2)
 					end
 				end)
 				MainButton.MouseLeave:Connect(function()
 					if not isOpen then
-						MainButton.BackgroundColor3 = T.Button1
-						MainBtnStroke.Color = T.Stroke
+						Tween(MainButton, { BackgroundColor3 = T.Button1 }, 0.2, 2)
+						Tween(MainBtnStroke, { Color = T.Stroke }, 0.2, 2)
 					end
 				end)
 				MainButton.MouseButton1Click:Connect(toggleOpen)
@@ -2727,6 +2937,7 @@ function SimpleKavo.CreateLib(title, themeName)
 				DropFrame.Destroying:Connect(function()
 					outsideConn:Disconnect()
 					for _, c in ipairs(keybindInputConns) do c:Disconnect() end
+					for _, c in ipairs(tdSliderInputConns) do c:Disconnect() end
 					for _, cpw in pairs(colorPickerWindows) do
 						if cpw then pcall(cpw.destroy) end
 					end
@@ -2848,14 +3059,12 @@ function SimpleKavo.CreateLib(title, themeName)
 				TBPad.Parent = TextBox
 
 				TextBox.Focused:Connect(function()
-					TextBox.BackgroundColor3 = T.Button3
-					TextBox.TextColor3 = T.Primary
-					TBStroke.Color = T.StrokeHover
+					Tween(TextBox, { BackgroundColor3 = T.Button3, TextColor3 = T.Primary }, 0.2, 2)
+					Tween(TBStroke, { Color = T.StrokeHover }, 0.2, 2)
 				end)
 				TextBox.FocusLost:Connect(function(enterPressed)
-					TextBox.BackgroundColor3 = T.Button1
-					TextBox.TextColor3 = T.TextPrimary
-					TBStroke.Color = T.Stroke
+					Tween(TextBox, { BackgroundColor3 = T.Button1, TextColor3 = T.TextPrimary }, 0.2, 2)
+					Tween(TBStroke, { Color = T.Stroke }, 0.2, 2)
 					if enterPressed then
 						TextBox.Text = tbName
 					end
@@ -2931,24 +3140,24 @@ function SimpleKavo.CreateLib(title, themeName)
 
 				BackButton.MouseEnter:Connect(function()
 					focused = true
-					ControlFrame.BackgroundColor3 = T.Button2
+					Tween(ControlFrame, { BackgroundColor3 = T.Button2 }, 0.2, 2)
 					if listening then
-						KBDisplay.TextColor3 = T.Primary
+						Tween(KBDisplay, { TextColor3 = T.Primary }, 0.2, 2)
 					else
-						KBDisplay.TextColor3 = T.TextPrimary
+						Tween(KBDisplay, { TextColor3 = T.TextPrimary }, 0.2, 2)
 					end
 				end)
 				BackButton.MouseLeave:Connect(function()
 					focused = false
-					ControlFrame.BackgroundColor3 = T.Button1
+					Tween(ControlFrame, { BackgroundColor3 = T.Button1 }, 0.2, 2)
 					if not listening then
-						KBDisplay.TextColor3 = T.TextDim
+						Tween(KBDisplay, { TextColor3 = T.TextDim }, 0.2, 2)
 					end
 				end)
 				BackButton.MouseButton1Click:Connect(function()
 					listening = true
 					KBDisplay.Text = "..."
-					KBDisplay.TextColor3 = T.Primary
+					Tween(KBDisplay, { TextColor3 = T.Primary }, 0.2, 2)
 				end)
 
 				local inputConnection = UserInputService.InputBegan:Connect(function(input, gameProcessed)
@@ -2958,7 +3167,7 @@ function SimpleKavo.CreateLib(title, themeName)
 						if newKey == Enum.KeyCode.Unknown then return end
 						currentKey = newKey
 						KBDisplay.Text = ("[%s]"):format(newKey.Name)
-						KBDisplay.TextColor3 = focused and T.TextPrimary or T.TextDim
+						Tween(KBDisplay, { TextColor3 = focused and T.TextPrimary or T.TextDim }, 0.2, 2)
 						listening = false
 						if callback then callback(currentKey) end
 					elseif not gameProcessed and input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == currentKey then
