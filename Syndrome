@@ -1033,7 +1033,7 @@ function SimpleKavo.CreateLib(title, themeName)
 	local WindowIcon = Instance.new("ImageLabel")
 	WindowIcon.BackgroundTransparency = 1
 	WindowIcon.BorderSizePixel = 0
-	WindowIcon.Image = "rbxassetid://10152328589"
+	WindowIcon.Image = "rbxassetid://90412219369494"
 	WindowIcon.ImageColor3 = T.Primary
 	WindowIcon.Name = "Icon"
 	WindowIcon.Position = UDim2.fromOffset(6, 7)
